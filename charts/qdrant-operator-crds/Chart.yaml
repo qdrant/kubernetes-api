@@ -1,0 +1,16 @@
+apiVersion: v2
+name: qdrant-operator-crds
+description: Operator CRDs used to manage Qdrant databases inside of Kubernetes # Used by both the operator and agent.
+home: https://qdrant.tech
+type: application
+version: 0.1.0
+sources:
+  - https://github.com/qdrant/operator
+keywords:
+  - vector database
+maintainers:
+  - name: qdrant
+    email: info@qdrant.com
+    url: https://github.com/qdrant
+icon: https://qdrant.github.io/qdrant-helm/logo_with_text.svg
+appVersion: "0.1.0"

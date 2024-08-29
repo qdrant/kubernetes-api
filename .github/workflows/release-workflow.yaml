@@ -1,0 +1,73 @@
+name: Release
+on:
+  push:
+    branches:
+      - 'releases/**'
+
+permissions:
+  contents: read
+
+jobs:
+  Release:
+    name: Release Workflow
+    runs-on: ubuntu-latest
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+      pull-requests: write
+      id-token: write  # needed for cosign keyless signing with OIDC
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract build info
+        id: extract_build_info
+        run: |
+          echo "tag=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+          echo "commit_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.6.0
+
+      - name: Package helm chart (CRDs)
+        run: |
+          # Ensure correct versions in Chart.yaml
+          sed -i "s/version:.*/version: ${{ steps.extract_build_info.outputs.tag }}/g" charts/qdrant-operator-crds/Chart.yaml
+          sed -i "s/appVersion:.*/appVersion: ${{ steps.extract_build_info.outputs.tag }}/g" charts/qdrant-operator-crds/Chart.yaml
+          helm package charts/qdrant-operator-crds/
+
+      - name: Tag Release
+        shell: bash
+        run: |
+          git tag ${{ steps.extract_build_info.outputs.tag }}
+          git push origin ${{ steps.extract_build_info.outputs.tag }}
+
+      - name: Publish Release Notes
+        uses: release-drafter/release-drafter@v6
+        with:
+          disable-autolabeler: true
+          commitish: ${{ github.ref }}
+          tag: ${{ steps.extract_build_info.outputs.tag }}
+          publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push helm (CRDs) chart to registry.cloud.qdrant.io
+        id: push-helm-chart-crds
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          HARBOR_TOKEN: ${{ secrets.HARBOR_TOKEN }}
+        run: |
+          helm registry login registry.cloud.qdrant.io -u "${HARBOR_USERNAME}" --password "${HARBOR_TOKEN}"
+          push_output=$(helm push qdrant-operator-crds-${{ steps.extract_build_info.outputs.tag }}.tgz oci://registry.cloud.qdrant.io/qdrant-charts 2>&1)
+          echo $push_output
+          digest=$(echo $push_output | grep -oP '(?<=Digest: ).*')
+          echo $digest
+          echo "digest=${digest}" >> $GITHUB_OUTPUT
+
+      - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io
+        run: |
+          cosign sign --yes "${TAGS}@${DIGEST}"
+        env:
+          TAGS: registry.cloud.qdrant.io/qdrant-charts/qdrant-operator-crds:${{ steps.extract_build_info.outputs.tag }}
+          DIGEST: ${{ steps.push-helm-chart-crds.outputs.digest }}
