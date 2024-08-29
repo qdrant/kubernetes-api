@@ -1,0 +1,114 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: qdrantclusterrestores.qdrant.io
+spec:
+  group: qdrant.io
+  names:
+    kind: QdrantClusterRestore
+    listKind: QdrantClusterRestoreList
+    plural: qdrantclusterrestores
+    shortNames:
+    - qcrs
+    - qcr
+    singular: qdrantclusterrestore
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: QdrantClusterRestore is the Schema for the qdrantclusterrestores
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: QdrantClusterRestoreSpec defines the desired state of QdrantClusterRestore
+            properties:
+              destination:
+                description: Destination defines the destination cluster where the
+                  source data will end up
+                properties:
+                  name:
+                    description: Name of the destination cluster
+                    type: string
+                  namespace:
+                    description: Namespace of the destination cluster
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+              operatorVersion:
+                default: V1
+                description: The version of the operator which reconciles this instance
+                enum:
+                - V1
+                - V2
+                type: string
+              source:
+                description: Source defines the source snapshot from which the restore
+                  will be done
+                properties:
+                  namespace:
+                    description: Namespace of the snapshot
+                    type: string
+                  snapshotName:
+                    description: SnapshotName is the name of the snapshot from which
+                      we wish to restore
+                    type: string
+                required:
+                - namespace
+                - snapshotName
+                type: object
+            required:
+            - destination
+            - source
+            type: object
+          status:
+            description: QdrantClusterRestoreStatus defines the observed state of
+              QdrantClusterRestore
+            properties:
+              message:
+                description: Message from the operator in case of failures, like snapshot
+                  not found
+                type: string
+              phase:
+                description: Phase is the current phase of the restore
+                enum:
+                - Running
+                - Skipped
+                - Failed
+                - Succeeded
+                type: string
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+        type: object
+    served: true
+    storage: true
+    subresources: {}

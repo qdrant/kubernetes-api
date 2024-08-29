@@ -1,0 +1,130 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: qdrantclustersnapshots.qdrant.io
+spec:
+  group: qdrant.io
+  names:
+    kind: QdrantClusterSnapshot
+    listKind: QdrantClusterSnapshotList
+    plural: qdrantclustersnapshots
+    shortNames:
+    - qcsnap
+    - qcsnaps
+    singular: qdrantclustersnapshot
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.cluster-id
+      name: clusterid
+      type: string
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    - jsonPath: .status.retainUntil
+      name: retainUntil
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: age
+      type: date
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: QdrantClusterSnapshot is the Schema for the qdrantclustersnapshots
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              cluster-id:
+                description: |-
+                  The cluster ID for which a Snapshot need to be taken
+                  The cluster should be in the same namespace as this QdrantClusterSnapshot is located
+                type: string
+              creation-timestamp:
+                description: The CreationTimestamp of the backup (expressed in Unix
+                  epoch format)
+                format: int64
+                type: integer
+              operatorVersion:
+                default: V1
+                description: The version of the operator which reconciles this instance
+                enum:
+                - V1
+                - V2
+                type: string
+              retention:
+                description: |-
+                  The retention period of this snapshot in hours, if any.
+                  If not set, the backup doesn't have a retention period, meaning it will not be removed.
+                pattern: ^[0-9]+h$
+                type: string
+              scheduleShortId:
+                description: |-
+                  Specifies the short Id which identifies a schedule, if any.
+                  This field should not be set if the backup is made manually.
+                maxLength: 8
+                type: string
+            required:
+            - cluster-id
+            type: object
+          status:
+            properties:
+              phase:
+                enum:
+                - Running
+                - Skipped
+                - Failed
+                - Succeeded
+                type: string
+              retainUntil:
+                description: The calculated time (in UTC) this snapshot will be deleted,
+                  if so.
+                format: date-time
+                type: string
+              volumeSnapshots:
+                description: VolumeSnapshots is the list of volume snapshots that
+                  were created
+                items:
+                  properties:
+                    readyToUse:
+                      description: ReadyToUse indicates if the volume snapshot is
+                        ready to use
+                      type: boolean
+                    volumeName:
+                      description: VolumeName is the name of the volume that was backed
+                        up
+                      type: string
+                    volumeSnapshotName:
+                      description: VolumeSnapshotName is the name of the volume snapshot
+                      type: string
+                  required:
+                  - volumeName
+                  - volumeSnapshotName
+                  type: object
+                type: array
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+        type: object
+    served: true
+    storage: true
+    subresources: {}
