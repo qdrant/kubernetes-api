@@ -15,8 +15,8 @@ make gen
 Create and push a new release branch like this:
 
 ```bash
-git checkout -b releases/x.y.z
-git push origin releases/x.y.z
+git checkout -b releases/v1.2.3
+git push origin releases/v1.2.3
 ```
 
-A GitHub Action will create and tag a new release with the given version number.
+A GitHub Action will create and tag a new release with the given version number. Important: the version number must be in the format `vX.Y.Z`, and prefixed with a `v`.
