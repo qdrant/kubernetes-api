@@ -253,7 +253,7 @@ type QdrantImage struct {
 	// +optional
 	PullPolicy *corev1.PullPolicy `json:"pullPolicy,omitempty"`
 	// PullSecretName specifies the pull secret for the Qdrant image.
-	// +options
+	// +optional
 	PullSecretName *string `json:"PullSecretName,omitempty"`
 }
 
