@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     branches:
-      - 'releases/**'
+      - 'releases/v**'
 
 permissions:
   contents: read
@@ -73,7 +73,7 @@ jobs:
           echo "digest=${digest}" >> $GITHUB_OUTPUT
 
       - name: Push helm (CRDs) chart to registry.cloud.qdrant.io to public repo
-        id: push-helm-chart-crds
+        id: push-helm-chart-crds-public
         env:
           HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
           HARBOR_TOKEN: ${{ secrets.HARBOR_TOKEN }}
@@ -97,4 +97,4 @@ jobs:
           cosign sign --yes "${TAGS}@${DIGEST}"
         env:
           TAGS: registry.cloud.qdrant.io/library/qdrant-operator-crds:${{ steps.extract_build_info.outputs.tag }}
-          DIGEST: ${{ steps.push-helm-chart-crds.outputs.public_digest }}
+          DIGEST: ${{ steps.push-helm-chart-crds-public.outputs.public_digest }}
