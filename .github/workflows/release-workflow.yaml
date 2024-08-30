@@ -72,9 +72,29 @@ jobs:
           echo $digest
           echo "digest=${digest}" >> $GITHUB_OUTPUT
 
+      - name: Push helm (CRDs) chart to registry.cloud.qdrant.io to public repo
+        id: push-helm-chart-crds
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          HARBOR_TOKEN: ${{ secrets.HARBOR_TOKEN }}
+        run: |
+          helm registry login registry.cloud.qdrant.io -u "${HARBOR_USERNAME}" --password "${HARBOR_TOKEN}"
+          push_output=$(helm push qdrant-operator-crds-${{ steps.extract_build_info.outputs.tag }}.tgz oci://registry.cloud.qdrant.io/library 2>&1)
+          echo $push_output
+          public_digest=$(echo $push_output | grep -oP '(?<=Digest: ).*')
+          echo $public_digest
+          echo "public_digest=${public_digest}" >> $GITHUB_OUTPUT
+
       - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io
         run: |
           cosign sign --yes "${TAGS}@${DIGEST}"
         env:
           TAGS: registry.cloud.qdrant.io/qdrant-charts/qdrant-operator-crds:${{ steps.extract_build_info.outputs.tag }}
           DIGEST: ${{ steps.push-helm-chart-crds.outputs.digest }}
+
+      - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io in public repo
+        run: |
+          cosign sign --yes "${TAGS}@${DIGEST}"
+        env:
+          TAGS: registry.cloud.qdrant.io/library/qdrant-operator-crds:${{ steps.extract_build_info.outputs.tag }}
+          DIGEST: ${{ steps.push-helm-chart-crds.outputs.public_digest }}
