@@ -9,6 +9,8 @@
 Package v1 contains API Schema definitions for the qdrant.io v1 API group
 
 ### Resource Types
+- [QdrantCloudRegion](#qdrantcloudregion)
+- [QdrantCloudRegionList](#qdrantcloudregionlist)
 - [QdrantCluster](#qdrantcluster)
 - [QdrantClusterList](#qdrantclusterlist)
 - [QdrantClusterRestore](#qdrantclusterrestore)
@@ -35,6 +37,73 @@ _Underlying type:_ _string_
 _Appears in:_
 - [QdrantClusterStatus](#qdrantclusterstatus)
 
+
+
+#### ComponentPhase
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [ComponentStatus](#componentstatus)
+
+
+
+#### ComponentStatus
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name specifies the name of the component |  |  |
+| `namespace` _string_ | Namespace specifies the namespace of the component |  |  |
+| `version` _string_ | Version specifies the version of the component |  |  |
+| `phase` _[ComponentPhase](#componentphase)_ | Phase specifies the current phase of the component |  |  |
+| `message` _string_ | Message specifies the info explaining the current phase of the component |  |  |
+
+
+#### HelmRelease
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionSpec](#qdrantcloudregionspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `markedForDeletionAt` _string_ | MarkedForDeletionAt specifies the time when the helm release was marked for deletion |  |  |
+| `object` _[HelmRelease](#helmrelease)_ | Object specifies the helm release object |  | EmbeddedResource: {} <br /> |
+
+
+#### HelmRepository
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionSpec](#qdrantcloudregionspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `markedForDeletionAt` _string_ | MarkedForDeletionAt specifies the time when the helm repository was marked for deletion |  |  |
+| `object` _[HelmRepository](#helmrepository)_ | Object specifies the helm repository object |  | EmbeddedResource: {} <br /> |
 
 
 #### Ingress
@@ -262,6 +331,63 @@ _Appears in:_
 | `owner` _string_ | Owner specifies the owner of the pause request. |  |  |
 | `reason` _string_ | Reason specifies the reason for the pause request. |  |  |
 | `creationTimestamp` _string_ | CreationTimestamp specifies the time when the pause request was created. |  |  |
+
+
+#### QdrantCloudRegion
+
+
+
+QdrantCloudRegion is the Schema for the qdrantcloudregions API
+
+
+
+_Appears in:_
+- [QdrantCloudRegionList](#qdrantcloudregionlist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantCloudRegion` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[QdrantCloudRegionSpec](#qdrantcloudregionspec)_ |  |  |  |
+
+
+#### QdrantCloudRegionList
+
+
+
+QdrantCloudRegionList contains a list of QdrantCloudRegion
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantCloudRegionList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[QdrantCloudRegion](#qdrantcloudregion) array_ |  |  |  |
+
+
+#### QdrantCloudRegionSpec
+
+
+
+QdrantCloudRegionSpec defines the desired state of QdrantCloudRegion
+
+
+
+_Appears in:_
+- [QdrantCloudRegion](#qdrantcloudregion)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `id` _string_ | Id specifies the unique identifier of the region |  |  |
+| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region |  |  |
+| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region |  |  |
+
+
 
 
 #### QdrantCluster
@@ -728,6 +854,36 @@ _Appears in:_
 | `accountPrivileges` _string array_ | If set, this version can only be used by accounts that have been given the listed privileges. |  |  |
 | `remarks` _string_ | General remarks for human reading |  |  |
 | `releaseNotesURL` _string_ | Release Notes URL for the specified version |  |  |
+
+
+#### RegionCapabilities
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `volumeSnapshot` _boolean_ | VolumeSnapshot specifies whether the Kubernetes cluster supports volume snapshot |  |  |
+| `volumeExpansion` _boolean_ | VolumeExpansion specifies whether the Kubernetes cluster supports volume expansion |  |  |
+
+
+#### RegionPhase
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
 
 
 #### ResourceRequests
