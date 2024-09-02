@@ -1,0 +1,97 @@
+name: Create Qdrant Version Custom Resource PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Qdrant version (e.g., v1.10.1)'
+        required: true
+        type: string
+      releaseNotesURL:
+        description: 'Release Notes URL for the specified version'
+        required: true
+        type: string
+  repository_dispatch:
+    types: [create-qdrant-version]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate Input Parameters
+        run: |
+          if [[ -z "${{ github.event.inputs.version }}" ]]; then
+            echo "Error: Qdrant version is required."
+            exit 1
+          fi
+          if [[ -z "${{ github.event.inputs.releaseNotesURL }}" ]]; then
+            echo "Error: Release Notes URL is required."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create new branch
+        run: |
+          BRANCH_NAME="add-qdrant-version-${{ github.event.inputs.version }}"
+          git checkout -b $BRANCH_NAME
+
+      - name: Create QdrantVersion YAML
+        run: |
+          cat <<EOF > qdrantversion-${{ github.event.inputs.version }}.yaml
+          apiVersion: qdrant.io/v1
+          kind: QdrantVersion
+          metadata:
+            name: qdrant-${{ github.event.inputs.version }}
+          spec:
+            version: "${{ github.event.inputs.version }}"
+            image: "qdrant/qdrant:${{ github.event.inputs.version }}"
+            isDefault: false
+            isEndOfLife: false
+            unavailable: false
+            releaseNotesURL: "${{ github.event.inputs.releaseNotesURL }}"
+            remarks: "Automated creation of Qdrant version ${{ github.event.inputs.version }}."
+            accountIds: []
+            accountPrivileges: []
+          EOF
+
+      - name: Validate YAML Structure
+        run: |
+          sudo apt-get update && sudo apt-get install -y yamllint
+          yamllint qdrantversion-${{ github.event.inputs.version }}.yaml
+
+      - name: Verify Content Replacement
+        run: |
+          grep "version: \"${{ github.event.inputs.version }}\"" qdrantversion-${{ github.event.inputs.version }}.yaml
+          grep "releaseNotesURL: \"${{ github.event.inputs.releaseNotesURL }}\"" qdrantversion-${{ github.event.inputs.version }}.yaml
+
+
+      - name: Commit changes
+        run: |
+          git add qdrantversion-${{ github.event.inputs.version }}.yaml
+          git commit -m "Add Qdrant version ${{ github.event.inputs.version }}"
+
+      - name: Push changes
+        run: |
+          BRANCH_NAME="add-qdrant-version-${{ github.event.inputs.version }}"
+          git push origin $BRANCH_NAME
+
+      - name: Create Pull Request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Add Qdrant version ${{ github.event.inputs.version }}"
+          branch: "add-qdrant-version-${{ github.event.inputs.version }}"
+          title: "Add Qdrant version ${{ github.event.inputs.version }}"
+          body: |
+            This PR adds a new Qdrant version ${{ github.event.inputs.version }} with the following details:
+            - **Version:** ${{ github.event.inputs.version }}
+            - **Release Notes:** ${{ github.event.inputs.releaseNotesURL }}
