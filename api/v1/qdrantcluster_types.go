@@ -254,7 +254,7 @@ type QdrantImage struct {
 	PullPolicy *corev1.PullPolicy `json:"pullPolicy,omitempty"`
 	// PullSecretName specifies the pull secret for the Qdrant image.
 	// +optional
-	PullSecretName *string `json:"PullSecretName,omitempty"`
+	PullSecretName *string `json:"pullSecretName,omitempty"`
 }
 
 func (qi *QdrantImage) GetRepository() *string {
