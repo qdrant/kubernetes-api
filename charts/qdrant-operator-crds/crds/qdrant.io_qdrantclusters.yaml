@@ -240,14 +240,14 @@ spec:
               image:
                 description: Image specifies the image to use for each Qdrant node.
                 properties:
-                  PullSecretName:
-                    description: PullSecretName specifies the pull secret for the
-                      Qdrant image.
-                    type: string
                   pullPolicy:
                     description: |-
                       PullPolicy specifies the image pull policy for the Qdrant image.
                       If not specified defaults the config of the operator (or IfNotPresent if not specified in operator).
+                    type: string
+                  pullSecretName:
+                    description: PullSecretName specifies the pull secret for the
+                      Qdrant image.
                     type: string
                   repository:
                     description: |-

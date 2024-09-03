@@ -757,7 +757,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `repository` _string_ | Repository specifies the repository of the Qdrant image.<br />If not specified defaults the config of the operator (or qdrant/qdrant if not specified in operator). |  |  |
 | `pullPolicy` _[PullPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#pullpolicy-v1-core)_ | PullPolicy specifies the image pull policy for the Qdrant image.<br />If not specified defaults the config of the operator (or IfNotPresent if not specified in operator). |  |  |
-| `PullSecretName` _string_ | PullSecretName specifies the pull secret for the Qdrant image. |  |  |
+| `pullSecretName` _string_ | PullSecretName specifies the pull secret for the Qdrant image. |  |  |
 
 
 #### QdrantSecretKeyRef
