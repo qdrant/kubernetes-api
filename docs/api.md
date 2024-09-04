@@ -633,7 +633,7 @@ _Appears in:_
 | `version` _string_ | Version specifies the version of Qdrant to deploy |  |  |
 | `size` _integer_ | Size specifies the desired number of Qdrant nodes in the cluster |  | Maximum: 30 <br />Minimum: 1 <br /> |
 | `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should start a dedicated service for each node. | true |  |
-| `clusterManager` _boolean_ | ClusterManager specifies whether to use the cluster manager for this cluster.<br />The Python-operator will deploy a dedicated cluster manager instance.<br />The Go-operator will use a shared instance. | false |  |
+| `clusterManager` _boolean_ | ClusterManager specifies whether to use the cluster manager for this cluster.<br />The Python-operator will deploy a dedicated cluster manager instance.<br />The Go-operator will use a shared instance.<br />If not set, the default will be taken from the operator config. |  |  |
 | `suspend` _boolean_ | Suspend specifies whether to suspend the cluster.<br />If enabled, the cluster will be suspended and all related resources will be removed except the PVCs. | false |  |
 | `pauses` _[Pause](#pause) array_ | Pauses specifies a list of pause request by developer for manual maintenance.<br />Operator will skip handling any changes in the CR if any pause request is present. |  |  |
 | `distributed` _boolean_ | Deprecated |  |  |

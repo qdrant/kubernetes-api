@@ -51,7 +51,7 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	}
 	// Remove all fields (aka set a fixed value) which shouldn't restart the pod
 	// The list is sorted alphabetically, for easier maintainability
-	cloned.ClusterManager = false
+	cloned.ClusterManager = nil
 	cloned.Distributed = false
 	cloned.Ingress = nil
 	cloned.OperatorVersion = nil

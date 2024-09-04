@@ -811,6 +811,11 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 		*out = new(OperatorVersion)
 		**out = **in
 	}
+	if in.ClusterManager != nil {
+		in, out := &in.ClusterManager, &out.ClusterManager
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Pauses != nil {
 		in, out := &in.Pauses, &out.Pauses
 		*out = make([]Pause, len(*in))
