@@ -94,9 +94,9 @@ type QdrantClusterSpec struct {
 	// ClusterManager specifies whether to use the cluster manager for this cluster.
 	// The Python-operator will deploy a dedicated cluster manager instance.
 	// The Go-operator will use a shared instance.
-	// +kubebuilder:default=false
+	// If not set, the default will be taken from the operator config.
 	// +optional
-	ClusterManager bool `json:"clusterManager,omitempty"`
+	ClusterManager *bool `json:"clusterManager,omitempty"`
 	// Suspend specifies whether to suspend the cluster.
 	// If enabled, the cluster will be suspended and all related resources will be removed except the PVCs.
 	// +kubebuilder:default=false
