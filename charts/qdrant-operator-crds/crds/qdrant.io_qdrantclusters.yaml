@@ -56,11 +56,11 @@ spec:
             description: QdrantClusterSpec defines the desired state of QdrantCluster
             properties:
               clusterManager:
-                default: false
                 description: |-
                   ClusterManager specifies whether to use the cluster manager for this cluster.
                   The Python-operator will deploy a dedicated cluster manager instance.
                   The Go-operator will use a shared instance.
+                  If not set, the default will be taken from the operator config.
                 type: boolean
               config:
                 description: Config specifies the Qdrant configuration setttings for
