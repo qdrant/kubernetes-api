@@ -514,7 +514,7 @@ const (
 type Ingress struct {
 	// Enabled specifies whether to enable ingress for the cluster or not.
 	// +optional
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 	// Annotations specifies annotations for the ingress.
 	// +optional
 	Annotations map[string]string `json:"annotations,omitempty"`
