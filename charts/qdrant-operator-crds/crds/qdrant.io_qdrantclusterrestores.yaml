@@ -64,13 +64,6 @@ spec:
                 - name
                 - namespace
                 type: object
-              operatorVersion:
-                default: V1
-                description: The version of the operator which reconciles this instance
-                enum:
-                - V1
-                - V2
-                type: string
               source:
                 description: Source defines the source snapshot from which the restore
                   will be done

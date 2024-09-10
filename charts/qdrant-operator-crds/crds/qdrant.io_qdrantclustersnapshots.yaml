@@ -65,13 +65,6 @@ spec:
                   epoch format)
                 format: int64
                 type: integer
-              operatorVersion:
-                default: V1
-                description: The version of the operator which reconciles this instance
-                enum:
-                - V1
-                - V2
-                type: string
               retention:
                 description: |-
                   The retention period of this snapshot in hours, if any.

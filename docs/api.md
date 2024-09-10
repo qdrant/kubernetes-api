@@ -299,22 +299,6 @@ _Appears in:_
 
 
 
-#### OperatorVersion
-
-_Underlying type:_ _string_
-
-
-
-
-
-_Appears in:_
-- [QdrantClusterRestoreSpec](#qdrantclusterrestorespec)
-- [QdrantClusterScheduledSnapshotSpec](#qdrantclusterscheduledsnapshotspec)
-- [QdrantClusterSnapshotSpec](#qdrantclustersnapshotspec)
-- [QdrantClusterSpec](#qdrantclusterspec)
-
-
-
 #### Pause
 
 
@@ -477,7 +461,6 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `operatorVersion` _[OperatorVersion](#operatorversion)_ | The version of the operator which reconciles this instance | V1 | Enum: [V1 V2] <br /> |
 | `source` _[RestoreSource](#restoresource)_ | Source defines the source snapshot from which the restore will be done |  |  |
 | `destination` _[RestoreDestination](#restoredestination)_ | Destination defines the destination cluster where the source data will end up |  |  |
 
@@ -534,7 +517,6 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `operatorVersion` _[OperatorVersion](#operatorversion)_ | The version of the operator which reconciles this instance | V1 | Enum: [V1 V2] <br /> |
 | `cluster-id` _string_ | Id specifies the unique identifier of the cluster |  |  |
 | `scheduleShortId` _string_ | Specifies short Id which identifies a schedule |  | MaxLength: 8 <br /> |
 | `schedule` _string_ | Cron expression for frequency of creating snapshots, see https://en.wikipedia.org/wiki/Cron.<br />The schedule is specified in UTC. |  | Pattern: `^(@(annually|yearly|monthly|weekly|daily|hourly|reboot))|(@every (\d+(ns|us|µs|ms|s|m|h))+)|((((\d+,)+\d+|([\d\*]+(\/|-)\d+)|\d+|\*) ?){5,7})$` <br /> |
@@ -606,7 +588,6 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `operatorVersion` _[OperatorVersion](#operatorversion)_ | The version of the operator which reconciles this instance | V1 | Enum: [V1 V2] <br /> |
 | `cluster-id` _string_ | The cluster ID for which a Snapshot need to be taken<br />The cluster should be in the same namespace as this QdrantClusterSnapshot is located |  |  |
 | `creation-timestamp` _integer_ | The CreationTimestamp of the backup (expressed in Unix epoch format) |  |  |
 | `scheduleShortId` _string_ | Specifies the short Id which identifies a schedule, if any.<br />This field should not be set if the backup is made manually. |  | MaxLength: 8 <br /> |
@@ -628,7 +609,6 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `operatorVersion` _[OperatorVersion](#operatorversion)_ | The version of the operator which reconciles this instance | V1 | Enum: [V1 V2] <br /> |
 | `id` _string_ | Id specifies the unique identifier of the cluster |  |  |
 | `version` _string_ | Version specifies the version of Qdrant to deploy |  |  |
 | `size` _integer_ | Size specifies the desired number of Qdrant nodes in the cluster |  | Maximum: 30 <br />Minimum: 1 <br /> |
