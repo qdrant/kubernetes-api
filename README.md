@@ -1,4 +1,4 @@
-# Qdrant operator API
+# Qdrant Kubernetes API
 
 This repository holds the API definitions and documentation for the Qdrant Kubernetes operator.
 
