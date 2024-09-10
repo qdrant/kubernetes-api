@@ -324,13 +324,6 @@ spec:
                 description: NodeSelector specifies the node selector for each Qdrant
                   node.
                 type: object
-              operatorVersion:
-                default: V1
-                description: The version of the operator which reconciles this instance
-                enum:
-                - V1
-                - V2
-                type: string
               pauses:
                 description: |-
                   Pauses specifies a list of pause request by developer for manual maintenance.

@@ -9,22 +9,10 @@ const (
 
 // QdrantClusterRestoreSpec defines the desired state of QdrantClusterRestore
 type QdrantClusterRestoreSpec struct {
-	// The version of the operator which reconciles this instance
-	// +kubebuilder:validation:Enum=V1;V2
-	// +kubebuilder:default=V1
-	// +optional
-	OperatorVersion *OperatorVersion `json:"operatorVersion,omitempty"`
 	// Source defines the source snapshot from which the restore will be done
 	Source RestoreSource `json:"source"`
 	// Destination defines the destination cluster where the source data will end up
 	Destination RestoreDestination `json:"destination"`
-}
-
-func (s QdrantClusterRestoreSpec) GetOperatorVersion() OperatorVersion {
-	if s.OperatorVersion == nil {
-		return OperatorV1
-	}
-	return *s.OperatorVersion
 }
 
 type RestoreSource struct {

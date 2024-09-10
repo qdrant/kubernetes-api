@@ -66,13 +66,6 @@ spec:
               cluster-id:
                 description: Id specifies the unique identifier of the cluster
                 type: string
-              operatorVersion:
-                default: V1
-                description: The version of the operator which reconciles this instance
-                enum:
-                - V1
-                - V2
-                type: string
               retention:
                 description: Retention of schedule in hours
                 pattern: ^[0-9]+h$
