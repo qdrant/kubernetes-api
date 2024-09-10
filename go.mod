@@ -1,4 +1,4 @@
-module github.com/qdrant/operator-api
+module github.com/qdrant/kubernetes-api
 
 go 1.22.2
 
