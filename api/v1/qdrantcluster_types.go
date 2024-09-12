@@ -688,6 +688,10 @@ type QdrantClusterStatus struct {
 	// AvailableNodes specifies the number of available nodes in the cluster
 	// +optional
 	AvailableNodes int `json:"availableNodes,omitempty"`
+	// AvailableNodeIndexes specifies the indexes of the individual nodes in the cluster
+	// The number of indexes should be equal with the AvailableNodes field.
+	// +optional
+	AvailableNodeIndexes []int `json:"availableNodeIndexes,omitempty"`
 	// BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
 	// Should be 0...n-1 (default = 0)
 	// +optional
