@@ -8,11 +8,6 @@ const (
 )
 
 type QdrantClusterSnapshotSpec struct {
-	// The version of the operator which reconciles this instance
-	// +kubebuilder:validation:Enum=V1;V2
-	// +kubebuilder:default=V1
-	// +optional
-	OperatorVersion *OperatorVersion `json:"operatorVersion,omitempty"`
 	// The cluster ID for which a Snapshot need to be taken
 	// The cluster should be in the same namespace as this QdrantClusterSnapshot is located
 	ClusterId string `json:"cluster-id"`
@@ -29,13 +24,6 @@ type QdrantClusterSnapshotSpec struct {
 	// +kubebuilder:validation:Pattern=^[0-9]+h$
 	// +optional
 	Retention *string `json:"retention,omitempty"`
-}
-
-func (s QdrantClusterSnapshotSpec) GetOperatorVersion() OperatorVersion {
-	if s.OperatorVersion == nil {
-		return OperatorV1
-	}
-	return *s.OperatorVersion
 }
 
 type QdrantClusterSnapshotPhase string

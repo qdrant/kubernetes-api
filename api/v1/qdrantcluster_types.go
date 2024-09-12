@@ -14,15 +14,6 @@ const (
 	ResourceQdrantCluster = "qdrantclusters"
 )
 
-type OperatorVersion string
-
-const (
-	// The operator written in Python
-	OperatorV1 OperatorVersion = "V1"
-	// The operator written in Go
-	OperatorV2 OperatorVersion = "V2"
-)
-
 const (
 	// The Annotation key to trigger a restart.
 	RestartedAtAnnotationKey = "restartedAt"
@@ -54,7 +45,6 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	cloned.ClusterManager = nil
 	cloned.Distributed = false
 	cloned.Ingress = nil
-	cloned.OperatorVersion = nil
 	cloned.Pauses = nil
 	cloned.Resources.Storage = ""
 	cloned.Service = nil
@@ -74,11 +64,6 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 // QdrantClusterSpec defines the desired state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterSpec struct {
-	// The version of the operator which reconciles this instance
-	// +kubebuilder:validation:Enum=V1;V2
-	// +kubebuilder:default=V1
-	// +optional
-	OperatorVersion *OperatorVersion `json:"operatorVersion,omitempty"`
 	// Id specifies the unique identifier of the cluster
 	Id string `json:"id"`
 	// Version specifies the version of Qdrant to deploy
@@ -144,13 +129,6 @@ type QdrantClusterSpec struct {
 	// PodDisruptionBudget specifies the pod disruption budget for the cluster.
 	// +optional
 	PodDisruptionBudget *policyv1.PodDisruptionBudgetSpec `json:"podDisruptionBudget,omitempty"`
-}
-
-func (s QdrantClusterSpec) GetOperatorVersion() OperatorVersion {
-	if s.OperatorVersion == nil {
-		return OperatorV1
-	}
-	return *s.OperatorVersion
 }
 
 // Validates if there are incorrect settings in the CRD

@@ -9,11 +9,6 @@ const (
 
 // QdrantClusterScheduledSnapshotSpec defines the desired state of QdrantCluster
 type QdrantClusterScheduledSnapshotSpec struct {
-	// The version of the operator which reconciles this instance
-	// +kubebuilder:validation:Enum=V1;V2
-	// +kubebuilder:default=V1
-	// +optional
-	OperatorVersion *OperatorVersion `json:"operatorVersion,omitempty"`
 	// Id specifies the unique identifier of the cluster
 	ClusterId string `json:"cluster-id"`
 	// Specifies short Id which identifies a schedule
@@ -26,13 +21,6 @@ type QdrantClusterScheduledSnapshotSpec struct {
 	// Retention of schedule in hours
 	// +kubebuilder:validation:Pattern=^[0-9]+h$
 	Retention string `json:"retention"`
-}
-
-func (s QdrantClusterScheduledSnapshotSpec) GetOperatorVersion() OperatorVersion {
-	if s.OperatorVersion == nil {
-		return OperatorV1
-	}
-	return *s.OperatorVersion
 }
 
 type ScheduledSnapshotPhase string
