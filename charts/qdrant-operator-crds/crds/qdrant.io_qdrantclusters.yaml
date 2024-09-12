@@ -914,6 +914,13 @@ spec:
           status:
             description: QdrantClusterStatus defines the observed state of QdrantCluster
             properties:
+              availableNodeIndexes:
+                description: |-
+                  AvailableNodeIndexes specifies the indexes of the individual nodes in the cluster
+                  The number of indexes should be equal with the AvailableNodes field.
+                items:
+                  type: integer
+                type: array
               availableNodes:
                 description: AvailableNodes specifies the number of available nodes
                   in the cluster

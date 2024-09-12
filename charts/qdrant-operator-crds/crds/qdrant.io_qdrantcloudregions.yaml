@@ -122,6 +122,11 @@ spec:
                                       maxLength: 2048
                                       minLength: 1
                                       type: string
+                                    ignoreMissingValuesFiles:
+                                      description: IgnoreMissingValuesFiles controls
+                                        whether to silently ignore missing values
+                                        files rather than failing.
+                                      type: boolean
                                     interval:
                                       description: |-
                                         Interval at which to check the v1.Source for updates. Defaults to
@@ -198,6 +203,7 @@ spec:
                                             used to sign the OCI Helm chart.
                                           enum:
                                           - cosign
+                                          - notation
                                           type: string
                                         secretRef:
                                           description: |-
@@ -225,6 +231,39 @@ spec:
                                   type: object
                               required:
                               - spec
+                              type: object
+                            chartRef:
+                              description: |-
+                                ChartRef holds a reference to a source controller resource containing the
+                                Helm chart artifact.
+
+                                Note: this field is provisional to the v2 API, and not actively used
+                                by v2beta2 HelmReleases.
+                              properties:
+                                apiVersion:
+                                  description: APIVersion of the referent.
+                                  type: string
+                                kind:
+                                  description: Kind of the referent.
+                                  enum:
+                                  - OCIRepository
+                                  - HelmChart
+                                  type: string
+                                name:
+                                  description: Name of the referent.
+                                  maxLength: 253
+                                  minLength: 1
+                                  type: string
+                                namespace:
+                                  description: |-
+                                    Namespace of the referent, defaults to the namespace of the Kubernetes
+                                    resource object that contains the reference.
+                                  maxLength: 63
+                                  minLength: 1
+                                  type: string
+                              required:
+                              - kind
+                              - name
                               type: object
                             dependsOn:
                               description: |-
@@ -1007,9 +1046,12 @@ spec:
                                 type: object
                               type: array
                           required:
-                          - chart
                           - interval
                           type: object
+                          x-kubernetes-validations:
+                          - message: either chart or chartRef must be set
+                            rule: (has(self.chart) && !has(self.chartRef)) || (!has(self.chart)
+                              && has(self.chartRef))
                         status:
                           default:
                             observedGeneration: -1
@@ -1102,6 +1144,10 @@ spec:
                                       Provisional: when the calculation method of the Digest field is changed,
                                       this field will be used to distinguish between the old and new methods.
                                     type: string
+                                  appVersion:
+                                    description: AppVersion is the chart app version
+                                      of the release object in storage.
+                                    type: string
                                   chartName:
                                     description: ChartName is the chart name of the
                                       release object in storage.
@@ -1142,6 +1188,10 @@ spec:
                                   namespace:
                                     description: Namespace is the namespace the release
                                       is deployed to.
+                                    type: string
+                                  ociDigest:
+                                    description: OCIDigest is the digest of the OCI
+                                      artifact associated with the release.
                                     type: string
                                   status:
                                     description: Status is the current state of the
@@ -1223,7 +1273,13 @@ spec:
                             lastAttemptedRevision:
                               description: |-
                                 LastAttemptedRevision is the Source revision of the last reconciliation
-                                attempt.
+                                attempt. For OCIRepository  sources, the 12 first characters of the digest are
+                                appended to the chart version e.g. "1.2.3+1234567890ab".
+                              type: string
+                            lastAttemptedRevisionDigest:
+                              description: |-
+                                LastAttemptedRevisionDigest is the digest of the last reconciliation attempt.
+                                This is only set for OCIRepository sources.
                               type: string
                             lastAttemptedValuesChecksum:
                               description: |-
@@ -1257,6 +1313,11 @@ spec:
                                 generation.
                               format: int64
                               type: integer
+                            observedPostRenderersDigest:
+                              description: |-
+                                ObservedPostRenderersDigest is the digest for the post-renderers of
+                                the last successful reconciliation attempt.
+                              type: string
                             storageNamespace:
                               description: |-
                                 StorageNamespace is the namespace of the Helm release storage for the
