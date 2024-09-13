@@ -29,6 +29,7 @@ const (
 	// The node index should be one of the values specified in .Status.AvailableNodeIndexes.
 	// If a none existing node index is provided, the operator will remove the annotation (with a warning in the log).
 	// Once the operator has replaced the node it will remove the annotation.
+	// This feature requires that the cluster-manager is enabled.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
 
