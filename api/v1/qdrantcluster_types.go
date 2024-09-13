@@ -27,6 +27,7 @@ const (
 	// Once the operator has replaced the node it will remove the annotation.
 	// If a not existing node index is provided, the operator will remove the annotation (with a warning in the log).
 	// The annotation should be placed on the QdrantCluster instance.
+	// Multiple annotations can be added, the operator will handle them all.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
 
