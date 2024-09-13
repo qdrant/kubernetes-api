@@ -15,8 +15,16 @@ const (
 )
 
 const (
-	// The Annotation key to trigger a restart.
+	// The annotation key to trigger a restart.
+	// The value should be a [RFC3339 formatted] date.
+	// If the value is updated it will  retrigger the restart.
+	// For historical reasons the key doesn't start with `operator.qdrant.com/`
+	// The annotation should be placed on the QdrantCluster instance.
 	RestartedAtAnnotationKey = "restartedAt"
+	// The annotation key to recreate a certain node.
+	// The value should contain the node index (e.g. "3").
+	// The annotation should be placed on the QdrantCluster instance.
+	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
 
 // GetQdrantClusterCrdForHash creates a QdrantCluster for the use of creating a hash for the provided QdrantCluster,
