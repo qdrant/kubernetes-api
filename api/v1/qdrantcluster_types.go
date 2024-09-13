@@ -15,14 +15,17 @@ const (
 )
 
 const (
-	// The annotation key to trigger a restart.
+	// RestartedAtAnnotationKey is the annotation key to trigger a restart.
 	// The value should be a [RFC3339 formatted] date.
 	// If the value is updated it will  retrigger the restart.
 	// For historical reasons the key doesn't start with `operator.qdrant.com/`
 	// The annotation should be placed on the QdrantCluster instance.
 	RestartedAtAnnotationKey = "restartedAt"
-	// The annotation key to recreate a certain node.
-	// The value should contain the node index (e.g. "3").
+	// RecreateNodeAnnotationKey is the annotation key to recreate a certain node.
+	// The value should contain the node index to be replaced (e.g. "3").
+	// The node index should be one of the values specified in .Status.AvailableNodeIndexes.
+	// Once the operator has replaced the node it will remove the annotation.
+	// If a not existing node index is provided, the operator will remove the annotation (with a warning in the log).
 	// The annotation should be placed on the QdrantCluster instance.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
