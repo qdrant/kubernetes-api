@@ -17,7 +17,7 @@ const (
 const (
 	// RestartedAtAnnotationKey is the annotation key to trigger a restart.
 	// The value should be a [RFC3339 formatted] date.
-	// If the value is updated it will  retrigger the restart.
+	// If the value is updated it will retrigger the restart.
 	// The operator will not remove the annotation once restarted.
 	// For historical reasons the key doesn't start with `operator.qdrant.com/`
 	// The annotation should be placed on the QdrantCluster instance.
