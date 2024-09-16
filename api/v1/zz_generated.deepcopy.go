@@ -887,6 +887,11 @@ func (in *QdrantClusterStatus) DeepCopyInto(out *QdrantClusterStatus) {
 		*out = make([]int, len(*in))
 		copy(*out, *in)
 	}
+	if in.ScaleDownNodeIndex != nil {
+		in, out := &in.ScaleDownNodeIndex, &out.ScaleDownNodeIndex
+		*out = new(int)
+		**out = **in
+	}
 	if in.Conditions != nil {
 		in, out := &in.Conditions, &out.Conditions
 		*out = make([]metav1.Condition, len(*in))
