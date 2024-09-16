@@ -914,6 +914,11 @@ spec:
           status:
             description: QdrantClusterStatus defines the observed state of QdrantCluster
             properties:
+              ScaleDownNodeIndex:
+                description: |-
+                  The node index used in a scale down (see ScaleDownAllowed)
+                  If this field is not set the last index in AvailableNodeIndexes will be used.
+                type: integer
               availableNodeIndexes:
                 description: |-
                   AvailableNodeIndexes specifies the indexes of the individual nodes in the cluster
@@ -928,7 +933,8 @@ spec:
               bootstrapNode:
                 description: |-
                   BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
-                  Should be 0...n-1 (default = 0)
+                  Should be a value from AvailableNodeIndexes.
+                  As default the value from AvailableNodeIndexes[0] will be used.
                 type: integer
               conditions:
                 description: Conditions specifies the conditions of different checks
@@ -1015,8 +1021,9 @@ spec:
                 description: Nodes specifies the status of the nodes in the cluster
                 type: object
               operations:
-                description: Operations tracks list of recent operation on the cluster.
-                  Operator uses this field to track the progress of an operation.
+                description: |-
+                  Operations tracks list of recent operation on the cluster. Operator uses this field to track the progress of an operation.
+                  In operator V2 this field is deprecated and Kubernetes events are used instead.
                 items:
                   properties:
                     completionTime:

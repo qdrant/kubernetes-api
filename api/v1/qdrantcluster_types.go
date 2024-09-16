@@ -24,7 +24,7 @@ const (
 	// RecreateNodeAnnotationKey is the annotation key to recreate a certain node.
 	// The annotation should be placed on the pod created by the operator (for the node that need to be recreated).
 	// It is allowed to add this annotation to multiple pods, the operator will handle them all.
-	// The value should be 'true'
+	// The value is free to use, and will be used in Events.
 	// This feature requires that the cluster-manager is enabled.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
@@ -703,17 +703,22 @@ type QdrantClusterStatus struct {
 	// +optional
 	AvailableNodeIndexes []int `json:"availableNodeIndexes,omitempty"`
 	// BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
-	// Should be 0...n-1 (default = 0)
+	// Should be a value from AvailableNodeIndexes.
+	// As default the value from AvailableNodeIndexes[0] will be used.
 	// +optional
 	BootstrapNode int `json:"bootstrapNode,omitempty"`
 	// If set the operator will scale down 1 peer and reset the bool.
 	// If you want to remove more then 1 peer, you need to repeat setting this bool
 	// +optional
 	ScaleDownAllowed bool `json:"scaleDownAllowed,omitempty"`
+	// The node index used in a scale down (see ScaleDownAllowed)
+	// If this field is not set the last index in AvailableNodeIndexes will be used.
+	ScaleDownNodeIndex *int `json:"ScaleDownNodeIndex,omitempty"`
 	// Conditions specifies the conditions of different checks on the cluster
 	// +optional
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 	// Operations tracks list of recent operation on the cluster. Operator uses this field to track the progress of an operation.
+	// In operator V2 this field is deprecated and Kubernetes events are used instead.
 	// +optional
 	Operations []Operation `json:"operations,omitempty"`
 	// Nodes specifies the status of the nodes in the cluster
