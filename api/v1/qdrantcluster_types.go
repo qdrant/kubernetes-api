@@ -19,16 +19,12 @@ const (
 	// The annotation should be placed on the QdrantCluster instance.
 	// The value should be a [RFC3339 formatted] date.
 	// If the value is updated it will retrigger the restart.
-	// The operator will not remove the annotation once restarted.
 	// For historical reasons the key doesn't start with `operator.qdrant.com/`
 	RestartedAtAnnotationKey = "restartedAt"
 	// RecreateNodeAnnotationKey is the annotation key to recreate a certain node.
-	// The annotation should be placed on the QdrantCluster instance.
-	// Multiple annotations can be added, the operator will handle them all.
-	// The value should contain the node index to be replaced (e.g. "3").
-	// The node index should be one of the values specified in .Status.AvailableNodeIndexes.
-	// If a none existing node index is provided, the operator will remove the annotation (with a warning in the log).
-	// Once the operator has replaced the node it will remove the annotation.
+	// The annotation should be placed on the pod created by the operator (for the node that need to be recreated).
+	// It is allowed to add this annotation to multiple pods, the operator will handle them all.
+	// The value should be 'true'
 	// This feature requires that the cluster-manager is enabled.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
