@@ -24,7 +24,7 @@ const (
 	// RecreateNodeAnnotationKey is the annotation key to recreate a certain node.
 	// The annotation should be placed on the pod created by the operator (for the node that need to be recreated).
 	// It is allowed to add this annotation to multiple pods, the operator will handle them all.
-	// The value is free to use, and will be used in Events.
+	// The value should be non-empty, but is free to use, and will be used in Events.
 	// This feature requires that the cluster-manager is enabled.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
