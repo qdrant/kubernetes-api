@@ -20,8 +20,8 @@ gen: manifests generate format vet ## Generate code containing DeepCopy, DeepCop
 
 .PHONY: manifests
 manifests: controller-gen ## Generate CustomResourceDefinition objects.
-	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/qdrant-operator-crds/crds
-	cp charts/qdrant-operator-crds/crds/qdrant.io_qdrantversions.yaml charts/qdrant-operator-crds/crds-for-cluster-api/qdrant.io_qdrantversions.yaml
+	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/qdrant-operator-crds/templates/crds
+	cp charts/qdrant-operator-crds/templates/crds/qdrant.io_qdrantversions.yaml charts/qdrant-operator-crds/templates/crds-for-cluster-api/qdrant.io_qdrantversions.yaml
 
 .PHONY: generate
 generate: controller-gen crd-ref-docs ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
