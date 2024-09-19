@@ -1,0 +1,2 @@
+# Include qdrantversions.qdrant.io CRD
+includeQdrantVersionsCRD: false
