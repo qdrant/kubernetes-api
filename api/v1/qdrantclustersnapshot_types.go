@@ -56,6 +56,9 @@ type VolumeSnapshotInfo struct {
 	// ReadyToUse indicates if the volume snapshot is ready to use
 	// +optional
 	ReadyToUse bool `json:"readyToUse"`
+	// SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider
+	// +optional
+	SnapshotHandle string `json:"snapshotHandle,omitempty"`
 }
 
 // +kubebuilder:object:root=true

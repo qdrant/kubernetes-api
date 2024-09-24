@@ -103,6 +103,10 @@ spec:
                       description: ReadyToUse indicates if the volume snapshot is
                         ready to use
                       type: boolean
+                    snapshotHandle:
+                      description: SnapshotHandle is the identifier of the volume
+                        snapshot in the respective cloud provider
+                      type: string
                     volumeName:
                       description: VolumeName is the name of the volume that was backed
                         up

@@ -1024,5 +1024,6 @@ _Appears in:_
 | `volumeSnapshotName` _string_ | VolumeSnapshotName is the name of the volume snapshot |  |  |
 | `volumeName` _string_ | VolumeName is the name of the volume that was backed up |  |  |
 | `readyToUse` _boolean_ | ReadyToUse indicates if the volume snapshot is ready to use |  |  |
+| `snapshotHandle` _string_ | SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider |  |  |
 
 
