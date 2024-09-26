@@ -31,3 +31,12 @@ jobs:
         with:
           version: v1.59.1 # Specify the golangci-lint version, so we are stable
           args: --timeout 10m # Increase the timeout to 10 minutes
+
+      - name: Run make gen
+        run: |
+          make gen
+
+      - name: Ensure that make gen did not result in changes
+        uses: CatChen/check-git-status-action@v1
+        with:
+          fail-if-not-clean: true

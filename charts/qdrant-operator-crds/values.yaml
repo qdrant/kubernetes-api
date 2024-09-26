@@ -1,0 +1,4 @@
+# Include management-crds in the deployment
+includeManagementCRDs: false
+# Include region-crds in the deployment
+includeRegionCRDs: true

@@ -20,8 +20,20 @@ gen: manifests generate format vet ## Generate code containing DeepCopy, DeepCop
 
 .PHONY: manifests
 manifests: controller-gen ## Generate CustomResourceDefinition objects.
-	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/qdrant-operator-crds/crds
-	cp charts/qdrant-operator-crds/crds/qdrant.io_qdrantversions.yaml charts/qdrant-operator-crds/crds-for-cluster-api/qdrant.io_qdrantversions.yaml
+	rm charts/qdrant-operator-crds/templates/management-crds/*.yaml
+	rm charts/qdrant-operator-crds/templates/region-crds/*.yaml
+	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/qdrant-operator-crds/templates
+	mv charts/qdrant-operator-crds/templates/qdrant.io_qdrantversions.yaml charts/qdrant-operator-crds/templates/management-crds/
+	mv charts/qdrant-operator-crds/templates/qdrant*.yaml charts/qdrant-operator-crds/templates/region-crds/
+	for file in charts/qdrant-operator-crds/templates/management-crds/*.yaml; do \
+		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
+		echo "{{ end }}" >> $$file; \
+	done
+	for file in charts/qdrant-operator-crds/templates/region-crds/*.yaml; do \
+		echo "{{ if .Values.includeRegionCRDs }}" | cat - $$file > temp && mv temp $$file; \
+		echo "{{ end }}" >> $$file; \
+	done
+	helm lint charts/qdrant-operator-crds
 
 .PHONY: generate
 generate: controller-gen crd-ref-docs ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
