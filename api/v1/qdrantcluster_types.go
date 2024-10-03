@@ -377,6 +377,27 @@ type QdrantConfiguration struct {
 	// TLS specifies the TLS configuration for Qdrant.
 	// +optional
 	TLS *QdrantConfigurationTLS `json:"tls,omitempty"`
+	// Storage specifies the storage configuration for Qdrant.
+	// +optional
+	Storage *StorageConfig `json:"storage,omitempty"`
+}
+
+type StorageConfig struct {
+	// AsyncScorer enables io_uring when rescoring
+	// +optional
+	AsyncScorer *bool `json:"asyncScorer,omitempty"`
+	// Performance configuration
+	// +optional
+	Performance *StoragePerformanceConfig `json:"performance,omitempty"`
+}
+
+type StoragePerformanceConfig struct {
+	// OptimizerCPUBudget defines the number of CPU allocation.
+	// If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size
+	// If negative - subtract this number of CPUs from the available CPUs.
+	// If positive - use this exact number of CPUs.
+	// +optional
+	OptimizerCPUBudget *int64 `json:"optimizerCPUBudget,omitempty"`
 }
 
 func (c *QdrantConfiguration) GetService() *QdrantConfigurationService {
