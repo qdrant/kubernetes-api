@@ -1706,6 +1706,10 @@ spec:
                   - name
                   type: object
                 type: array
+              k8sDistribution:
+                description: KubernetesDistribution specifies the distribution of
+                  the Kubernetes cluster
+                type: string
               k8sVersion:
                 description: KubernetesVersion specifies the version of the Kubernetes
                   cluster
