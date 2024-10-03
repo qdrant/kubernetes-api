@@ -650,6 +650,7 @@ _Appears in:_
 | `log_level` _string_ | LogLevel specifies the log level for Qdrant. |  |  |
 | `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  |  |
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
+| `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
 
 
 #### QdrantConfigurationCollection
@@ -1027,3 +1028,34 @@ _Appears in:_
 | `snapshotHandle` _string_ | SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider |  |  |
 
 
+#### Storage
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantConfiguration](#qdrantconfiguration)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `asyncScorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
+| `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  |  |
+
+
+#### StoragePerformanceConfig
+
+
+
+
+
+
+
+_Appears in:_
+- [Storage](#storage)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `optimizerCPUBudget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation. |  |  |
