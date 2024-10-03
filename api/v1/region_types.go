@@ -71,9 +71,6 @@ type QdrantCloudRegionStatus struct {
 	// Message specifies the info explaining the current phase of the region
 	// +optional
 	Message string `json:"message,omitempty"`
-	// KubernetesDistribution specifies the distribution of the Kubernetes cluster
-	// +optional
-	KubernetesDistribution KubernetesDistribution `json:"k8sDistribution,omitempty"`
 }
 
 type RegionCapabilities struct {
