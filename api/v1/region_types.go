@@ -71,6 +71,9 @@ type QdrantCloudRegionStatus struct {
 	// Message specifies the info explaining the current phase of the region
 	// +optional
 	Message string `json:"message,omitempty"`
+	// KubernetesDistribution specifies the distribution of the Kubernetes cluster
+	// +optional
+	KubernetesDistribution KubernetesDistribution `json:"k8sDistribution,omitempty"`
 }
 
 type RegionCapabilities struct {
@@ -81,6 +84,24 @@ type RegionCapabilities struct {
 	// +optional
 	VolumeExpansion *bool `json:"volumeExpansion,omitempty"`
 }
+
+type KubernetesDistribution string
+
+const (
+	K8sDistributionUnknown   KubernetesDistribution = "unknown"
+	K8sDistributionAWS       KubernetesDistribution = "aws"
+	K8sDistributionGCP       KubernetesDistribution = "gcp"
+	K8sDistributionAzure     KubernetesDistribution = "azure"
+	K8sDistributionDO        KubernetesDistribution = "do"
+	K8sDistributionScaleway  KubernetesDistribution = "scaleway"
+	K8sDistributionOpenShift KubernetesDistribution = "openshift"
+	K8sDistributionLinode    KubernetesDistribution = "linode"
+	K8sDistributionCivo      KubernetesDistribution = "civo"
+	K8sDistributionOCI       KubernetesDistribution = "oci"
+	K8sDistributionOVHCloud  KubernetesDistribution = "ovhcloud"
+	K8sDistributionStackit   KubernetesDistribution = "stackit"
+	K8sDistributionVultr     KubernetesDistribution = "vultr"
+)
 
 type ComponentPhase string
 
