@@ -167,6 +167,25 @@ spec:
                             x-kubernetes-map-type: atomic
                         type: object
                     type: object
+                  storage:
+                    description: Storage specifies the storage configuration for Qdrant.
+                    properties:
+                      asyncScorer:
+                        description: AsyncScorer enables io_uring when rescoring
+                        type: boolean
+                      performance:
+                        description: Performance configuration
+                        properties:
+                          optimizerCPUBudget:
+                            description: |-
+                              OptimizerCPUBudget defines the number of CPU allocation.
+                              If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size
+                              If negative - subtract this number of CPUs from the available CPUs.
+                              If positive - use this exact number of CPUs.
+                            format: int64
+                            type: integer
+                        type: object
+                    type: object
                   tls:
                     description: TLS specifies the TLS configuration for Qdrant.
                     properties:

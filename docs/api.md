@@ -143,6 +143,19 @@ _Appears in:_
 
 
 
+#### KubernetesDistribution
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+
+
 #### KubernetesPod
 
 
@@ -650,6 +663,7 @@ _Appears in:_
 | `log_level` _string_ | LogLevel specifies the log level for Qdrant. |  |  |
 | `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  |  |
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
+| `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
 
 
 #### QdrantConfigurationCollection
@@ -990,6 +1004,39 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `db` _string_ | DB specifies the storage class name for db volume. |  |  |
 | `snapshots` _string_ | Snapshots specifies the storage class name for snapshots volume. |  |  |
+
+
+#### StorageConfig
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantConfiguration](#qdrantconfiguration)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `asyncScorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
+| `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  |  |
+
+
+#### StoragePerformanceConfig
+
+
+
+
+
+
+
+_Appears in:_
+- [StorageConfig](#storageconfig)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `optimizerCPUBudget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  |  |
 
 
 #### TraefikConfig
