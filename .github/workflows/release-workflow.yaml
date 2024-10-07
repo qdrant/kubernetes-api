@@ -27,7 +27,7 @@ jobs:
           echo "commit_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.6.0
+        uses: sigstore/cosign-installer@v3.7.0
 
       - name: Login to registry.cloud.qdrant.io
         uses: docker/login-action@v3
