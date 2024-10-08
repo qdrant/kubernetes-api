@@ -5,36 +5,36 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: qdrantversions.qdrant.io
+  name: qdrantreleases.qdrant.io
 spec:
   group: qdrant.io
   names:
-    kind: QdrantVersion
-    listKind: QdrantVersionList
-    plural: qdrantversions
+    kind: QdrantRelease
+    listKind: QdrantReleaseList
+    plural: qdrantreleases
     shortNames:
-    - qv
-    - qvs
-    singular: qdrantversions
+    - qr
+    - qrs
+    singular: qdrantrelease
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.version
       name: Version
       type: string
-    - jsonPath: .spec.isDefault
-      name: IsDefault
+    - jsonPath: .spec.default
+      name: Default
       type: boolean
     - jsonPath: .spec.unavailable
       name: Unavailable
       type: boolean
-    - jsonPath: .metadata.isEndOfLife
-      name: IsEndOfLife
+    - jsonPath: .spec.endOfLife
+      name: EndOfLife
       type: boolean
     name: v1
     schema:
       openAPIV3Schema:
-        description: QdrantVersion is the Schema for the qdrantversions API
+        description: QdrantRelease describes an available Qdrant release
         properties:
           apiVersion:
             description: |-
@@ -54,7 +54,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: QdrantVersionSpec defines the desired state of QdrantVersion
+            description: QdrantReleaseSpec defines the desired state of QdrantRelease
             properties:
               accountIds:
                 description: If set, this version can only be used by accounts with
@@ -68,21 +68,21 @@ spec:
                 items:
                   type: string
                 type: array
-              image:
-                description: |-
-                  Full docker image to use for this version.
-                  If empty, a default image will be derived from Version (and qdrant/qdrant is assumed).
-                type: string
-              isDefault:
+              default:
                 default: false
                 description: |-
                   If set, this version is default for new clusters on Cloud.
                   There should be only 1 Qdrant version in the platform set as default.
                 type: boolean
-              isEndOfLife:
+              endOfLife:
                 default: false
                 description: If set, this version is no longer actively supported.
                 type: boolean
+              image:
+                description: |-
+                  Full docker image to use for this version.
+                  If empty, a default image will be derived from Version (and qdrant/qdrant is assumed).
+                type: string
               releaseNotesURL:
                 description: Release Notes URL for the specified version
                 type: string
