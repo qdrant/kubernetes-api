@@ -1014,6 +1014,15 @@ spec:
                   - type
                   type: object
                 type: array
+              deleteInProgressNodeIndexes:
+                description: |-
+                  DeleteInProgessNodeIndexes specifies the indexes of the nodes in the cluster which are in progress of deleting and required to be deleted.
+                  The indexes in this field are part of the AvailableNodeIndexes as well and cannot be re-used anymore before they are fully dropped.
+                  Meaning that if the cluster-manager has (async) started the process of deleting nodes, due to a scale-down, there is no way to revert this operaton.
+                  If the cluster want to scale-up concurrently (aka the delete is in progress), new nodes are required to accomplish.
+                items:
+                  type: integer
+                type: array
               nextClusterManagerInvocation:
                 description: The next time to invoke the cluster-manager in UTC
                 format: date-time

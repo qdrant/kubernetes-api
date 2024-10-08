@@ -723,6 +723,12 @@ type QdrantClusterStatus struct {
 	// The number of indexes should be equal with the AvailableNodes field.
 	// +optional
 	AvailableNodeIndexes []int `json:"availableNodeIndexes,omitempty"`
+	// DeleteInProgessNodeIndexes specifies the indexes of the nodes in the cluster which are in progress of deleting and required to be deleted.
+	// The indexes in this field are part of the AvailableNodeIndexes as well and cannot be re-used anymore before they are fully dropped.
+	// Meaning that if the cluster-manager has (async) started the process of deleting nodes, due to a scale-down, there is no way to revert this operaton.
+	// If the cluster want to scale-up concurrently (aka the delete is in progress), new nodes are required to accomplish.
+	// +optional
+	DeleteInProgessNodeIndexes []int `json:"deleteInProgressNodeIndexes,omitempty"`
 	// BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
 	// Should be a value from AvailableNodeIndexes.
 	// As default the value from AvailableNodeIndexes[0] will be used.
