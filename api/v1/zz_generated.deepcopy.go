@@ -887,6 +887,11 @@ func (in *QdrantClusterStatus) DeepCopyInto(out *QdrantClusterStatus) {
 		*out = make([]int, len(*in))
 		copy(*out, *in)
 	}
+	if in.DeleteInProgessNodeIndexes != nil {
+		in, out := &in.DeleteInProgessNodeIndexes, &out.DeleteInProgessNodeIndexes
+		*out = make([]int, len(*in))
+		copy(*out, *in)
+	}
 	if in.ScaleDownNodeIndex != nil {
 		in, out := &in.ScaleDownNodeIndex, &out.ScaleDownNodeIndex
 		*out = new(int)
