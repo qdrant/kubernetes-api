@@ -752,6 +752,9 @@ type QdrantClusterStatus struct {
 	// This version can differ from the spec, because version updates need to be done in order (see `update-path` annotation)
 	// +optional
 	Version string `json:"version,omitempty"`
+	// Storage specifies the storage configuration for Qdrant.
+	// +optional
+	Storage *StorageConfig `json:"storage,omitempty"`
 }
 
 type Operation struct {
