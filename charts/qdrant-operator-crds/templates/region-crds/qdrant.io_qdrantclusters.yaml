@@ -1105,6 +1105,25 @@ spec:
                   If set the operator will scale down 1 peer and reset the bool.
                   If you want to remove more then 1 peer, you need to repeat setting this bool
                 type: boolean
+              storage:
+                description: Storage specifies the storage configuration for Qdrant.
+                properties:
+                  asyncScorer:
+                    description: AsyncScorer enables io_uring when rescoring
+                    type: boolean
+                  performance:
+                    description: Performance configuration
+                    properties:
+                      optimizerCPUBudget:
+                        description: |-
+                          OptimizerCPUBudget defines the number of CPU allocation.
+                          If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size
+                          If negative - subtract this number of CPUs from the available CPUs.
+                          If positive - use this exact number of CPUs.
+                        format: int64
+                        type: integer
+                    type: object
+                type: object
               version:
                 description: |-
                   The version (to be) used in the cluster.

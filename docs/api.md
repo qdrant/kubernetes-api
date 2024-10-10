@@ -1015,6 +1015,7 @@ _Appears in:_
 
 
 _Appears in:_
+- [QdrantClusterStatus](#qdrantclusterstatus)
 - [QdrantConfiguration](#qdrantconfiguration)
 
 | Field | Description | Default | Validation |
