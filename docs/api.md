@@ -19,8 +19,8 @@ Package v1 contains API Schema definitions for the qdrant.io v1 API group
 - [QdrantClusterScheduledSnapshotList](#qdrantclusterscheduledsnapshotlist)
 - [QdrantClusterSnapshot](#qdrantclustersnapshot)
 - [QdrantClusterSnapshotList](#qdrantclustersnapshotlist)
-- [QdrantVersion](#qdrantversion)
-- [QdrantVersionList](#qdrantversionlist)
+- [QdrantRelease](#qdrantrelease)
+- [QdrantReleaseList](#qdrantreleaselist)
 
 
 
@@ -754,6 +754,67 @@ _Appears in:_
 | `pullSecretName` _string_ | PullSecretName specifies the pull secret for the Qdrant image. |  |  |
 
 
+#### QdrantRelease
+
+
+
+QdrantRelease describes an available Qdrant release
+
+
+
+_Appears in:_
+- [QdrantReleaseList](#qdrantreleaselist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantRelease` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[QdrantReleaseSpec](#qdrantreleasespec)_ |  |  |  |
+
+
+#### QdrantReleaseList
+
+
+
+QdrantReleaseList contains a list of QdrantRelease
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantReleaseList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[QdrantRelease](#qdrantrelease) array_ |  |  |  |
+
+
+#### QdrantReleaseSpec
+
+
+
+QdrantReleaseSpec defines the desired state of QdrantRelease
+
+
+
+_Appears in:_
+- [QdrantRelease](#qdrantrelease)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `version` _string_ | Version number (should be semver compliant).<br />E.g. "v1.10.1" |  |  |
+| `default` _boolean_ | If set, this version is default for new clusters on Cloud.<br />There should be only 1 Qdrant version in the platform set as default. | false |  |
+| `image` _string_ | Full docker image to use for this version.<br />If empty, a default image will be derived from Version (and qdrant/qdrant is assumed). |  |  |
+| `unavailable` _boolean_ | If set, this version cannot be used for new clusters. | false |  |
+| `endOfLife` _boolean_ | If set, this version is no longer actively supported. | false |  |
+| `accountIds` _string array_ | If set, this version can only be used by accounts with given IDs. |  |  |
+| `accountPrivileges` _string array_ | If set, this version can only be used by accounts that have been given the listed privileges. |  |  |
+| `remarks` _string_ | General remarks for human reading |  |  |
+| `releaseNotesURL` _string_ | Release Notes URL for the specified version |  |  |
+
+
 #### QdrantSecretKeyRef
 
 
@@ -787,67 +848,6 @@ _Appears in:_
 | `user` _integer_ | User specifies the user to run the Qdrant process as. |  |  |
 | `group` _integer_ | Group specifies the group to run the Qdrant process as. |  |  |
 | `fsGroup` _integer_ | FsGroup specifies file system group to run the Qdrant process as. |  |  |
-
-
-#### QdrantVersion
-
-
-
-QdrantVersion is the Schema for the qdrantversions API
-
-
-
-_Appears in:_
-- [QdrantVersionList](#qdrantversionlist)
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `apiVersion` _string_ | `qdrant.io/v1` | | |
-| `kind` _string_ | `QdrantVersion` | | |
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
-| `spec` _[QdrantVersionSpec](#qdrantversionspec)_ |  |  |  |
-
-
-#### QdrantVersionList
-
-
-
-QdrantVersionList contains a list of QdrantVersion
-
-
-
-
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `apiVersion` _string_ | `qdrant.io/v1` | | |
-| `kind` _string_ | `QdrantVersionList` | | |
-| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
-| `items` _[QdrantVersion](#qdrantversion) array_ |  |  |  |
-
-
-#### QdrantVersionSpec
-
-
-
-QdrantVersionSpec defines the desired state of QdrantVersion
-
-
-
-_Appears in:_
-- [QdrantVersion](#qdrantversion)
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `version` _string_ | Version number (should be semver compliant).<br />E.g. "v1.10.1" |  |  |
-| `isDefault` _boolean_ | If set, this version is default for new clusters on Cloud.<br />There should be only 1 Qdrant version in the platform set as default. | false |  |
-| `image` _string_ | Full docker image to use for this version.<br />If empty, a default image will be derived from Version (and qdrant/qdrant is assumed). |  |  |
-| `unavailable` _boolean_ | If set, this version cannot be used for new clusters. | false |  |
-| `isEndOfLife` _boolean_ | If set, this version is no longer actively supported. | false |  |
-| `accountIds` _string array_ | If set, this version can only be used by accounts with given IDs. |  |  |
-| `accountPrivileges` _string array_ | If set, this version can only be used by accounts that have been given the listed privileges. |  |  |
-| `remarks` _string_ | General remarks for human reading |  |  |
-| `releaseNotesURL` _string_ | Release Notes URL for the specified version |  |  |
 
 
 #### RegionCapabilities

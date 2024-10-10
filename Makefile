@@ -23,7 +23,7 @@ manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	rm charts/qdrant-operator-crds/templates/management-crds/*.yaml
 	rm charts/qdrant-operator-crds/templates/region-crds/*.yaml
 	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/qdrant-operator-crds/templates
-	mv charts/qdrant-operator-crds/templates/qdrant.io_qdrantversions.yaml charts/qdrant-operator-crds/templates/management-crds/
+	mv charts/qdrant-operator-crds/templates/qdrant.io_qdrantreleases.yaml charts/qdrant-operator-crds/templates/management-crds/
 	mv charts/qdrant-operator-crds/templates/qdrant*.yaml charts/qdrant-operator-crds/templates/region-crds/
 	for file in charts/qdrant-operator-crds/templates/management-crds/*.yaml; do \
 		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
