@@ -383,9 +383,6 @@ type QdrantConfiguration struct {
 }
 
 type StorageConfig struct {
-	// AsyncScorer enables io_uring when rescoring
-	// +optional
-	AsyncScorer *bool `json:"asyncScorer,omitempty"`
 	// Performance configuration
 	// +optional
 	Performance *StoragePerformanceConfig `json:"performance,omitempty"`
@@ -398,6 +395,9 @@ type StoragePerformanceConfig struct {
 	// If positive - use this exact number of CPUs.
 	// +optional
 	OptimizerCPUBudget *int64 `json:"optimizerCPUBudget,omitempty"`
+	// AsyncScorer enables io_uring when rescoring
+	// +optional
+	AsyncScorer *bool `json:"asyncScorer,omitempty"`
 }
 
 func (c *QdrantConfiguration) GetService() *QdrantConfigurationService {

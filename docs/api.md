@@ -1019,7 +1019,6 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `asyncScorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
 | `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  |  |
 
 
@@ -1037,6 +1036,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `optimizerCPUBudget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  |  |
+| `asyncScorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
 
 
 #### TraefikConfig
