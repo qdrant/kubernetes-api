@@ -9,10 +9,11 @@ GCI ?= $(LOCALBIN)/gci
 
 CONTROLLER_TOOLS_VERSION ?= v0.16.1
 CRD_REF_DOCS_VERSION ?= v0.0.12
+CHART_DIR ?= charts/qdrant-kubernetes-api
 
 lint:
 	bash -c 'files=$$(gofmt -l .) && echo $$files && [ -z "$$files" ]'
-	helm lint charts/qdrant-operator-crds
+	helm lint $(CHART_DIR)
 	golangci-lint run
 
 .PHONY: gen
@@ -20,20 +21,20 @@ gen: manifests generate format vet ## Generate code containing DeepCopy, DeepCop
 
 .PHONY: manifests
 manifests: controller-gen ## Generate CustomResourceDefinition objects.
-	rm charts/qdrant-operator-crds/templates/management-crds/*.yaml
-	rm charts/qdrant-operator-crds/templates/region-crds/*.yaml
-	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=charts/qdrant-operator-crds/templates
-	mv charts/qdrant-operator-crds/templates/qdrant.io_qdrantreleases.yaml charts/qdrant-operator-crds/templates/management-crds/
-	mv charts/qdrant-operator-crds/templates/qdrant*.yaml charts/qdrant-operator-crds/templates/region-crds/
-	for file in charts/qdrant-operator-crds/templates/management-crds/*.yaml; do \
+	rm $(CHART_DIR)/templates/management-crds/*.yaml
+	rm $(CHART_DIR)/templates/region-crds/*.yaml
+	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=$(CHART_DIR)/templates
+	mv $(CHART_DIR)/templates/qdrant.io_qdrantreleases.yaml $(CHART_DIR)/templates/management-crds/
+	mv $(CHART_DIR)/templates/qdrant*.yaml $(CHART_DIR)/templates/region-crds/
+	for file in $(CHART_DIR)/templates/management-crds/*.yaml; do \
 		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
-	for file in charts/qdrant-operator-crds/templates/region-crds/*.yaml; do \
+	for file in $(CHART_DIR)/templates/region-crds/*.yaml; do \
 		echo "{{ if .Values.includeRegionCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
-	helm lint charts/qdrant-operator-crds
+	helm lint $(CHART_DIR)
 
 .PHONY: generate
 generate: controller-gen crd-ref-docs ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.

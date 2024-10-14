@@ -39,9 +39,7 @@ jobs:
       - name: Package helm chart (CRDs)
         run: |
           # Ensure correct versions in Chart.yaml
-          sed -i "s/version:.*/version: ${{ steps.extract_build_info.outputs.tag }}/g" charts/qdrant-operator-crds/Chart.yaml
-          sed -i "s/appVersion:.*/appVersion: ${{ steps.extract_build_info.outputs.tag }}/g" charts/qdrant-operator-crds/Chart.yaml
-          helm package charts/qdrant-operator-crds/
+          helm package --app-version ${{ steps.extract_build_info.outputs.tag }} --version ${{ steps.extract_build_info.outputs.tag }} charts/qdrant-kubernetes-api/
 
       - name: Tag Release
         shell: bash
@@ -66,7 +64,7 @@ jobs:
           HARBOR_TOKEN: ${{ secrets.HARBOR_TOKEN }}
         run: |
           helm registry login registry.cloud.qdrant.io -u "${HARBOR_USERNAME}" --password "${HARBOR_TOKEN}"
-          push_output=$(helm push qdrant-operator-crds-${{ steps.extract_build_info.outputs.tag }}.tgz oci://registry.cloud.qdrant.io/qdrant-charts 2>&1)
+          push_output=$(helm push qdrant-kubernetes-api-${{ steps.extract_build_info.outputs.tag }}.tgz oci://registry.cloud.qdrant.io/qdrant-charts 2>&1)
           echo $push_output
           digest=$(echo $push_output | grep -oP '(?<=Digest: ).*')
           echo $digest
@@ -79,7 +77,7 @@ jobs:
           HARBOR_TOKEN: ${{ secrets.HARBOR_TOKEN }}
         run: |
           helm registry login registry.cloud.qdrant.io -u "${HARBOR_USERNAME}" --password "${HARBOR_TOKEN}"
-          push_output=$(helm push qdrant-operator-crds-${{ steps.extract_build_info.outputs.tag }}.tgz oci://registry.cloud.qdrant.io/library 2>&1)
+          push_output=$(helm push qdrant-kubernetes-api-${{ steps.extract_build_info.outputs.tag }}.tgz oci://registry.cloud.qdrant.io/library 2>&1)
           echo $push_output
           public_digest=$(echo $push_output | grep -oP '(?<=Digest: ).*')
           echo $public_digest
@@ -89,12 +87,12 @@ jobs:
         run: |
           cosign sign --yes "${TAGS}@${DIGEST}"
         env:
-          TAGS: registry.cloud.qdrant.io/qdrant-charts/qdrant-operator-crds:${{ steps.extract_build_info.outputs.tag }}
+          TAGS: registry.cloud.qdrant.io/qdrant-charts/qdrant-kubernetes-api:${{ steps.extract_build_info.outputs.tag }}
           DIGEST: ${{ steps.push-helm-chart-crds.outputs.digest }}
 
       - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io in public repo
         run: |
           cosign sign --yes "${TAGS}@${DIGEST}"
         env:
-          TAGS: registry.cloud.qdrant.io/library/qdrant-operator-crds:${{ steps.extract_build_info.outputs.tag }}
+          TAGS: registry.cloud.qdrant.io/library/qdrant-kubernetes-api:${{ steps.extract_build_info.outputs.tag }}
           DIGEST: ${{ steps.push-helm-chart-crds-public.outputs.public_digest }}
