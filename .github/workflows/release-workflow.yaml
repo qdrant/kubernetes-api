@@ -39,7 +39,7 @@ jobs:
       - name: Package helm chart (CRDs)
         run: |
           # Ensure correct versions in Chart.yaml
-          helm package --app-version ${{ steps.extract_build_info.outputs.tag }} --version ${{ steps.extract_build_info.outputs.tag }} charts/qdrant-operator-crds/
+          helm package --app-version ${{ steps.extract_build_info.outputs.tag }} --version ${{ steps.extract_build_info.outputs.tag }} charts/qdrant-kubernetes-api/
 
       - name: Tag Release
         shell: bash

@@ -20,7 +20,7 @@ jobs:
 
       - name: Helm lint (CRDs)
         run: |
-          helm lint charts/qdrant-operator-crds
+          helm lint charts/qdrant-kubernetes-api
 
       - name: Check Go Formatting
         run: |
