@@ -254,6 +254,10 @@ spec:
               distributed:
                 description: Deprecated
                 type: boolean
+              forwardEvents:
+                description: ForwardEvents specifies whether to forward events to
+                  backend service.
+                type: boolean
               id:
                 description: Id specifies the unique identifier of the cluster
                 type: string
