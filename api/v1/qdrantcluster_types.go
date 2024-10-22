@@ -139,6 +139,9 @@ type QdrantClusterSpec struct {
 	// PodDisruptionBudget specifies the pod disruption budget for the cluster.
 	// +optional
 	PodDisruptionBudget *policyv1.PodDisruptionBudgetSpec `json:"podDisruptionBudget,omitempty"`
+	// ForwardEvents specifies whether to forward events to backend service.
+	// +optional
+	ForwardEvents bool `json:"forwardEvents,omitempty"`
 }
 
 // Validates if there are incorrect settings in the CRD
