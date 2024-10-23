@@ -513,13 +513,6 @@ func (c *QdrantConfigurationTLS) GetKey() *QdrantSecretKeyRef {
 	return c.Key
 }
 
-type IngressType string
-
-const (
-	TypePath IngressType = "path"
-	TypeHost IngressType = "host"
-)
-
 type Ingress struct {
 	// Enabled specifies whether to enable ingress for the cluster or not.
 	// +optional
@@ -530,11 +523,6 @@ type Ingress struct {
 	// IngressClassName specifies the name of the ingress class
 	// +optional
 	IngressClassName *string `json:"ingressClassName,omitempty"`
-	// Type specifies whether it is path or host based routing.
-	// +kubebuilder:default="path"
-	// +kubebuilder:validation:Enum=path;host
-	// +optional
-	Type *IngressType `json:"type,omitempty"`
 	// Host specifies the host for the ingress.
 	// +optional
 	Host string `json:"host,omitempty"`
@@ -575,13 +563,6 @@ func (i *Ingress) GetTls(def bool) bool {
 		return def
 	}
 	return *i.TLS
-}
-
-func (i *Ingress) GetType() IngressType {
-	if i == nil || i.Type == nil {
-		return TypePath
-	}
-	return *i.Type
 }
 
 func (i *Ingress) GetNGINX() *NGINXConfig {
@@ -625,6 +606,9 @@ type TraefikConfig struct {
 	// AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress.
 	// +optional
 	AllowedSourceRanges []string `json:"allowedSourceRanges,omitempty"`
+	// AdditionalRuleNames specifies additional rule names for the ingress route. The actual rules can be configured in the operator settings.
+	// +optional
+	AdditionalRuleNames []string `json:"additionalRuleNames,omitempty"`
 }
 
 func (c *TraefikConfig) GetAllowedSourceRanges() []string {
@@ -632,6 +616,13 @@ func (c *TraefikConfig) GetAllowedSourceRanges() []string {
 		return nil
 	}
 	return c.AllowedSourceRanges
+}
+
+func (c *TraefikConfig) GetAdditionalRuleNames() []string {
+	if c == nil {
+		return nil
+	}
+	return c.AdditionalRuleNames
 }
 
 type StorageClassNames struct {

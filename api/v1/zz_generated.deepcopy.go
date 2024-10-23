@@ -98,11 +98,6 @@ func (in *Ingress) DeepCopyInto(out *Ingress) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.Type != nil {
-		in, out := &in.Type, &out.Type
-		*out = new(IngressType)
-		**out = **in
-	}
 	if in.TLS != nil {
 		in, out := &in.TLS, &out.TLS
 		*out = new(bool)
@@ -1395,6 +1390,11 @@ func (in *TraefikConfig) DeepCopyInto(out *TraefikConfig) {
 	*out = *in
 	if in.AllowedSourceRanges != nil {
 		in, out := &in.AllowedSourceRanges, &out.AllowedSourceRanges
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
+	if in.AdditionalRuleNames != nil {
+		in, out := &in.AdditionalRuleNames, &out.AdditionalRuleNames
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
