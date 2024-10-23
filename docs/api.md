@@ -122,25 +122,11 @@ _Appears in:_
 | `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. |  |  |
 | `annotations` _object (keys:string, values:string)_ | Annotations specifies annotations for the ingress. |  |  |
 | `ingressClassName` _string_ | IngressClassName specifies the name of the ingress class |  |  |
-| `type` _[IngressType](#ingresstype)_ | Type specifies whether it is path or host based routing. | path | Enum: [path host] <br /> |
 | `host` _string_ | Host specifies the host for the ingress. |  |  |
 | `tls` _boolean_ | TLS specifies whether to enable tls for the ingress.<br />The default depends on the ingress provider:<br />- KubernetesIngress: False<br />- NginxIngress: False<br />- QdrantCloudTraefik: Depending on the config.tls setting of the operator. |  |  |
 | `tlsSecretName` _string_ | TLSSecretName specifies the name of the secret containing the tls certificate. |  |  |
 | `nginx` _[NGINXConfig](#nginxconfig)_ | NGINX specifies the nginx ingress specific configurations. |  |  |
 | `traefik` _[TraefikConfig](#traefikconfig)_ | Traefik specifies the traefik ingress specific configurations. |  |  |
-
-
-#### IngressType
-
-_Underlying type:_ _string_
-
-
-
-
-
-_Appears in:_
-- [Ingress](#ingress)
-
 
 
 #### KubernetesDistribution
@@ -1053,6 +1039,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
+| `additionalRuleNames` _string array_ | AdditionalRuleNames specifies additional rule names for the ingress route. The actual rules can be configured in the operator settings. |  |  |
 
 
 #### VolumeSnapshotInfo
