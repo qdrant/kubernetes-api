@@ -443,6 +443,10 @@ type QdrantConfigurationService struct {
 	// Default is false
 	// +optional
 	JwtRbac *bool `json:"jwt_rbac,omitempty"`
+	// HideJwtDashboard specifies wether to hide the JWT dashboard of the embedded UI
+	// Default is false
+	// +optional
+	HideJwtDashboard *bool `json:"hide_jwt_dashboard,omitempty"`
 	// EnableTLS specifies whether to enable tls for the qdrant instance
 	// Default is false
 	// +optional
