@@ -443,7 +443,7 @@ type QdrantConfigurationService struct {
 	// Default is false
 	// +optional
 	JwtRbac *bool `json:"jwt_rbac,omitempty"`
-	// HideJwtDashboard specifies wether to hide the JWT dashboard of the embedded UI
+	// HideJwtDashboard specifies whether to hide the JWT dashboard of the embedded UI
 	// Default is false
 	// +optional
 	HideJwtDashboard *bool `json:"hide_jwt_dashboard,omitempty"`
@@ -472,6 +472,13 @@ func (c *QdrantConfigurationService) GetJwtRbac() bool {
 		return false
 	}
 	return *c.JwtRbac
+}
+
+func (c *QdrantConfigurationService) GetHideJwtDashboard() bool {
+	if c == nil || c.HideJwtDashboard == nil {
+		return false
+	}
+	return *c.HideJwtDashboard
 }
 
 func (c *QdrantConfigurationService) GetEnableTLS() bool {
