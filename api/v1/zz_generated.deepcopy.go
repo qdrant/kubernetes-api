@@ -1034,6 +1034,11 @@ func (in *QdrantConfigurationService) DeepCopyInto(out *QdrantConfigurationServi
 		*out = new(bool)
 		**out = **in
 	}
+	if in.HideJwtDashboard != nil {
+		in, out := &in.HideJwtDashboard, &out.HideJwtDashboard
+		*out = new(bool)
+		**out = **in
+	}
 	if in.EnableTLS != nil {
 		in, out := &in.EnableTLS, &out.EnableTLS
 		*out = new(bool)
