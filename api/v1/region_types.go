@@ -101,6 +101,7 @@ const (
 	K8sDistributionOVHCloud  KubernetesDistribution = "ovhcloud"
 	K8sDistributionStackit   KubernetesDistribution = "stackit"
 	K8sDistributionVultr     KubernetesDistribution = "vultr"
+	K8sDistributionK3s       KubernetesDistribution = "k3s"
 )
 
 type ComponentPhase string
