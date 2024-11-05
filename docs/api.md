@@ -1040,7 +1040,6 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
-| `additionalRuleNames` _string array_ | AdditionalRuleNames specifies additional rule names for the ingress route. The actual rules can be configured in the operator settings. |  |  |
 
 
 #### VolumeSnapshotInfo
