@@ -617,9 +617,6 @@ type TraefikConfig struct {
 	// AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress.
 	// +optional
 	AllowedSourceRanges []string `json:"allowedSourceRanges,omitempty"`
-	// AdditionalRuleNames specifies additional rule names for the ingress route. The actual rules can be configured in the operator settings.
-	// +optional
-	AdditionalRuleNames []string `json:"additionalRuleNames,omitempty"`
 }
 
 func (c *TraefikConfig) GetAllowedSourceRanges() []string {
@@ -627,13 +624,6 @@ func (c *TraefikConfig) GetAllowedSourceRanges() []string {
 		return nil
 	}
 	return c.AllowedSourceRanges
-}
-
-func (c *TraefikConfig) GetAdditionalRuleNames() []string {
-	if c == nil {
-		return nil
-	}
-	return c.AdditionalRuleNames
 }
 
 type StorageClassNames struct {

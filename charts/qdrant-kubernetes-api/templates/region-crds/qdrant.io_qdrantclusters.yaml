@@ -328,13 +328,6 @@ spec:
                   traefik:
                     description: Traefik specifies the traefik ingress specific configurations.
                     properties:
-                      additionalRuleNames:
-                        description: AdditionalRuleNames specifies additional rule
-                          names for the ingress route. The actual rules can be configured
-                          in the operator settings.
-                        items:
-                          type: string
-                        type: array
                       allowedSourceRanges:
                         description: AllowedSourceRanges specifies the allowed CIDR
                           source ranges for the ingress.
