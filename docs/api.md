@@ -24,23 +24,6 @@ Package v1 contains API Schema definitions for the qdrant.io v1 API group
 
 
 
-#### AlternativeMonitoringSource
-
-
-
-
-
-
-
-_Appears in:_
-- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `cAdvisorMonitoringSource` _[MonitoringSource](#monitoringsource)_ | CAdvisorMonitoringSource specifies the cAdvisor monitoring source |  |  |
-| `nodeMonitoringSource` _[MonitoringSource](#monitoringsource)_ | NodeMonitoringSource specifies the node monitoring source |  |  |
-
-
 
 
 #### ClusterPhase
@@ -220,8 +203,25 @@ _Underlying type:_ _string_
 
 
 _Appears in:_
-- [AlternativeMonitoringSource](#alternativemonitoringsource)
+- [MonitoringStatus](#monitoringstatus)
 
+
+
+#### MonitoringStatus
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `cAdvisorMetricSource` _[MonitoringSource](#monitoringsource)_ | CAdvisorMetricSource specifies the cAdvisor metric source |  |  |
+| `nodeMetricSource` _[MonitoringSource](#monitoringsource)_ | NodeMetricSource specifies the node metric source |  |  |
 
 
 #### NGINXConfig

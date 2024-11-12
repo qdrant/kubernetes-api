@@ -76,18 +76,18 @@ type QdrantCloudRegionStatus struct {
 	// KubernetesDistribution specifies the distribution of the Kubernetes cluster
 	// +optional
 	KubernetesDistribution KubernetesDistribution `json:"k8sDistribution,omitempty"`
-	// AlternativeMonitoringSource specifies the alternative monitoring source
+	// Monitoring specifies monitoring status
 	// +optional
-	AlternativeMonitoringSource AlternativeMonitoringSource `json:"alternativeMonitoringSource,omitempty"`
+	Monitoring MonitoringStatus `json:"monitoring,omitempty"`
 }
 
-type AlternativeMonitoringSource struct {
-	// CAdvisorMonitoringSource specifies the cAdvisor monitoring source
+type MonitoringStatus struct {
+	// CAdvisorMetricSource specifies the cAdvisor metric source
 	// +optional
-	CAdvisorMonitoringSource MonitoringSource `json:"cAdvisorMonitoringSource,omitempty"`
-	// NodeMonitoringSource specifies the node monitoring source
+	CAdvisorMetricSource MonitoringSource `json:"cAdvisorMetricSource,omitempty"`
+	// NodeMetricSource specifies the node metric source
 	// +optional
-	NodeMonitoringSource MonitoringSource `json:"nodeMonitoringSource,omitempty"`
+	NodeMetricSource MonitoringSource `json:"nodeMetricSource,omitempty"`
 }
 
 type RegionCapabilities struct {

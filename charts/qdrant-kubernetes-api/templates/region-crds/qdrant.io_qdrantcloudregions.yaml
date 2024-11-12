@@ -1645,19 +1645,6 @@ spec:
             type: object
           status:
             properties:
-              alternativeMonitoringSource:
-                description: AlternativeMonitoringSource specifies the alternative
-                  monitoring source
-                properties:
-                  cAdvisorMonitoringSource:
-                    description: CAdvisorMonitoringSource specifies the cAdvisor monitoring
-                      source
-                    type: string
-                  nodeMonitoringSource:
-                    description: NodeMonitoringSource specifies the node monitoring
-                      source
-                    type: string
-                type: object
               capabilities:
                 description: Capabilities specifies the capabilities of the Kubernetes
                   cluster
@@ -1731,6 +1718,17 @@ spec:
                 description: Message specifies the info explaining the current phase
                   of the region
                 type: string
+              monitoring:
+                description: Monitoring specifies monitoring status
+                properties:
+                  cAdvisorMetricSource:
+                    description: CAdvisorMetricSource specifies the cAdvisor metric
+                      source
+                    type: string
+                  nodeMetricSource:
+                    description: NodeMetricSource specifies the node metric source
+                    type: string
+                type: object
               numberOfNodes:
                 description: NumberOfNodes specifies the number of nodes in the Kubernetes
                   cluster
