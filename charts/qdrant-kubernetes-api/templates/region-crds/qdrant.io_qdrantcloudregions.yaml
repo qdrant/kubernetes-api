@@ -1645,6 +1645,19 @@ spec:
             type: object
           status:
             properties:
+              alternativeMonitoringSource:
+                description: AlternativeMonitoringSource specifies the alternative
+                  monitoring source
+                properties:
+                  cAdvisorMonitoringSource:
+                    description: CAdvisorMonitoringSource specifies the cAdvisor monitoring
+                      source
+                    type: string
+                  nodeMonitoringSource:
+                    description: NodeMonitoringSource specifies the node monitoring
+                      source
+                    type: string
+                type: object
               capabilities:
                 description: Capabilities specifies the capabilities of the Kubernetes
                   cluster
