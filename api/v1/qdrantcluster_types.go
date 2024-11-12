@@ -139,12 +139,6 @@ type QdrantClusterSpec struct {
 	// PodDisruptionBudget specifies the pod disruption budget for the cluster.
 	// +optional
 	PodDisruptionBudget *policyv1.PodDisruptionBudgetSpec `json:"podDisruptionBudget,omitempty"`
-	// RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).
-	// If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods
-	// need to be restarted like when RestartedAtAnnotationKey is added/updated or the Qdrant version need to be upgraded.
-	// This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart.
-	// +optional
-	RestartAllPodsConcurrently bool `json:"restartAllPodsConcurrently,omitempty"`
 }
 
 // Validates if there are incorrect settings in the CRD

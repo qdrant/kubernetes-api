@@ -492,13 +492,6 @@ spec:
                       node.
                     type: string
                 type: object
-              restartAllPodsConcurrently:
-                description: |-
-                  RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).
-                  If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods
-                  need to be restarted like when RestartedAtAnnotationKey is added/updated or the Qdrant version need to be upgraded.
-                  This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart.
-                type: boolean
               security:
                 description: Security specifies the security context for each Qdrant
                   node.
