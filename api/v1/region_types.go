@@ -42,11 +42,13 @@ type HelmRelease struct {
 }
 
 type RegionPhase string
+type MonitoringSource string
 
 const (
-	RegionPhaseReady    RegionPhase = "Ready"
-	RegionPhaseNotReady RegionPhase = "NotReady"
-	FailedToSync        RegionPhase = "FailedToSync"
+	RegionPhaseReady        RegionPhase      = "Ready"
+	RegionPhaseNotReady     RegionPhase      = "NotReady"
+	FailedToSync            RegionPhase      = "FailedToSync"
+	KubeletMonitoringSource MonitoringSource = "kubelet"
 )
 
 type QdrantCloudRegionStatus struct {
@@ -74,6 +76,18 @@ type QdrantCloudRegionStatus struct {
 	// KubernetesDistribution specifies the distribution of the Kubernetes cluster
 	// +optional
 	KubernetesDistribution KubernetesDistribution `json:"k8sDistribution,omitempty"`
+	// AlternativeMonitoringSource specifies the alternative monitoring source
+	// +optional
+	AlternativeMonitoringSource AlternativeMonitoringSource `json:"alternativeMonitoringSource,omitempty"`
+}
+
+type AlternativeMonitoringSource struct {
+	// CAdvisorMonitoringSource specifies the cAdvisor monitoring source
+	// +optional
+	CAdvisorMonitoringSource MonitoringSource `json:"cAdvisorMonitoringSource,omitempty"`
+	// NodeMonitoringSource specifies the node monitoring source
+	// +optional
+	NodeMonitoringSource MonitoringSource `json:"nodeMonitoringSource,omitempty"`
 }
 
 type RegionCapabilities struct {
