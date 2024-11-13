@@ -203,11 +203,11 @@ _Underlying type:_ _string_
 
 
 _Appears in:_
-- [MonitoringStatus](#monitoringstatus)
+- [Monitoring](#monitoring)
 
 
 
-#### MonitoringStatus
+#### Monitoring
 
 
 

@@ -83,10 +83,10 @@ type QdrantCloudRegionStatus struct {
 	KubernetesDistribution KubernetesDistribution `json:"k8sDistribution,omitempty"`
 	// Monitoring specifies monitoring status
 	// +optional
-	Monitoring MonitoringStatus `json:"monitoring,omitempty"`
+	Monitoring Monitoring `json:"monitoring,omitempty"`
 }
 
-type MonitoringStatus struct {
+type Monitoring struct {
 	// CAdvisorMetricSource specifies the cAdvisor metric source
 	// +optional
 	CAdvisorMetricSource MetricSource `json:"cAdvisorMetricSource,omitempty"`
