@@ -57,6 +57,7 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	cloned.Ingress = nil
 	cloned.Pauses = nil
 	cloned.Resources.Storage = ""
+	cloned.RestartAllPodsConcurrently = false
 	cloned.Service = nil
 	cloned.ServicePerNode = false
 	cloned.Size = 1
