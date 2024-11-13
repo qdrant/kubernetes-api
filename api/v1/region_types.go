@@ -42,13 +42,18 @@ type HelmRelease struct {
 }
 
 type RegionPhase string
-type MonitoringSource string
 
 const (
-	RegionPhaseReady        RegionPhase      = "Ready"
-	RegionPhaseNotReady     RegionPhase      = "NotReady"
-	FailedToSync            RegionPhase      = "FailedToSync"
-	KubeletMonitoringSource MonitoringSource = "kubelet"
+	RegionPhaseReady    RegionPhase = "Ready"
+	RegionPhaseNotReady RegionPhase = "NotReady"
+	FailedToSync        RegionPhase = "FailedToSync"
+)
+
+type MetricSource string
+
+const (
+	KubeletMetricSource MetricSource = "kubelet"
+	ApiMetricSource     MetricSource = "api"
 )
 
 type QdrantCloudRegionStatus struct {
@@ -84,10 +89,10 @@ type QdrantCloudRegionStatus struct {
 type MonitoringStatus struct {
 	// CAdvisorMetricSource specifies the cAdvisor metric source
 	// +optional
-	CAdvisorMetricSource MonitoringSource `json:"cAdvisorMetricSource,omitempty"`
+	CAdvisorMetricSource MetricSource `json:"cAdvisorMetricSource,omitempty"`
 	// NodeMetricSource specifies the node metric source
 	// +optional
-	NodeMetricSource MonitoringSource `json:"nodeMetricSource,omitempty"`
+	NodeMetricSource MetricSource `json:"nodeMetricSource,omitempty"`
 }
 
 type RegionCapabilities struct {

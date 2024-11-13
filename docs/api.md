@@ -194,7 +194,7 @@ _Appears in:_
 | `pods` _[KubernetesPod](#kubernetespod)_ | Pods  specifies the configuration of the Pods of the Qdrant StatefulSet. |  |  |
 
 
-#### MonitoringSource
+#### MetricSource
 
 _Underlying type:_ _string_
 
@@ -220,8 +220,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `cAdvisorMetricSource` _[MonitoringSource](#monitoringsource)_ | CAdvisorMetricSource specifies the cAdvisor metric source |  |  |
-| `nodeMetricSource` _[MonitoringSource](#monitoringsource)_ | NodeMetricSource specifies the node metric source |  |  |
+| `cAdvisorMetricSource` _[MetricSource](#metricsource)_ | CAdvisorMetricSource specifies the cAdvisor metric source |  |  |
+| `nodeMetricSource` _[MetricSource](#metricsource)_ | NodeMetricSource specifies the node metric source |  |  |
 
 
 #### NGINXConfig
