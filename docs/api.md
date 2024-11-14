@@ -194,6 +194,36 @@ _Appears in:_
 | `pods` _[KubernetesPod](#kubernetespod)_ | Pods  specifies the configuration of the Pods of the Qdrant StatefulSet. |  |  |
 
 
+#### MetricSource
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [Monitoring](#monitoring)
+
+
+
+#### Monitoring
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `cAdvisorMetricSource` _[MetricSource](#metricsource)_ | CAdvisorMetricSource specifies the cAdvisor metric source |  |  |
+| `nodeMetricSource` _[MetricSource](#metricsource)_ | NodeMetricSource specifies the node metric source |  |  |
+
+
 #### NGINXConfig
 
 

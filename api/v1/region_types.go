@@ -49,6 +49,13 @@ const (
 	FailedToSync        RegionPhase = "FailedToSync"
 )
 
+type MetricSource string
+
+const (
+	KubeletMetricSource MetricSource = "kubelet"
+	ApiMetricSource     MetricSource = "api"
+)
+
 type QdrantCloudRegionStatus struct {
 	// Phase specifies the current phase of the region
 	// +optional
@@ -74,6 +81,18 @@ type QdrantCloudRegionStatus struct {
 	// KubernetesDistribution specifies the distribution of the Kubernetes cluster
 	// +optional
 	KubernetesDistribution KubernetesDistribution `json:"k8sDistribution,omitempty"`
+	// Monitoring specifies monitoring status
+	// +optional
+	Monitoring Monitoring `json:"monitoring,omitempty"`
+}
+
+type Monitoring struct {
+	// CAdvisorMetricSource specifies the cAdvisor metric source
+	// +optional
+	CAdvisorMetricSource MetricSource `json:"cAdvisorMetricSource,omitempty"`
+	// NodeMetricSource specifies the node metric source
+	// +optional
+	NodeMetricSource MetricSource `json:"nodeMetricSource,omitempty"`
 }
 
 type RegionCapabilities struct {
