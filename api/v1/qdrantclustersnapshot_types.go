@@ -47,6 +47,8 @@ type QdrantClusterSnapshotStatus struct {
 	// +optional
 	RetainUntil *metav1.Time `json:"retainUntil,omitempty"`
 	// CompletionTime specifies how long it took for the snapshot to complete
+	// When serialized, it is a Duration in string format which follows "DDdHHhMMmSSs" format
+	// For example: "1d3h5m10s", "3h5m10s", "5m10s", "10s" etc.
 	// +optional
 	CompletionTime *metav1.Duration `json:"completionTime,omitempty"`
 }
