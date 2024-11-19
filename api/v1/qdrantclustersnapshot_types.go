@@ -46,6 +46,9 @@ type QdrantClusterSnapshotStatus struct {
 	// The calculated time (in UTC) this snapshot will be deleted, if so.
 	// +optional
 	RetainUntil *metav1.Time `json:"retainUntil,omitempty"`
+	// Duration specifies how long it took for the snapshot to complete
+	// +optional
+	Duration *metav1.Duration `json:"duration,omitempty"`
 }
 
 type VolumeSnapshotInfo struct {
@@ -66,6 +69,7 @@ type VolumeSnapshotInfo struct {
 // +kubebuilder:printcolumn:name="clusterid",type=string,JSONPath=`.spec.cluster-id`
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="retainUntil",type=string,JSONPath=`.status.retainUntil`
+// +kubebuilder:printcolumn:name="duration",type=string,JSONPath=`.status.duration`
 // +kubebuilder:printcolumn:name="age",type=date,JSONPath=`.metadata.creationTimestamp`
 
 // QdrantClusterSnapshot is the Schema for the qdrantclustersnapshots API

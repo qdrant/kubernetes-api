@@ -28,6 +28,9 @@ spec:
     - jsonPath: .status.retainUntil
       name: retainUntil
       type: string
+    - jsonPath: .status.duration
+      name: duration
+      type: string
     - jsonPath: .metadata.creationTimestamp
       name: age
       type: date
@@ -83,6 +86,10 @@ spec:
             type: object
           status:
             properties:
+              duration:
+                description: Duration specifies how long it took for the snapshot
+                  to complete
+                type: string
               phase:
                 enum:
                 - Running
