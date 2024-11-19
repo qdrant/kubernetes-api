@@ -81,6 +81,10 @@ type QdrantClusterSnapshot struct {
 	Status QdrantClusterSnapshotStatus `json:"status,omitempty"`
 }
 
+func (qcs *QdrantClusterSnapshot) IsCompleted() bool {
+	return qcs.Status.Phase == SnapshotSucceeded || qcs.Status.Phase == SnapshotFailed || qcs.Status.Phase == SnapshotSkipped
+}
+
 //+kubebuilder:object:root=true
 
 // QdrantClusterSnapshotList contains a list of QdrantClusterSnapshot
