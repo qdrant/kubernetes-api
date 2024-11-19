@@ -787,8 +787,8 @@ func (in *QdrantClusterSnapshotStatus) DeepCopyInto(out *QdrantClusterSnapshotSt
 		in, out := &in.RetainUntil, &out.RetainUntil
 		*out = (*in).DeepCopy()
 	}
-	if in.Duration != nil {
-		in, out := &in.Duration, &out.Duration
+	if in.CompletionTime != nil {
+		in, out := &in.CompletionTime, &out.CompletionTime
 		*out = new(metav1.Duration)
 		**out = **in
 	}

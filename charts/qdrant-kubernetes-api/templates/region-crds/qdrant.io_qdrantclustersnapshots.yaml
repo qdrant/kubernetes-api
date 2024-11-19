@@ -28,8 +28,8 @@ spec:
     - jsonPath: .status.retainUntil
       name: retainUntil
       type: string
-    - jsonPath: .status.duration
-      name: duration
+    - jsonPath: .status.completionTime
+      name: completion-time
       type: string
     - jsonPath: .metadata.creationTimestamp
       name: age
@@ -86,8 +86,8 @@ spec:
             type: object
           status:
             properties:
-              duration:
-                description: Duration specifies how long it took for the snapshot
+              completionTime:
+                description: CompletionTime specifies how long it took for the snapshot
                   to complete
                 type: string
               phase:
