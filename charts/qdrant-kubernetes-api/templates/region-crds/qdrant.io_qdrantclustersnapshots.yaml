@@ -28,6 +28,9 @@ spec:
     - jsonPath: .status.retainUntil
       name: retainUntil
       type: string
+    - jsonPath: .status.completionTime
+      name: completion-time
+      type: string
     - jsonPath: .metadata.creationTimestamp
       name: age
       type: date
@@ -83,6 +86,12 @@ spec:
             type: object
           status:
             properties:
+              completionTime:
+                description: |-
+                  CompletionTime specifies how long it took for the snapshot to complete
+                  When serialized, it is a Duration in string format which follows "DDdHHhMMmSSs" format
+                  For example: "1d3h5m10s", "3h5m10s", "5m10s", "10s" etc.
+                type: string
               phase:
                 enum:
                 - Running

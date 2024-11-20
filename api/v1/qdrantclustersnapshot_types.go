@@ -46,6 +46,11 @@ type QdrantClusterSnapshotStatus struct {
 	// The calculated time (in UTC) this snapshot will be deleted, if so.
 	// +optional
 	RetainUntil *metav1.Time `json:"retainUntil,omitempty"`
+	// CompletionTime specifies how long it took for the snapshot to complete
+	// When serialized, it is a Duration in string format which follows "DDdHHhMMmSSs" format
+	// For example: "1d3h5m10s", "3h5m10s", "5m10s", "10s" etc.
+	// +optional
+	CompletionTime *metav1.Duration `json:"completionTime,omitempty"`
 }
 
 type VolumeSnapshotInfo struct {
@@ -66,6 +71,7 @@ type VolumeSnapshotInfo struct {
 // +kubebuilder:printcolumn:name="clusterid",type=string,JSONPath=`.spec.cluster-id`
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="retainUntil",type=string,JSONPath=`.status.retainUntil`
+// +kubebuilder:printcolumn:name="completion-time",type=string,JSONPath=`.status.completionTime`
 // +kubebuilder:printcolumn:name="age",type=date,JSONPath=`.metadata.creationTimestamp`
 
 // QdrantClusterSnapshot is the Schema for the qdrantclustersnapshots API
@@ -75,6 +81,10 @@ type QdrantClusterSnapshot struct {
 
 	Spec   QdrantClusterSnapshotSpec   `json:"spec,omitempty"`
 	Status QdrantClusterSnapshotStatus `json:"status,omitempty"`
+}
+
+func (qcs *QdrantClusterSnapshot) IsCompleted() bool {
+	return qcs.Status.Phase == SnapshotSucceeded || qcs.Status.Phase == SnapshotFailed || qcs.Status.Phase == SnapshotSkipped
 }
 
 //+kubebuilder:object:root=true
