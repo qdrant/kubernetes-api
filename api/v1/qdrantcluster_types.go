@@ -86,7 +86,7 @@ type QdrantClusterSpec struct {
 	// ServicePerNode specifies whether the cluster should start a dedicated service for each node.
 	// +kubebuilder:default=true
 	// +optional
-	ServicePerNode bool `json:"servicePerNode,omitempty"`
+	ServicePerNode bool `json:"servicePerNode"`
 	// ClusterManager specifies whether to use the cluster manager for this cluster.
 	// The Python-operator will deploy a dedicated cluster manager instance.
 	// The Go-operator will use a shared instance.
