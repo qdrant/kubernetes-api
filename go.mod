@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/fluxcd/helm-controller/api v1.1.0
 	github.com/fluxcd/source-controller/api v1.4.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	k8s.io/api v0.31.3
 	k8s.io/apimachinery v0.31.3
 	sigs.k8s.io/controller-runtime v0.19.2
