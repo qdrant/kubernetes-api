@@ -10,6 +10,7 @@ GCI ?= $(LOCALBIN)/gci
 CONTROLLER_TOOLS_VERSION ?= v0.16.1
 CRD_REF_DOCS_VERSION ?= v0.0.12
 CHART_DIR ?= charts/qdrant-kubernetes-api
+CRDS_DIR ?= crds
 
 lint:
 	bash -c 'files=$$(gofmt -l .) && echo $$files && [ -z "$$files" ]'
@@ -23,9 +24,9 @@ gen: manifests generate format vet ## Generate code containing DeepCopy, DeepCop
 manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	rm $(CHART_DIR)/templates/management-crds/*.yaml
 	rm $(CHART_DIR)/templates/region-crds/*.yaml
-	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=$(CHART_DIR)/templates
-	mv $(CHART_DIR)/templates/qdrant.io_qdrantreleases.yaml $(CHART_DIR)/templates/management-crds/
-	mv $(CHART_DIR)/templates/qdrant*.yaml $(CHART_DIR)/templates/region-crds/
+	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=$(CRDS_DIR)
+	mv $(CRDS_DIR)/qdrant.io_qdrantreleases.yaml $(CHART_DIR)/templates/management-crds/
+	cp $(CRDS_DIR)/qdrant*.yaml $(CHART_DIR)/templates/region-crds/
 	for file in $(CHART_DIR)/templates/management-crds/*.yaml; do \
 		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \

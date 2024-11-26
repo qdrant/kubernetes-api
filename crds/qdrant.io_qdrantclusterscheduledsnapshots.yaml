@@ -1,0 +1,113 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: qdrantclusterscheduledsnapshots.qdrant.io
+spec:
+  group: qdrant.io
+  names:
+    kind: QdrantClusterScheduledSnapshot
+    listKind: QdrantClusterScheduledSnapshotList
+    plural: qdrantclusterscheduledsnapshots
+    shortNames:
+    - qcssnap
+    - qcssnaps
+    singular: qdrantclusterscheduledsnapshot
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.cluster-id
+      name: clusterid
+      type: string
+    - jsonPath: .spec.scheduleShortId
+      name: scheduleShortId
+      type: string
+    - jsonPath: .spec.schedule
+      name: schedule
+      type: string
+    - jsonPath: .spec.retention
+      name: retention
+      type: string
+    - jsonPath: .status.scheduled
+      name: scheduled
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: age
+      type: date
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: QdrantClusterScheduledSnapshot is the Schema for the qdrantclusterscheduledsnapshots
+          API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: QdrantClusterScheduledSnapshotSpec defines the desired state
+              of QdrantCluster
+            properties:
+              cluster-id:
+                description: Id specifies the unique identifier of the cluster
+                type: string
+              retention:
+                description: Retention of schedule in hours
+                pattern: ^[0-9]+h$
+                type: string
+              schedule:
+                description: |-
+                  Cron expression for frequency of creating snapshots, see https://en.wikipedia.org/wiki/Cron.
+                  The schedule is specified in UTC.
+                pattern: ^(@(annually|yearly|monthly|weekly|daily|hourly|reboot))|(@every
+                  (\d+(ns|us|µs|ms|s|m|h))+)|((((\d+,)+\d+|([\d\*]+(\/|-)\d+)|\d+|\*)
+                  ?){5,7})$
+                type: string
+              scheduleShortId:
+                description: Specifies short Id which identifies a schedule
+                maxLength: 8
+                type: string
+            required:
+            - cluster-id
+            - retention
+            - schedule
+            - scheduleShortId
+            type: object
+          status:
+            description: QdrantClusterScheduledSnapshotStatus defines the observed
+              state of the snapshot
+            properties:
+              message:
+                description: Message from the operator in case of failures, like schedule
+                  not valid
+                type: string
+              phase:
+                description: Phase is the current phase of the scheduled snapshot
+                enum:
+                - Active
+                - Disabled
+                type: string
+              scheduled:
+                description: The next scheduled time in UTC
+                format: date-time
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources: {}
