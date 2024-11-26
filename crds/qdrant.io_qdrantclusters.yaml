@@ -1,0 +1,1131 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: qdrantclusters.qdrant.io
+spec:
+  group: qdrant.io
+  names:
+    kind: QdrantCluster
+    listKind: QdrantClusterList
+    plural: qdrantclusters
+    shortNames:
+    - qc
+    - qcs
+    singular: qdrantcluster
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.size
+      name: Nodes
+      type: integer
+    - jsonPath: .spec.version
+      name: Version
+      type: string
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: QdrantCluster is the Schema for the qdrantclusters API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: QdrantClusterSpec defines the desired state of QdrantCluster
+            properties:
+              clusterManager:
+                description: |-
+                  ClusterManager specifies whether to use the cluster manager for this cluster.
+                  The Python-operator will deploy a dedicated cluster manager instance.
+                  The Go-operator will use a shared instance.
+                  If not set, the default will be taken from the operator config.
+                type: boolean
+              config:
+                description: Config specifies the Qdrant configuration setttings for
+                  the clusters.
+                properties:
+                  collection:
+                    description: Collection specifies the default collection configuration
+                      for Qdrant.
+                    properties:
+                      replication_factor:
+                        description: ReplicationFactor specifies the default number
+                          of replicas of each shard
+                        format: int64
+                        type: integer
+                      vectors:
+                        description: Vectors specifies the default parameters for
+                          vectors
+                        properties:
+                          on_disk:
+                            description: OnDisk specifies whether vectors should be
+                              stored in memory or on disk.
+                            type: boolean
+                        type: object
+                      write_consistency_factor:
+                        description: WriteConsistencyFactor specifies how many replicas
+                          should apply the operation to consider it successful
+                        format: int64
+                        type: integer
+                    type: object
+                  log_level:
+                    description: LogLevel specifies the log level for Qdrant.
+                    type: string
+                  service:
+                    description: Service specifies the service level configuration
+                      for Qdrant.
+                    properties:
+                      api_key:
+                        description: ApiKey for the qdrant instance
+                        properties:
+                          secretKeyRef:
+                            description: SecretKeyRef to the secret containing data
+                              to configure the qdrant instance
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                      enable_tls:
+                        description: |-
+                          EnableTLS specifies whether to enable tls for the qdrant instance
+                          Default is false
+                        type: boolean
+                      hide_jwt_dashboard:
+                        description: |-
+                          HideJwtDashboard specifies whether to hide the JWT dashboard of the embedded UI
+                          Default is false
+                        type: boolean
+                      jwt_rbac:
+                        description: |-
+                          JwtRbac specifies whether to enable jwt rbac for the qdrant instance
+                          Default is false
+                        type: boolean
+                      read_only_api_key:
+                        description: ReadOnlyApiKey for the qdrant instance
+                        properties:
+                          secretKeyRef:
+                            description: SecretKeyRef to the secret containing data
+                              to configure the qdrant instance
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                    type: object
+                  storage:
+                    description: Storage specifies the storage configuration for Qdrant.
+                    properties:
+                      performance:
+                        description: Performance configuration
+                        properties:
+                          asyncScorer:
+                            description: AsyncScorer enables io_uring when rescoring
+                            type: boolean
+                          optimizerCPUBudget:
+                            description: |-
+                              OptimizerCPUBudget defines the number of CPU allocation.
+                              If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size
+                              If negative - subtract this number of CPUs from the available CPUs.
+                              If positive - use this exact number of CPUs.
+                            format: int64
+                            type: integer
+                        type: object
+                    type: object
+                  tls:
+                    description: TLS specifies the TLS configuration for Qdrant.
+                    properties:
+                      cert:
+                        description: Reference to the secret containing the server
+                          certificate chain file
+                        properties:
+                          secretKeyRef:
+                            description: SecretKeyRef to the secret containing data
+                              to configure the qdrant instance
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                      key:
+                        description: Reference to the secret containing the server
+                          private key file
+                        properties:
+                          secretKeyRef:
+                            description: SecretKeyRef to the secret containing data
+                              to configure the qdrant instance
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                    type: object
+                type: object
+              distributed:
+                description: Deprecated
+                type: boolean
+              id:
+                description: Id specifies the unique identifier of the cluster
+                type: string
+              image:
+                description: Image specifies the image to use for each Qdrant node.
+                properties:
+                  pullPolicy:
+                    description: |-
+                      PullPolicy specifies the image pull policy for the Qdrant image.
+                      If not specified defaults the config of the operator (or IfNotPresent if not specified in operator).
+                    type: string
+                  pullSecretName:
+                    description: PullSecretName specifies the pull secret for the
+                      Qdrant image.
+                    type: string
+                  repository:
+                    description: |-
+                      Repository specifies the repository of the Qdrant image.
+                      If not specified defaults the config of the operator (or qdrant/qdrant if not specified in operator).
+                    type: string
+                type: object
+              ingress:
+                description: Ingress specifies the ingress for the cluster.
+                properties:
+                  annotations:
+                    additionalProperties:
+                      type: string
+                    description: Annotations specifies annotations for the ingress.
+                    type: object
+                  enabled:
+                    description: Enabled specifies whether to enable ingress for the
+                      cluster or not.
+                    type: boolean
+                  host:
+                    description: Host specifies the host for the ingress.
+                    type: string
+                  ingressClassName:
+                    description: IngressClassName specifies the name of the ingress
+                      class
+                    type: string
+                  nginx:
+                    description: NGINX specifies the nginx ingress specific configurations.
+                    properties:
+                      allowedSourceRanges:
+                        description: AllowedSourceRanges specifies the allowed CIDR
+                          source ranges for the ingress.
+                        items:
+                          type: string
+                        type: array
+                      grpcHost:
+                        description: GRPCHost specifies the host name for the GRPC
+                          ingress.
+                        type: string
+                    type: object
+                  tls:
+                    description: |-
+                      TLS specifies whether to enable tls for the ingress.
+                      The default depends on the ingress provider:
+                      - KubernetesIngress: False
+                      - NginxIngress: False
+                      - QdrantCloudTraefik: Depending on the config.tls setting of the operator.
+                    type: boolean
+                  tlsSecretName:
+                    description: TLSSecretName specifies the name of the secret containing
+                      the tls certificate.
+                    type: string
+                  traefik:
+                    description: Traefik specifies the traefik ingress specific configurations.
+                    properties:
+                      allowedSourceRanges:
+                        description: AllowedSourceRanges specifies the allowed CIDR
+                          source ranges for the ingress.
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                type: object
+              nodeSelector:
+                additionalProperties:
+                  type: string
+                description: NodeSelector specifies the node selector for each Qdrant
+                  node.
+                type: object
+              pauses:
+                description: |-
+                  Pauses specifies a list of pause request by developer for manual maintenance.
+                  Operator will skip handling any changes in the CR if any pause request is present.
+                items:
+                  properties:
+                    creationTimestamp:
+                      description: CreationTimestamp specifies the time when the pause
+                        request was created.
+                      type: string
+                    owner:
+                      description: Owner specifies the owner of the pause request.
+                      type: string
+                    reason:
+                      description: Reason specifies the reason for the pause request.
+                      type: string
+                  type: object
+                type: array
+              podDisruptionBudget:
+                description: PodDisruptionBudget specifies the pod disruption budget
+                  for the cluster.
+                properties:
+                  maxUnavailable:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    description: |-
+                      An eviction is allowed if at most "maxUnavailable" pods selected by
+                      "selector" are unavailable after the eviction, i.e. even in absence of
+                      the evicted pod. For example, one can prevent all voluntary evictions
+                      by specifying 0. This is a mutually exclusive setting with "minAvailable".
+                    x-kubernetes-int-or-string: true
+                  minAvailable:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    description: |-
+                      An eviction is allowed if at least "minAvailable" pods selected by
+                      "selector" will still be available after the eviction, i.e. even in the
+                      absence of the evicted pod.  So for example you can prevent all voluntary
+                      evictions by specifying "100%".
+                    x-kubernetes-int-or-string: true
+                  selector:
+                    description: |-
+                      Label query over pods whose evictions are managed by the disruption
+                      budget.
+                      A null selector will match no pods, while an empty ({}) selector will select
+                      all pods within the namespace.
+                    properties:
+                      matchExpressions:
+                        description: matchExpressions is a list of label selector
+                          requirements. The requirements are ANDed.
+                        items:
+                          description: |-
+                            A label selector requirement is a selector that contains values, a key, and an operator that
+                            relates the key and values.
+                          properties:
+                            key:
+                              description: key is the label key that the selector
+                                applies to.
+                              type: string
+                            operator:
+                              description: |-
+                                operator represents a key's relationship to a set of values.
+                                Valid operators are In, NotIn, Exists and DoesNotExist.
+                              type: string
+                            values:
+                              description: |-
+                                values is an array of string values. If the operator is In or NotIn,
+                                the values array must be non-empty. If the operator is Exists or DoesNotExist,
+                                the values array must be empty. This array is replaced during a strategic
+                                merge patch.
+                              items:
+                                type: string
+                              type: array
+                              x-kubernetes-list-type: atomic
+                          required:
+                          - key
+                          - operator
+                          type: object
+                        type: array
+                        x-kubernetes-list-type: atomic
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                          map is equivalent to an element of matchExpressions, whose key field is "key", the
+                          operator is "In", and the values array contains only "value". The requirements are ANDed.
+                        type: object
+                    type: object
+                    x-kubernetes-map-type: atomic
+                  unhealthyPodEvictionPolicy:
+                    description: |-
+                      UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods
+                      should be considered for eviction. Current implementation considers healthy pods,
+                      as pods that have status.conditions item with type="Ready",status="True".
+
+                      Valid policies are IfHealthyBudget and AlwaysAllow.
+                      If no policy is specified, the default behavior will be used,
+                      which corresponds to the IfHealthyBudget policy.
+
+                      IfHealthyBudget policy means that running pods (status.phase="Running"),
+                      but not yet healthy can be evicted only if the guarded application is not
+                      disrupted (status.currentHealthy is at least equal to status.desiredHealthy).
+                      Healthy pods will be subject to the PDB for eviction.
+
+                      AlwaysAllow policy means that all running pods (status.phase="Running"),
+                      but not yet healthy are considered disrupted and can be evicted regardless
+                      of whether the criteria in a PDB is met. This means perspective running
+                      pods of a disrupted application might not get a chance to become healthy.
+                      Healthy pods will be subject to the PDB for eviction.
+
+                      Additional policies may be added in the future.
+                      Clients making eviction decisions should disallow eviction of unhealthy pods
+                      if they encounter an unrecognized policy in this field.
+
+                      This field is beta-level. The eviction API uses this field when
+                      the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default).
+                    type: string
+                type: object
+              resources:
+                description: Resources specifies the resources to allocate for each
+                  Qdrant node.
+                properties:
+                  cpu:
+                    description: CPU specifies the CPU limit for each Qdrant node.
+                    type: string
+                  memory:
+                    description: Memory specifies the memory limit for each Qdrant
+                      node.
+                    type: string
+                  requests:
+                    description: Requests specifies the resource requests for each
+                      Qdrant node.
+                    properties:
+                      cpu:
+                        description: CPU specifies the CPU request for each Qdrant
+                          node.
+                        type: string
+                      memory:
+                        description: Memory specifies the memory request for each
+                          Qdrant node.
+                        type: string
+                    type: object
+                  storage:
+                    description: Storage specifies the storage amount for each Qdrant
+                      node.
+                    type: string
+                type: object
+              restartAllPodsConcurrently:
+                description: |-
+                  RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).
+                  If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods
+                  need to be restarted like when RestartedAtAnnotationKey is added/updated or the Qdrant version need to be upgraded.
+                  This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart.
+                type: boolean
+              security:
+                description: Security specifies the security context for each Qdrant
+                  node.
+                properties:
+                  fsGroup:
+                    description: FsGroup specifies file system group to run the Qdrant
+                      process as.
+                    format: int64
+                    type: integer
+                  group:
+                    description: Group specifies the group to run the Qdrant process
+                      as.
+                    format: int64
+                    type: integer
+                  user:
+                    description: User specifies the user to run the Qdrant process
+                      as.
+                    format: int64
+                    type: integer
+                type: object
+              service:
+                description: Service specifies the configuration of the Qdrant Kubernetes
+                  Service.
+                properties:
+                  annotations:
+                    additionalProperties:
+                      type: string
+                    description: Annotations specifies the annotations for the Service.
+                    type: object
+                  type:
+                    default: ClusterIP
+                    description: 'Type specifies the type of the Service: "ClusterIP",
+                      "NodePort", "LoadBalancer".'
+                    type: string
+                type: object
+              servicePerNode:
+                default: true
+                description: ServicePerNode specifies whether the cluster should start
+                  a dedicated service for each node.
+                type: boolean
+              size:
+                description: Size specifies the desired number of Qdrant nodes in
+                  the cluster
+                maximum: 30
+                minimum: 1
+                type: integer
+              statefulSet:
+                description: StatefulSet specifies the configuration of the Qdrant
+                  Kubernetes StatefulSet.
+                properties:
+                  annotations:
+                    additionalProperties:
+                      type: string
+                    description: Annotations specifies the annotations for the StatefulSet.
+                    type: object
+                  pods:
+                    description: Pods  specifies the configuration of the Pods of
+                      the Qdrant StatefulSet.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations specifies the annotations for the
+                          Pods.
+                        type: object
+                      extraEnv:
+                        description: ExtraEnv specifies the extra environment variables
+                          for the Pods.
+                        items:
+                          description: EnvVar represents an environment variable present
+                            in a Container.
+                          properties:
+                            name:
+                              description: Name of the environment variable. Must
+                                be a C_IDENTIFIER.
+                              type: string
+                            value:
+                              description: |-
+                                Variable references $(VAR_NAME) are expanded
+                                using the previously defined environment variables in the container and
+                                any service environment variables. If a variable cannot be resolved,
+                                the reference in the input string will be unchanged. Double $$ are reduced
+                                to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e.
+                                "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)".
+                                Escaped references will never be expanded, regardless of whether the variable
+                                exists or not.
+                                Defaults to "".
+                              type: string
+                            valueFrom:
+                              description: Source for the environment variable's value.
+                                Cannot be used if value is not empty.
+                              properties:
+                                configMapKeyRef:
+                                  description: Selects a key of a ConfigMap.
+                                  properties:
+                                    key:
+                                      description: The key to select.
+                                      type: string
+                                    name:
+                                      default: ""
+                                      description: |-
+                                        Name of the referent.
+                                        This field is effectively required, but due to backwards compatibility is
+                                        allowed to be empty. Instances of this type with an empty value here are
+                                        almost certainly wrong.
+                                        More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                      type: string
+                                    optional:
+                                      description: Specify whether the ConfigMap or
+                                        its key must be defined
+                                      type: boolean
+                                  required:
+                                  - key
+                                  type: object
+                                  x-kubernetes-map-type: atomic
+                                fieldRef:
+                                  description: |-
+                                    Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                                    spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+                                  properties:
+                                    apiVersion:
+                                      description: Version of the schema the FieldPath
+                                        is written in terms of, defaults to "v1".
+                                      type: string
+                                    fieldPath:
+                                      description: Path of the field to select in
+                                        the specified API version.
+                                      type: string
+                                  required:
+                                  - fieldPath
+                                  type: object
+                                  x-kubernetes-map-type: atomic
+                                resourceFieldRef:
+                                  description: |-
+                                    Selects a resource of the container: only resources limits and requests
+                                    (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+                                  properties:
+                                    containerName:
+                                      description: 'Container name: required for volumes,
+                                        optional for env vars'
+                                      type: string
+                                    divisor:
+                                      anyOf:
+                                      - type: integer
+                                      - type: string
+                                      description: Specifies the output format of
+                                        the exposed resources, defaults to "1"
+                                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                      x-kubernetes-int-or-string: true
+                                    resource:
+                                      description: 'Required: resource to select'
+                                      type: string
+                                  required:
+                                  - resource
+                                  type: object
+                                  x-kubernetes-map-type: atomic
+                                secretKeyRef:
+                                  description: Selects a key of a secret in the pod's
+                                    namespace
+                                  properties:
+                                    key:
+                                      description: The key of the secret to select
+                                        from.  Must be a valid secret key.
+                                      type: string
+                                    name:
+                                      default: ""
+                                      description: |-
+                                        Name of the referent.
+                                        This field is effectively required, but due to backwards compatibility is
+                                        allowed to be empty. Instances of this type with an empty value here are
+                                        almost certainly wrong.
+                                        More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                      type: string
+                                    optional:
+                                      description: Specify whether the Secret or its
+                                        key must be defined
+                                      type: boolean
+                                  required:
+                                  - key
+                                  type: object
+                                  x-kubernetes-map-type: atomic
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        type: array
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels specifies the labels for the Pods.
+                        type: object
+                    type: object
+                type: object
+              storageClassNames:
+                description: StorageClassNames specifies the storage class names for
+                  db and snapshots.
+                properties:
+                  db:
+                    description: DB specifies the storage class name for db volume.
+                    type: string
+                  snapshots:
+                    description: Snapshots specifies the storage class name for snapshots
+                      volume.
+                    type: string
+                type: object
+              suspend:
+                default: false
+                description: |-
+                  Suspend specifies whether to suspend the cluster.
+                  If enabled, the cluster will be suspended and all related resources will be removed except the PVCs.
+                type: boolean
+              tolerations:
+                description: Tolerations specifies the tolerations for each Qdrant
+                  node.
+                items:
+                  description: |-
+                    The pod this Toleration is attached to tolerates any taint that matches
+                    the triple <key,value,effect> using the matching operator <operator>.
+                  properties:
+                    effect:
+                      description: |-
+                        Effect indicates the taint effect to match. Empty means match all taint effects.
+                        When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+                      type: string
+                    key:
+                      description: |-
+                        Key is the taint key that the toleration applies to. Empty means match all taint keys.
+                        If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+                      type: string
+                    operator:
+                      description: |-
+                        Operator represents a key's relationship to the value.
+                        Valid operators are Exists and Equal. Defaults to Equal.
+                        Exists is equivalent to wildcard for value, so that a pod can
+                        tolerate all taints of a particular category.
+                      type: string
+                    tolerationSeconds:
+                      description: |-
+                        TolerationSeconds represents the period of time the toleration (which must be
+                        of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default,
+                        it is not set, which means tolerate the taint forever (do not evict). Zero and
+                        negative values will be treated as 0 (evict immediately) by the system.
+                      format: int64
+                      type: integer
+                    value:
+                      description: |-
+                        Value is the taint value the toleration matches to.
+                        If the operator is Exists, the value should be empty, otherwise just a regular string.
+                      type: string
+                  type: object
+                type: array
+              topologySpreadConstraints:
+                description: TopologySpreadConstraints specifies the topology spread
+                  constraints for the cluster.
+                items:
+                  description: TopologySpreadConstraint specifies how to spread matching
+                    pods among the given topology.
+                  properties:
+                    labelSelector:
+                      description: |-
+                        LabelSelector is used to find matching pods.
+                        Pods that match this label selector are counted to determine the number of pods
+                        in their corresponding topology domain.
+                      properties:
+                        matchExpressions:
+                          description: matchExpressions is a list of label selector
+                            requirements. The requirements are ANDed.
+                          items:
+                            description: |-
+                              A label selector requirement is a selector that contains values, a key, and an operator that
+                              relates the key and values.
+                            properties:
+                              key:
+                                description: key is the label key that the selector
+                                  applies to.
+                                type: string
+                              operator:
+                                description: |-
+                                  operator represents a key's relationship to a set of values.
+                                  Valid operators are In, NotIn, Exists and DoesNotExist.
+                                type: string
+                              values:
+                                description: |-
+                                  values is an array of string values. If the operator is In or NotIn,
+                                  the values array must be non-empty. If the operator is Exists or DoesNotExist,
+                                  the values array must be empty. This array is replaced during a strategic
+                                  merge patch.
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: atomic
+                            required:
+                            - key
+                            - operator
+                            type: object
+                          type: array
+                          x-kubernetes-list-type: atomic
+                        matchLabels:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels
+                            map is equivalent to an element of matchExpressions, whose key field is "key", the
+                            operator is "In", and the values array contains only "value". The requirements are ANDed.
+                          type: object
+                      type: object
+                      x-kubernetes-map-type: atomic
+                    matchLabelKeys:
+                      description: |-
+                        MatchLabelKeys is a set of pod label keys to select the pods over which
+                        spreading will be calculated. The keys are used to lookup values from the
+                        incoming pod labels, those key-value labels are ANDed with labelSelector
+                        to select the group of existing pods over which spreading will be calculated
+                        for the incoming pod. The same key is forbidden to exist in both MatchLabelKeys and LabelSelector.
+                        MatchLabelKeys cannot be set when LabelSelector isn't set.
+                        Keys that don't exist in the incoming pod labels will
+                        be ignored. A null or empty list means only match against labelSelector.
+
+                        This is a beta field and requires the MatchLabelKeysInPodTopologySpread feature gate to be enabled (enabled by default).
+                      items:
+                        type: string
+                      type: array
+                      x-kubernetes-list-type: atomic
+                    maxSkew:
+                      description: |-
+                        MaxSkew describes the degree to which pods may be unevenly distributed.
+                        When `whenUnsatisfiable=DoNotSchedule`, it is the maximum permitted difference
+                        between the number of matching pods in the target topology and the global minimum.
+                        The global minimum is the minimum number of matching pods in an eligible domain
+                        or zero if the number of eligible domains is less than MinDomains.
+                        For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same
+                        labelSelector spread as 2/2/1:
+                        In this case, the global minimum is 1.
+                        | zone1 | zone2 | zone3 |
+                        |  P P  |  P P  |   P   |
+                        - if MaxSkew is 1, incoming pod can only be scheduled to zone3 to become 2/2/2;
+                        scheduling it onto zone1(zone2) would make the ActualSkew(3-1) on zone1(zone2)
+                        violate MaxSkew(1).
+                        - if MaxSkew is 2, incoming pod can be scheduled onto any zone.
+                        When `whenUnsatisfiable=ScheduleAnyway`, it is used to give higher precedence
+                        to topologies that satisfy it.
+                        It's a required field. Default value is 1 and 0 is not allowed.
+                      format: int32
+                      type: integer
+                    minDomains:
+                      description: |-
+                        MinDomains indicates a minimum number of eligible domains.
+                        When the number of eligible domains with matching topology keys is less than minDomains,
+                        Pod Topology Spread treats "global minimum" as 0, and then the calculation of Skew is performed.
+                        And when the number of eligible domains with matching topology keys equals or greater than minDomains,
+                        this value has no effect on scheduling.
+                        As a result, when the number of eligible domains is less than minDomains,
+                        scheduler won't schedule more than maxSkew Pods to those domains.
+                        If value is nil, the constraint behaves as if MinDomains is equal to 1.
+                        Valid values are integers greater than 0.
+                        When value is not nil, WhenUnsatisfiable must be DoNotSchedule.
+
+                        For example, in a 3-zone cluster, MaxSkew is set to 2, MinDomains is set to 5 and pods with the same
+                        labelSelector spread as 2/2/2:
+                        | zone1 | zone2 | zone3 |
+                        |  P P  |  P P  |  P P  |
+                        The number of domains is less than 5(MinDomains), so "global minimum" is treated as 0.
+                        In this situation, new pod with the same labelSelector cannot be scheduled,
+                        because computed skew will be 3(3 - 0) if new Pod is scheduled to any of the three zones,
+                        it will violate MaxSkew.
+                      format: int32
+                      type: integer
+                    nodeAffinityPolicy:
+                      description: |-
+                        NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector
+                        when calculating pod topology spread skew. Options are:
+                        - Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations.
+                        - Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.
+
+                        If this value is nil, the behavior is equivalent to the Honor policy.
+                        This is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+                      type: string
+                    nodeTaintsPolicy:
+                      description: |-
+                        NodeTaintsPolicy indicates how we will treat node taints when calculating
+                        pod topology spread skew. Options are:
+                        - Honor: nodes without taints, along with tainted nodes for which the incoming pod
+                        has a toleration, are included.
+                        - Ignore: node taints are ignored. All nodes are included.
+
+                        If this value is nil, the behavior is equivalent to the Ignore policy.
+                        This is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+                      type: string
+                    topologyKey:
+                      description: |-
+                        TopologyKey is the key of node labels. Nodes that have a label with this key
+                        and identical values are considered to be in the same topology.
+                        We consider each <key, value> as a "bucket", and try to put balanced number
+                        of pods into each bucket.
+                        We define a domain as a particular instance of a topology.
+                        Also, we define an eligible domain as a domain whose nodes meet the requirements of
+                        nodeAffinityPolicy and nodeTaintsPolicy.
+                        e.g. If TopologyKey is "kubernetes.io/hostname", each Node is a domain of that topology.
+                        And, if TopologyKey is "topology.kubernetes.io/zone", each zone is a domain of that topology.
+                        It's a required field.
+                      type: string
+                    whenUnsatisfiable:
+                      description: |-
+                        WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy
+                        the spread constraint.
+                        - DoNotSchedule (default) tells the scheduler not to schedule it.
+                        - ScheduleAnyway tells the scheduler to schedule the pod in any location,
+                          but giving higher precedence to topologies that would help reduce the
+                          skew.
+                        A constraint is considered "Unsatisfiable" for an incoming pod
+                        if and only if every possible node assignment for that pod would violate
+                        "MaxSkew" on some topology.
+                        For example, in a 3-zone cluster, MaxSkew is set to 1, and pods with the same
+                        labelSelector spread as 3/1/1:
+                        | zone1 | zone2 | zone3 |
+                        | P P P |   P   |   P   |
+                        If WhenUnsatisfiable is set to DoNotSchedule, incoming pod can only be scheduled
+                        to zone2(zone3) to become 3/2/1(3/1/2) as ActualSkew(2-1) on zone2(zone3) satisfies
+                        MaxSkew(1). In other words, the cluster can still be imbalanced, but scheduler
+                        won't make it *more* imbalanced.
+                        It's a required field.
+                      type: string
+                  required:
+                  - maxSkew
+                  - topologyKey
+                  - whenUnsatisfiable
+                  type: object
+                type: array
+              version:
+                description: Version specifies the version of Qdrant to deploy
+                type: string
+            required:
+            - id
+            - size
+            - version
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+          status:
+            description: QdrantClusterStatus defines the observed state of QdrantCluster
+            properties:
+              ScaleDownNodeIndex:
+                description: |-
+                  The node index used in a scale down (see ScaleDownAllowed)
+                  If this field is not set the last index in AvailableNodeIndexes will be used.
+                type: integer
+              availableNodeIndexes:
+                description: |-
+                  AvailableNodeIndexes specifies the indexes of the individual nodes in the cluster
+                  The number of indexes should be equal with the AvailableNodes field.
+                items:
+                  type: integer
+                type: array
+              availableNodes:
+                description: AvailableNodes specifies the number of available nodes
+                  in the cluster
+                type: integer
+              bootstrapNode:
+                description: |-
+                  BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
+                  Should be a value from AvailableNodeIndexes.
+                  As default the value from AvailableNodeIndexes[0] will be used.
+                type: integer
+              conditions:
+                description: Conditions specifies the conditions of different checks
+                  on the cluster
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              deleteInProgressNodeIndexes:
+                description: |-
+                  DeleteInProgessNodeIndexes specifies the indexes of the nodes in the cluster which are in progress of deleting and required to be deleted.
+                  The indexes in this field are part of the AvailableNodeIndexes as well and cannot be re-used anymore before they are fully dropped.
+                  Meaning that if the cluster-manager has (async) started the process of deleting nodes, due to a scale-down, there is no way to revert this operaton.
+                  If the cluster want to scale-up concurrently (aka the delete is in progress), new nodes are required to accomplish.
+                items:
+                  type: integer
+                type: array
+              nextClusterManagerInvocation:
+                description: The next time to invoke the cluster-manager in UTC
+                format: date-time
+                type: string
+              nodes:
+                additionalProperties:
+                  properties:
+                    name:
+                      description: Name specifies the name of the node
+                      type: string
+                    started_at:
+                      description: StartedAt specifies the time when the node started
+                        (in RFC3339 format)
+                      type: string
+                    state:
+                      additionalProperties:
+                        type: string
+                      description: States specifies the condition states of the node
+                      type: object
+                    version:
+                      description: Version specifies the version of Qdrant running
+                        on the node
+                      type: string
+                  type: object
+                description: Nodes specifies the status of the nodes in the cluster
+                type: object
+              operations:
+                description: |-
+                  Operations tracks list of recent operation on the cluster. Operator uses this field to track the progress of an operation.
+                  In operator V2 this field is deprecated and Kubernetes events are used instead.
+                items:
+                  properties:
+                    completionTime:
+                      description: CompletionTime specifies the time when the operation
+                        completed
+                      type: string
+                    id:
+                      description: Id specifies the id of the operation
+                      type: integer
+                    message:
+                      description: Message specifies the message of the operation
+                      type: string
+                    phase:
+                      description: Phase specifies the phase of the operation
+                      type: string
+                    startTime:
+                      description: StartTime specifies the time when the operation
+                        started
+                      type: string
+                    steps:
+                      description: Steps specifies the steps the operation has performed
+                      items:
+                        properties:
+                          id:
+                            description: Id specifies the id of the step
+                            type: integer
+                          message:
+                            description: Message specifies the reason in case of failure
+                            type: string
+                          name:
+                            description: Name specifies the name of the step
+                            type: string
+                          phase:
+                            description: Phase specifies the phase of the step
+                            type: string
+                        required:
+                        - name
+                        type: object
+                      type: array
+                    subOperation:
+                      description: SubOperation specifies whether the operation is
+                        a sub-operation of another operation
+                      type: boolean
+                    type:
+                      description: Type specifies the type of the operation
+                      type: string
+                  required:
+                  - type
+                  type: object
+                type: array
+              phase:
+                description: Phase specifies the phase of the cluster
+                type: string
+              reason:
+                description: Reason specifies the reason for the phase of the cluster
+                type: string
+              scaleDownAllowed:
+                description: |-
+                  If set the operator will scale down 1 peer and reset the bool.
+                  If you want to remove more then 1 peer, you need to repeat setting this bool
+                type: boolean
+              version:
+                description: |-
+                  The version (to be) used in the cluster.
+                  This version can differ from the spec, because version updates need to be done in order (see `update-path` annotation)
+                type: string
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+        type: object
+    served: true
+    storage: true
+    subresources: {}
