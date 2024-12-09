@@ -59,7 +59,7 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	cloned.Resources.Storage = ""
 	cloned.RestartAllPodsConcurrently = false
 	cloned.Service = nil
-	cloned.ServicePerNode = false
+	cloned.ServicePerNode = nil
 	cloned.Size = 1
 	if v := cloned.StatefulSet; v != nil {
 		v.Annotations = nil
@@ -86,7 +86,7 @@ type QdrantClusterSpec struct {
 	// ServicePerNode specifies whether the cluster should start a dedicated service for each node.
 	// +kubebuilder:default=true
 	// +optional
-	ServicePerNode bool `json:"servicePerNode"`
+	ServicePerNode *bool `json:"servicePerNode,omitempty"`
 	// ClusterManager specifies whether to use the cluster manager for this cluster.
 	// The Python-operator will deploy a dedicated cluster manager instance.
 	// The Go-operator will use a shared instance.
