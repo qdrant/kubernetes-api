@@ -156,6 +156,14 @@ func (s QdrantClusterSpec) Validate() error {
 	return nil
 }
 
+// GetServicePerNode get the service per node, taking the default (true) into concideration
+func (s QdrantClusterSpec) GetServicePerNode() bool {
+	if s.ServicePerNode == nil {
+		return true
+	}
+	return *s.ServicePerNode
+}
+
 type KubernetesService struct {
 	// Type specifies the type of the Service: "ClusterIP", "NodePort", "LoadBalancer".
 	// +kubebuilder:default="ClusterIP"
