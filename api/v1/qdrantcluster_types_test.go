@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-
 	"testing"
 
 	"github.com/stretchr/testify/assert"
