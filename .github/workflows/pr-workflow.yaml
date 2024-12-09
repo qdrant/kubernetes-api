@@ -40,3 +40,7 @@ jobs:
         uses: CatChen/check-git-status-action@v1
         with:
           fail-if-not-clean: true
+
+      - name: Tests
+        run: |
+          make test
