@@ -888,8 +888,8 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 		*out = new(policyv1.PodDisruptionBudgetSpec)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.EmitSleep != nil {
-		in, out := &in.EmitSleep, &out.EmitSleep
+	if in.StartupDelaySeconds != nil {
+		in, out := &in.StartupDelaySeconds, &out.StartupDelaySeconds
 		*out = new(int)
 		**out = **in
 	}

@@ -53,7 +53,6 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	// Remove all fields (aka set a fixed value) which shouldn't restart the pod
 	// The list is sorted alphabetically, for easier maintainability
 	cloned.ClusterManager = nil
-	cloned.EmitSleep = nil
 	cloned.Ingress = nil
 	cloned.Pauses = nil
 	cloned.Resources.Storage = ""
@@ -64,6 +63,7 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	if v := cloned.StatefulSet; v != nil {
 		v.Annotations = nil
 	}
+	cloned.StartupDelaySeconds = nil
 	cloned.StorageClassNames = nil
 	cloned.Suspend = false
 	// Set Spec for result
@@ -143,12 +143,12 @@ type QdrantClusterSpec struct {
 	// This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart.
 	// +optional
 	RestartAllPodsConcurrently bool `json:"restartAllPodsConcurrently,omitempty"`
-	// If Emit Sleep is set, an additional 'sleep <value>' will be emitted to the pod startup.
+	// If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.
 	// The sleep will be added when a pod is restarted, it will not force any pod to restart.
-	// This feature is for debugging the core, e.g. if a pod is in crash loop, it provided a way
+	// This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way
 	// to inspect the attached storage.
 	// +optional
-	EmitSleep *int `json:"emitSleep,omitempty"`
+	StartupDelaySeconds *int `json:"startupDelaySeconds = nil,omitempty"`
 }
 
 // Validates if there are incorrect settings in the CRD
