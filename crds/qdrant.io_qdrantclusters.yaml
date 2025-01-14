@@ -255,9 +255,13 @@ spec:
                         type: object
                     type: object
                 type: object
-              distributed:
-                description: Deprecated
-                type: boolean
+              emitSleep:
+                description: |-
+                  If Emit Sleep is set, an additional 'sleep <value>' will be emitted to the pod startup.
+                  The sleep will be added when a pod is restarted, it will not force any pod to restart.
+                  This feature is for debugging the core, e.g. if a pod is in crash loop, it provided a way
+                  to inspect the attached storage.
+                type: integer
               id:
                 description: Id specifies the unique identifier of the cluster
                 type: string
