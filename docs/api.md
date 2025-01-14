@@ -645,7 +645,6 @@ _Appears in:_
 | `clusterManager` _boolean_ | ClusterManager specifies whether to use the cluster manager for this cluster.<br />The Python-operator will deploy a dedicated cluster manager instance.<br />The Go-operator will use a shared instance.<br />If not set, the default will be taken from the operator config. |  |  |
 | `suspend` _boolean_ | Suspend specifies whether to suspend the cluster.<br />If enabled, the cluster will be suspended and all related resources will be removed except the PVCs. | false |  |
 | `pauses` _[Pause](#pause) array_ | Pauses specifies a list of pause request by developer for manual maintenance.<br />Operator will skip handling any changes in the CR if any pause request is present. |  |  |
-| `distributed` _boolean_ | Deprecated |  |  |
 | `image` _[QdrantImage](#qdrantimage)_ | Image specifies the image to use for each Qdrant node. |  |  |
 | `resources` _[Resources](#resources)_ | Resources specifies the resources to allocate for each Qdrant node. |  |  |
 | `security` _[QdrantSecurityContext](#qdrantsecuritycontext)_ | Security specifies the security context for each Qdrant node. |  |  |
@@ -659,6 +658,7 @@ _Appears in:_
 | `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  |  |
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted like when RestartedAtAnnotationKey is added/updated or the Qdrant version need to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart. |  |  |
+| `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  |  |
 
 
 

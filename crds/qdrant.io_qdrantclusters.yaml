@@ -255,9 +255,6 @@ spec:
                         type: object
                     type: object
                 type: object
-              distributed:
-                description: Deprecated
-                type: boolean
               id:
                 description: Id specifies the unique identifier of the cluster
                 type: string
@@ -543,6 +540,13 @@ spec:
                   the cluster
                 maximum: 30
                 minimum: 1
+                type: integer
+              startupDelaySeconds:
+                description: |-
+                  If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.
+                  The sleep will be added when a pod is restarted, it will not force any pod to restart.
+                  This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way
+                  to inspect the attached storage.
                 type: integer
               statefulSet:
                 description: StatefulSet specifies the configuration of the Qdrant
