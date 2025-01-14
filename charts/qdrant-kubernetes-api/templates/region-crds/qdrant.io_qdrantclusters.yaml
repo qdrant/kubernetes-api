@@ -542,7 +542,7 @@ spec:
                 maximum: 30
                 minimum: 1
                 type: integer
-              startupDelaySeconds = nil:
+              startupDelaySeconds:
                 description: |-
                   If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.
                   The sleep will be added when a pod is restarted, it will not force any pod to restart.

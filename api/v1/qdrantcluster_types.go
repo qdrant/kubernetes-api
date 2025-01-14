@@ -148,7 +148,7 @@ type QdrantClusterSpec struct {
 	// This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way
 	// to inspect the attached storage.
 	// +optional
-	StartupDelaySeconds *int `json:"startupDelaySeconds = nil,omitempty"`
+	StartupDelaySeconds *int `json:"startupDelaySeconds,omitempty"`
 }
 
 // Validates if there are incorrect settings in the CRD
