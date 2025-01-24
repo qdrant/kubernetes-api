@@ -3,6 +3,7 @@ package v1
 import (
 	helmapi "github.com/fluxcd/helm-controller/api/v2beta2"
 	srcapi "github.com/fluxcd/source-controller/api/v1beta2"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -15,10 +16,15 @@ const (
 type QdrantCloudRegionSpec struct {
 	// Id specifies the unique identifier of the region
 	Id string `json:"id,omitempty"`
+	// Components specifies the list of components to be installed in the region
+	// +optional
+	Components []corev1.TypedObjectReference `json:"components,omitempty"`
 	// HelmRepositories specifies the list of helm repositories to be created to the region
+	// Deprecated: Use "Components" instead
 	// +optional
 	HelmRepositories []HelmRepository `json:"helmRepositories,omitempty"`
 	// HelmReleases specifies the list of helm releases to be created to the region
+	// Deprecated: Use "Components" instead
 	// +optional
 	HelmReleases []HelmRelease `json:"helmReleases,omitempty"`
 }
