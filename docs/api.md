@@ -52,6 +52,25 @@ _Appears in:_
 
 
 
+#### ComponentReference
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionSpec](#qdrantcloudregionspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | APIVersion is the group and version of the component being referenced. |  |  |
+| `kind` _string_ | Kind is the type of component being referenced |  |  |
+| `name` _string_ | Name is the name of component being referenced |  |  |
+| `namespace` _string_ | Namespace is the namespace of component being referenced. |  |  |
+
+
 #### ComponentStatus
 
 
@@ -397,8 +416,9 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `id` _string_ | Id specifies the unique identifier of the region |  |  |
-| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region |  |  |
-| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region |  |  |
+| `components` _[ComponentReference](#componentreference) array_ | Components specifies the list of components to be installed in the region |  |  |
+| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region<br />Deprecated: Use "Components" instead |  |  |
+| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region<br />Deprecated: Use "Components" instead |  |  |
 
 
 
