@@ -30,8 +30,7 @@ type QdrantCloudRegionSpec struct {
 
 type ComponentReference struct {
 	// APIVersion is the group and version of the component being referenced.
-	// +optional
-	APIVersion string `json:"apiVersion,omitempty"`
+	APIVersion string `json:"apiVersion"`
 	// Kind is the type of component being referenced
 	Kind string `json:"kind"`
 	// Name is the name of component being referenced

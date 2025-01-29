@@ -71,6 +71,7 @@ spec:
                       description: Namespace is the namespace of component being referenced.
                       type: string
                   required:
+                  - apiVersion
                   - kind
                   - name
                   - namespace
