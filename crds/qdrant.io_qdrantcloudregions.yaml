@@ -57,8 +57,9 @@ spec:
                   in the region
                 items:
                   properties:
-                    apiGroup:
-                      description: APIGroup is the group of the component being referenced.
+                    apiVersion:
+                      description: APIVersion is the group and version of the component
+                        being referenced.
                       type: string
                     kind:
                       description: Kind is the type of component being referenced
@@ -67,12 +68,12 @@ spec:
                       description: Name is the name of component being referenced
                       type: string
                     namespace:
-                      default: default
-                      description: Namespace is the namespace of component being referenced
+                      description: Namespace is the namespace of component being referenced.
                       type: string
                   required:
                   - kind
                   - name
+                  - namespace
                   type: object
                 type: array
               helmReleases:

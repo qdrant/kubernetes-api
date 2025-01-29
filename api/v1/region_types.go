@@ -29,17 +29,15 @@ type QdrantCloudRegionSpec struct {
 }
 
 type ComponentReference struct {
-	// APIGroup is the group of the component being referenced.
+	// APIVersion is the group and version of the component being referenced.
 	// +optional
-	APIGroup string `json:"apiGroup,omitempty"`
+	APIVersion string `json:"apiVersion,omitempty"`
 	// Kind is the type of component being referenced
 	Kind string `json:"kind"`
 	// Name is the name of component being referenced
 	Name string `json:"name"`
-	// Namespace is the namespace of component being referenced
-	// +kubebuilder:default="default"
-	// +optional
-	Namespace string `json:"namespace,omitempty"`
+	// Namespace is the namespace of component being referenced.
+	Namespace string `json:"namespace"`
 }
 
 type HelmRepository struct {

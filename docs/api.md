@@ -65,10 +65,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `apiGroup` _string_ | APIGroup is the group of the component being referenced. |  |  |
+| `apiVersion` _string_ | APIVersion is the group and version of the component being referenced. |  |  |
 | `kind` _string_ | Kind is the type of component being referenced |  |  |
 | `name` _string_ | Name is the name of component being referenced |  |  |
-| `namespace` _string_ | Namespace is the namespace of component being referenced | default |  |
+| `namespace` _string_ | Namespace is the namespace of component being referenced. |  |  |
 
 
 #### ComponentStatus
