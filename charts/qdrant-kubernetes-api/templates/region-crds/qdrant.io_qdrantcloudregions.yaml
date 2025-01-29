@@ -57,26 +57,19 @@ spec:
                 description: Components specifies the list of components to be installed
                   in the region
                 items:
-                  description: TypedObjectReference contains enough information to
-                    let you locate the typed referenced object
                   properties:
                     apiGroup:
-                      description: |-
-                        APIGroup is the group for the resource being referenced.
-                        If APIGroup is not specified, the specified Kind must be in the core API group.
-                        For any other third-party types, APIGroup is required.
+                      description: APIGroup is the group of the component being referenced.
                       type: string
                     kind:
-                      description: Kind is the type of resource being referenced
+                      description: Kind is the type of component being referenced
                       type: string
                     name:
-                      description: Name is the name of resource being referenced
+                      description: Name is the name of component being referenced
                       type: string
                     namespace:
-                      description: |-
-                        Namespace is the namespace of resource being referenced
-                        Note that when a namespace is specified, a gateway.networking.k8s.io/ReferenceGrant object is required in the referent namespace to allow that namespace's owner to accept the reference. See the ReferenceGrant documentation for details.
-                        (Alpha) This field requires the CrossNamespaceVolumeDataSource feature gate to be enabled.
+                      default: default
+                      description: Namespace is the namespace of component being referenced
                       type: string
                   required:
                   - kind

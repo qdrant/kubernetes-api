@@ -3,7 +3,6 @@ package v1
 import (
 	helmapi "github.com/fluxcd/helm-controller/api/v2beta2"
 	srcapi "github.com/fluxcd/source-controller/api/v1beta2"
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -18,7 +17,7 @@ type QdrantCloudRegionSpec struct {
 	Id string `json:"id,omitempty"`
 	// Components specifies the list of components to be installed in the region
 	// +optional
-	Components []corev1.TypedObjectReference `json:"components,omitempty"`
+	Components []ComponentReference `json:"components,omitempty"`
 	// HelmRepositories specifies the list of helm repositories to be created to the region
 	// Deprecated: Use "Components" instead
 	// +optional
@@ -27,6 +26,20 @@ type QdrantCloudRegionSpec struct {
 	// Deprecated: Use "Components" instead
 	// +optional
 	HelmReleases []HelmRelease `json:"helmReleases,omitempty"`
+}
+
+type ComponentReference struct {
+	// APIGroup is the group of the component being referenced.
+	// +optional
+	APIGroup string `json:"apiGroup,omitempty"`
+	// Kind is the type of component being referenced
+	Kind string `json:"kind"`
+	// Name is the name of component being referenced
+	Name string `json:"name"`
+	// Namespace is the namespace of component being referenced
+	// +kubebuilder:default="default"
+	// +optional
+	Namespace string `json:"namespace,omitempty"`
 }
 
 type HelmRepository struct {
