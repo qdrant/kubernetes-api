@@ -65,6 +65,10 @@ spec:
                     kind:
                       description: Kind is the type of component being referenced
                       type: string
+                    markedForDeletion:
+                      description: MarkedForDeletion specifies whether the component
+                        is marked for deletion
+                      type: boolean
                     name:
                       description: Name is the name of component being referenced
                       type: string
