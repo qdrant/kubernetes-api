@@ -37,6 +37,9 @@ type ComponentReference struct {
 	Name string `json:"name"`
 	// Namespace is the namespace of component being referenced.
 	Namespace string `json:"namespace"`
+	// MarkedForDeletion specifies whether the component is marked for deletion
+	// +optional
+	MarkedForDeletion bool `json:"markedForDeletion,omitempty"`
 }
 
 type HelmRepository struct {

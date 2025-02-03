@@ -69,6 +69,7 @@ _Appears in:_
 | `kind` _string_ | Kind is the type of component being referenced |  |  |
 | `name` _string_ | Name is the name of component being referenced |  |  |
 | `namespace` _string_ | Namespace is the namespace of component being referenced. |  |  |
+| `markedForDeletion` _boolean_ | MarkedForDeletion specifies whether the component is marked for deletion |  |  |
 
 
 #### ComponentStatus
