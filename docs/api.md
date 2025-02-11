@@ -52,6 +52,26 @@ _Appears in:_
 
 
 
+#### ComponentReference
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionSpec](#qdrantcloudregionspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | APIVersion is the group and version of the component being referenced. |  |  |
+| `kind` _string_ | Kind is the type of component being referenced |  |  |
+| `name` _string_ | Name is the name of component being referenced |  |  |
+| `namespace` _string_ | Namespace is the namespace of component being referenced. |  |  |
+| `markedForDeletion` _boolean_ | MarkedForDeletion specifies whether the component is marked for deletion |  |  |
+
+
 #### ComponentStatus
 
 
@@ -260,74 +280,6 @@ _Appears in:_
 | `version` _string_ | Version specifies the version of Qdrant running on the node |  |  |
 
 
-#### Operation
-
-
-
-
-
-
-
-_Appears in:_
-- [QdrantClusterStatus](#qdrantclusterstatus)
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `type` _[OperationType](#operationtype)_ | Type specifies the type of the operation |  |  |
-| `phase` _[OperationPhase](#operationphase)_ | Phase specifies the phase of the operation |  |  |
-| `id` _integer_ | Id specifies the id of the operation |  |  |
-| `startTime` _string_ | StartTime specifies the time when the operation started |  |  |
-| `completionTime` _string_ | CompletionTime specifies the time when the operation completed |  |  |
-| `message` _string_ | Message specifies the message of the operation |  |  |
-| `subOperation` _boolean_ | SubOperation specifies whether the operation is a sub-operation of another operation |  |  |
-| `steps` _[OperationStep](#operationstep) array_ | Steps specifies the steps the operation has performed |  |  |
-
-
-#### OperationPhase
-
-_Underlying type:_ _string_
-
-
-
-
-
-_Appears in:_
-- [Operation](#operation)
-
-
-
-#### OperationStep
-
-
-
-
-
-
-
-_Appears in:_
-- [Operation](#operation)
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `name` _string_ | Name specifies the name of the step |  |  |
-| `id` _integer_ | Id specifies the id of the step |  |  |
-| `phase` _[StepPhase](#stepphase)_ | Phase specifies the phase of the step |  |  |
-| `message` _string_ | Message specifies the reason in case of failure |  |  |
-
-
-#### OperationType
-
-_Underlying type:_ _string_
-
-
-
-
-
-_Appears in:_
-- [Operation](#operation)
-
-
-
 #### Pause
 
 
@@ -397,8 +349,9 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `id` _string_ | Id specifies the unique identifier of the region |  |  |
-| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region |  |  |
-| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region |  |  |
+| `components` _[ComponentReference](#componentreference) array_ | Components specifies the list of components to be installed in the region |  |  |
+| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region<br />Deprecated: Use "Components" instead |  |  |
+| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region<br />Deprecated: Use "Components" instead |  |  |
 
 
 
@@ -991,19 +944,6 @@ _Underlying type:_ _string_
 
 _Appears in:_
 - [QdrantClusterScheduledSnapshotStatus](#qdrantclusterscheduledsnapshotstatus)
-
-
-
-#### StepPhase
-
-_Underlying type:_ _string_
-
-
-
-
-
-_Appears in:_
-- [OperationStep](#operationstep)
 
 
 

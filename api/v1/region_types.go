@@ -15,12 +15,31 @@ const (
 type QdrantCloudRegionSpec struct {
 	// Id specifies the unique identifier of the region
 	Id string `json:"id,omitempty"`
+	// Components specifies the list of components to be installed in the region
+	// +optional
+	Components []ComponentReference `json:"components,omitempty"`
 	// HelmRepositories specifies the list of helm repositories to be created to the region
+	// Deprecated: Use "Components" instead
 	// +optional
 	HelmRepositories []HelmRepository `json:"helmRepositories,omitempty"`
 	// HelmReleases specifies the list of helm releases to be created to the region
+	// Deprecated: Use "Components" instead
 	// +optional
 	HelmReleases []HelmRelease `json:"helmReleases,omitempty"`
+}
+
+type ComponentReference struct {
+	// APIVersion is the group and version of the component being referenced.
+	APIVersion string `json:"apiVersion"`
+	// Kind is the type of component being referenced
+	Kind string `json:"kind"`
+	// Name is the name of component being referenced
+	Name string `json:"name"`
+	// Namespace is the namespace of component being referenced.
+	Namespace string `json:"namespace"`
+	// MarkedForDeletion specifies whether the component is marked for deletion
+	// +optional
+	MarkedForDeletion bool `json:"markedForDeletion,omitempty"`
 }
 
 type HelmRepository struct {

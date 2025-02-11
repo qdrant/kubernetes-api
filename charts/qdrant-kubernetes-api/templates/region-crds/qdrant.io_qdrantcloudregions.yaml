@@ -53,9 +53,39 @@ spec:
           spec:
             description: QdrantCloudRegionSpec defines the desired state of QdrantCloudRegion
             properties:
+              components:
+                description: Components specifies the list of components to be installed
+                  in the region
+                items:
+                  properties:
+                    apiVersion:
+                      description: APIVersion is the group and version of the component
+                        being referenced.
+                      type: string
+                    kind:
+                      description: Kind is the type of component being referenced
+                      type: string
+                    markedForDeletion:
+                      description: MarkedForDeletion specifies whether the component
+                        is marked for deletion
+                      type: boolean
+                    name:
+                      description: Name is the name of component being referenced
+                      type: string
+                    namespace:
+                      description: Namespace is the namespace of component being referenced.
+                      type: string
+                  required:
+                  - apiVersion
+                  - kind
+                  - name
+                  - namespace
+                  type: object
+                type: array
               helmReleases:
-                description: HelmReleases specifies the list of helm releases to be
-                  created to the region
+                description: |-
+                  HelmReleases specifies the list of helm releases to be created to the region
+                  Deprecated: Use "Components" instead
                 items:
                   properties:
                     markedForDeletionAt:
@@ -1338,8 +1368,9 @@ spec:
                   type: object
                 type: array
               helmRepositories:
-                description: HelmRepositories specifies the list of helm repositories
-                  to be created to the region
+                description: |-
+                  HelmRepositories specifies the list of helm repositories to be created to the region
+                  Deprecated: Use "Components" instead
                 items:
                   properties:
                     markedForDeletionAt:
