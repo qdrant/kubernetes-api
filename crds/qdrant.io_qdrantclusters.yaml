@@ -1057,60 +1057,6 @@ spec:
                   type: object
                 description: Nodes specifies the status of the nodes in the cluster
                 type: object
-              operations:
-                description: |-
-                  Operations tracks list of recent operation on the cluster. Operator uses this field to track the progress of an operation.
-                  In operator V2 this field is deprecated and Kubernetes events are used instead.
-                items:
-                  properties:
-                    completionTime:
-                      description: CompletionTime specifies the time when the operation
-                        completed
-                      type: string
-                    id:
-                      description: Id specifies the id of the operation
-                      type: integer
-                    message:
-                      description: Message specifies the message of the operation
-                      type: string
-                    phase:
-                      description: Phase specifies the phase of the operation
-                      type: string
-                    startTime:
-                      description: StartTime specifies the time when the operation
-                        started
-                      type: string
-                    steps:
-                      description: Steps specifies the steps the operation has performed
-                      items:
-                        properties:
-                          id:
-                            description: Id specifies the id of the step
-                            type: integer
-                          message:
-                            description: Message specifies the reason in case of failure
-                            type: string
-                          name:
-                            description: Name specifies the name of the step
-                            type: string
-                          phase:
-                            description: Phase specifies the phase of the step
-                            type: string
-                        required:
-                        - name
-                        type: object
-                      type: array
-                    subOperation:
-                      description: SubOperation specifies whether the operation is
-                        a sub-operation of another operation
-                      type: boolean
-                    type:
-                      description: Type specifies the type of the operation
-                      type: string
-                  required:
-                  - type
-                  type: object
-                type: array
               phase:
                 description: Phase specifies the phase of the cluster
                 type: string
