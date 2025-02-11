@@ -679,23 +679,8 @@ const (
 	ClusterUpdating       ClusterPhase = "Updating"
 	ClusterFailedToUpdate ClusterPhase = "FailedToUpdate"
 
-	ClusterScaling       ClusterPhase = "Scaling"
-	ClusterFailedToScale ClusterPhase = "FailedToScale"
-
-	ClusterRestarting      ClusterPhase = "Restarting"
-	ClusterFailedToRestart ClusterPhase = "FailedToRestart"
-
-	ClusterResyncing      ClusterPhase = "Resyncing"
-	ClusterFailedToResync ClusterPhase = "FailedToResync"
-
-	ClusterUpgrading       ClusterPhase = "Upgrading"
-	ClusterFailedToUpgrade ClusterPhase = "FailedToUpgrade"
-
-	ClusterBackupRunning  ClusterPhase = "BackupRunning"
-	ClusterFailedToBackup ClusterPhase = "FailedToBackup"
-
-	ClusterRestoring       ClusterPhase = "Restoring"
-	ClusterFailedToRestore ClusterPhase = "FailedToRestore"
+	ClusterScaling   ClusterPhase = "Scaling"
+	ClusterUpgrading ClusterPhase = "Upgrading"
 
 	ClusterSuspending      ClusterPhase = "Suspending"
 	ClusterSuspended       ClusterPhase = "Suspended"
@@ -754,10 +739,6 @@ type QdrantClusterStatus struct {
 	// Conditions specifies the conditions of different checks on the cluster
 	// +optional
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
-	// Operations tracks list of recent operation on the cluster. Operator uses this field to track the progress of an operation.
-	// In operator V2 this field is deprecated and Kubernetes events are used instead.
-	// +optional
-	Operations []Operation `json:"operations,omitempty"`
 	// Nodes specifies the status of the nodes in the cluster
 	// +optional
 	Nodes map[string]NodeStatus `json:"nodes,omitempty"`
@@ -769,79 +750,6 @@ type QdrantClusterStatus struct {
 	// +optional
 	Version string `json:"version,omitempty"`
 }
-
-type Operation struct {
-	// Type specifies the type of the operation
-	Type OperationType `json:"type"`
-	// Phase specifies the phase of the operation
-	// +optional
-	Phase OperationPhase `json:"phase,omitempty"`
-	// Id specifies the id of the operation
-	// +optional
-	Id int `json:"id"`
-	// StartTime specifies the time when the operation started
-	// +optional
-	StartTime string `json:"startTime,omitempty"`
-	// CompletionTime specifies the time when the operation completed
-	// +optional
-	CompletionTime string `json:"completionTime,omitempty"`
-	// Message specifies the message of the operation
-	// +optional
-	Message string `json:"message,omitempty"`
-	// SubOperation specifies whether the operation is a sub-operation of another operation
-	// +optional
-	SubOperation bool `json:"subOperation,omitempty"`
-	// Steps specifies the steps the operation has performed
-	// +optional
-	Steps []OperationStep `json:"steps,omitempty"`
-}
-
-type OperationType string
-
-const (
-	BackupOperation                   OperationType = "Backup"
-	ClusterCreationOperation          OperationType = "ClusterCreation"
-	HorizontalScalingOperation        OperationType = "HorizontalScaling"
-	VerticalScalingOperation          OperationType = "VerticalScaling"
-	VersionUpdateOperation            OperationType = "VersionUpdate"
-	SuspendOperation                  OperationType = "Suspend"
-	ResumeOperation                   OperationType = "Resume"
-	RestartOperation                  OperationType = "Restart"
-	ResyncOperation                   OperationType = "Resync"
-	RecoveryOperation                 OperationType = "Recovery"
-	CrossNamespacedMigrationOperation OperationType = "CrossNamespacedMigration"
-)
-
-type OperationPhase string
-
-const (
-	OperationPending    OperationPhase = "Pending"
-	OperationInProgress OperationPhase = "InProgress"
-	OperationCompleted  OperationPhase = "Completed"
-	OperationFailed     OperationPhase = "Failed"
-)
-
-type OperationStep struct {
-	// Name specifies the name of the step
-	Name string `json:"name"`
-	// Id specifies the id of the step
-	// +optional
-	Id int `json:"id,omitempty"`
-	// Phase specifies the phase of the step
-	// +optional
-	Phase StepPhase `json:"phase,omitempty"`
-	// Message specifies the reason in case of failure
-	// +optional
-	Message string `json:"message,omitempty"`
-}
-
-type StepPhase string
-
-const (
-	StepInProgress StepPhase = "InProgress"
-	StepCompleted  StepPhase = "Completed"
-	StepFailed     StepPhase = "Failed"
-)
 
 type NodeStatus struct {
 	// Name specifies the name of the node
