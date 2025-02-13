@@ -526,6 +526,9 @@ type QdrantConfigurationTLS struct {
 	// Reference to the secret containing the server private key file
 	// +optional
 	Key *QdrantSecretKeyRef `json:"key,omitempty"`
+	// Reference to the secret containing the CA certificate file
+	// +optional
+	CaCert *QdrantSecretKeyRef `json:"caCert,omitempty"`
 }
 
 func (c *QdrantConfigurationTLS) GetCert() *QdrantSecretKeyRef {
@@ -533,6 +536,13 @@ func (c *QdrantConfigurationTLS) GetCert() *QdrantSecretKeyRef {
 		return nil
 	}
 	return c.Cert
+}
+
+func (c *QdrantConfigurationTLS) GetCaCert() *QdrantSecretKeyRef {
+	if c == nil {
+		return nil
+	}
+	return c.CaCert
 }
 
 func (c *QdrantConfigurationTLS) GetKey() *QdrantSecretKeyRef {
