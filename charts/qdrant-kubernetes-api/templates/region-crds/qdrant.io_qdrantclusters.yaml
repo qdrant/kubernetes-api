@@ -194,6 +194,36 @@ spec:
                   tls:
                     description: TLS specifies the TLS configuration for Qdrant.
                     properties:
+                      caCert:
+                        description: Reference to the secret containing the CA certificate
+                          file
+                        properties:
+                          secretKeyRef:
+                            description: SecretKeyRef to the secret containing data
+                              to configure the qdrant instance
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
                       cert:
                         description: Reference to the secret containing the server
                           certificate chain file

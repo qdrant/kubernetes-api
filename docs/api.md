@@ -705,6 +705,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `cert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server certificate chain file |  |  |
 | `key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server private key file |  |  |
+| `caCert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the CA certificate file |  |  |
 
 
 #### QdrantImage
