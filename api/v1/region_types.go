@@ -103,6 +103,70 @@ type QdrantCloudRegionStatus struct {
 	// Monitoring specifies monitoring status
 	// +optional
 	Monitoring Monitoring `json:"monitoring,omitempty"`
+	// StorageClasses contains the availble StorageClasses in the Kubernetes cluster
+	// +optional
+	StorageClasses []StorageClass `json:"storageClasses,omitempty"`
+	// VolumeSnapshotClasses contains the available VolumeSnapshotClasses in the Kubernetes cluster
+	// +optional
+	VolumeSnapshotClasses []VolumeSnapshotClass `json:"volumeSnapshotClasses,omitempty"`
+	// NodeInfos contains the information about the nodes in the Kubernetes cluster
+	// +optional
+	NodeInfos []NodeInfo `json:"nodeInfos,omitempty"`
+}
+
+type StorageClass struct {
+	// Name specifies the name of the storage class
+	Name string `json:"name"`
+	// IsDefault specifies whether the storage class is the default storage class
+	IsDefault bool `json:"isDefault"`
+	// Provisioner specifies the provisioner of the storage class
+	Provisioner string `json:"provisioner"`
+	// AllowVolumeExpansion specifies whether the storage class allows volume expansion
+	AllowVolumeExpansion bool `json:"allowVolumeExpansion"`
+	// ReclaimPolicy specifies the reclaim policy of the storage class
+	ReclaimPolicy string `json:"reclaimPolicy"`
+	// Parameters specifies the parameters of the storage class
+	// +optional
+	Parameters map[string]string `json:"parameters"`
+}
+
+type VolumeSnapshotClass struct {
+	// Name specifies the name of the volume snapshot class
+	Name string `json:"name"`
+	// Driver specifies the driver of the volume snapshot class
+	Driver string `json:"driver"`
+}
+
+type NodeInfo struct {
+	// Name specifies the name of the node
+	Name string `json:"name"`
+	// Region specifies the region of the node
+	// +optional
+	Region string `json:"region,omitempty"`
+	// Zone specifies the zone of the node
+	// +optional
+	Zone string `json:"zone,omitempty"`
+	// InstanceType specifies the instance type of the node
+	// +optional
+	InstanceType string `json:"instanceType,omitempty"`
+	// Arch specifies the CPU architecture of the node
+	// +optional
+	Arch string `json:"arch,omitempty"`
+	// Capacity specifies the capacity of the node
+	Capacity NodeResourceInfo `json:"capacity"`
+	// Allocatable specifies the allocatable resources of the node
+	Allocatable NodeResourceInfo `json:"allocatable"`
+}
+
+type NodeResourceInfo struct {
+	// CPU specifies the CPU resources of the node
+	CPU string `json:"cpu"`
+	// Memory specifies the memory resources of the node
+	Memory string `json:"memory"`
+	// Pods specifies the pods resources of the node
+	Pods string `json:"pods"`
+	// EphemeralStorage specifies the ephemeral storage resources of the node
+	EphemeralStorage string `json:"ephemeralStorage"`
 }
 
 type Monitoring struct {
