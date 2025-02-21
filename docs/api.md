@@ -261,6 +261,47 @@ _Appears in:_
 | `grpcHost` _string_ | GRPCHost specifies the host name for the GRPC ingress. |  |  |
 
 
+#### NodeInfo
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name specifies the name of the node |  |  |
+| `region` _string_ | Region specifies the region of the node |  |  |
+| `zone` _string_ | Zone specifies the zone of the node |  |  |
+| `instanceType` _string_ | InstanceType specifies the instance type of the node |  |  |
+| `arch` _string_ | Arch specifies the CPU architecture of the node |  |  |
+| `capacity` _[NodeResourceInfo](#noderesourceinfo)_ | Capacity specifies the capacity of the node |  |  |
+| `allocatable` _[NodeResourceInfo](#noderesourceinfo)_ | Allocatable specifies the allocatable resources of the node |  |  |
+
+
+#### NodeResourceInfo
+
+
+
+
+
+
+
+_Appears in:_
+- [NodeInfo](#nodeinfo)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `cpu` _string_ | CPU specifies the CPU resources of the node |  |  |
+| `memory` _string_ | Memory specifies the memory resources of the node |  |  |
+| `pods` _string_ | Pods specifies the pods resources of the node |  |  |
+| `ephemeralStorage` _string_ | EphemeralStorage specifies the ephemeral storage resources of the node |  |  |
+
+
 #### NodeStatus
 
 
@@ -948,6 +989,27 @@ _Appears in:_
 
 
 
+#### StorageClass
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name specifies the name of the storage class |  |  |
+| `default` _boolean_ | Default specifies whether the storage class is the default storage class |  |  |
+| `provisioner` _string_ | Provisioner specifies the provisioner of the storage class |  |  |
+| `allowVolumeExpansion` _boolean_ | AllowVolumeExpansion specifies whether the storage class allows volume expansion |  |  |
+| `reclaimPolicy` _string_ | ReclaimPolicy specifies the reclaim policy of the storage class |  |  |
+| `parameters` _object (keys:string, values:string)_ | Parameters specifies the parameters of the storage class |  |  |
+
+
 #### StorageClassNames
 
 
@@ -1012,6 +1074,23 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
+
+
+#### VolumeSnapshotClass
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name specifies the name of the volume snapshot class |  |  |
+| `driver` _string_ | Driver specifies the driver of the volume snapshot class |  |  |
 
 
 #### VolumeSnapshotInfo

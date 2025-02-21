@@ -1759,6 +1759,80 @@ spec:
                     description: NodeMetricSource specifies the node metric source
                     type: string
                 type: object
+              nodeInfos:
+                description: NodeInfos contains the information about the nodes in
+                  the Kubernetes cluster
+                items:
+                  properties:
+                    allocatable:
+                      description: Allocatable specifies the allocatable resources
+                        of the node
+                      properties:
+                        cpu:
+                          description: CPU specifies the CPU resources of the node
+                          type: string
+                        ephemeralStorage:
+                          description: EphemeralStorage specifies the ephemeral storage
+                            resources of the node
+                          type: string
+                        memory:
+                          description: Memory specifies the memory resources of the
+                            node
+                          type: string
+                        pods:
+                          description: Pods specifies the pods resources of the node
+                          type: string
+                      required:
+                      - cpu
+                      - ephemeralStorage
+                      - memory
+                      - pods
+                      type: object
+                    arch:
+                      description: Arch specifies the CPU architecture of the node
+                      type: string
+                    capacity:
+                      description: Capacity specifies the capacity of the node
+                      properties:
+                        cpu:
+                          description: CPU specifies the CPU resources of the node
+                          type: string
+                        ephemeralStorage:
+                          description: EphemeralStorage specifies the ephemeral storage
+                            resources of the node
+                          type: string
+                        memory:
+                          description: Memory specifies the memory resources of the
+                            node
+                          type: string
+                        pods:
+                          description: Pods specifies the pods resources of the node
+                          type: string
+                      required:
+                      - cpu
+                      - ephemeralStorage
+                      - memory
+                      - pods
+                      type: object
+                    instanceType:
+                      description: InstanceType specifies the instance type of the
+                        node
+                      type: string
+                    name:
+                      description: Name specifies the name of the node
+                      type: string
+                    region:
+                      description: Region specifies the region of the node
+                      type: string
+                    zone:
+                      description: Zone specifies the zone of the node
+                      type: string
+                  required:
+                  - allocatable
+                  - capacity
+                  - name
+                  type: object
+                type: array
               numberOfNodes:
                 description: NumberOfNodes specifies the number of nodes in the Kubernetes
                   cluster
@@ -1766,6 +1840,62 @@ spec:
               phase:
                 description: Phase specifies the current phase of the region
                 type: string
+              storageClasses:
+                description: StorageClasses contains the availble StorageClasses in
+                  the Kubernetes cluster
+                items:
+                  properties:
+                    allowVolumeExpansion:
+                      description: AllowVolumeExpansion specifies whether the storage
+                        class allows volume expansion
+                      type: boolean
+                    default:
+                      description: Default specifies whether the storage class is
+                        the default storage class
+                      type: boolean
+                    name:
+                      description: Name specifies the name of the storage class
+                      type: string
+                    parameters:
+                      additionalProperties:
+                        type: string
+                      description: Parameters specifies the parameters of the storage
+                        class
+                      type: object
+                    provisioner:
+                      description: Provisioner specifies the provisioner of the storage
+                        class
+                      type: string
+                    reclaimPolicy:
+                      description: ReclaimPolicy specifies the reclaim policy of the
+                        storage class
+                      type: string
+                  required:
+                  - allowVolumeExpansion
+                  - default
+                  - name
+                  - provisioner
+                  - reclaimPolicy
+                  type: object
+                type: array
+              volumeSnapshotClasses:
+                description: VolumeSnapshotClasses contains the available VolumeSnapshotClasses
+                  in the Kubernetes cluster
+                items:
+                  properties:
+                    driver:
+                      description: Driver specifies the driver of the volume snapshot
+                        class
+                      type: string
+                    name:
+                      description: Name specifies the name of the volume snapshot
+                        class
+                      type: string
+                  required:
+                  - driver
+                  - name
+                  type: object
+                type: array
             type: object
         type: object
         x-kubernetes-preserve-unknown-fields: true
