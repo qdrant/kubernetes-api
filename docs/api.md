@@ -1003,7 +1003,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `name` _string_ | Name specifies the name of the storage class |  |  |
-| `isDefault` _boolean_ | IsDefault specifies whether the storage class is the default storage class |  |  |
+| `default` _boolean_ | Default specifies whether the storage class is the default storage class |  |  |
 | `provisioner` _string_ | Provisioner specifies the provisioner of the storage class |  |  |
 | `allowVolumeExpansion` _boolean_ | AllowVolumeExpansion specifies whether the storage class allows volume expansion |  |  |
 | `reclaimPolicy` _string_ | ReclaimPolicy specifies the reclaim policy of the storage class |  |  |

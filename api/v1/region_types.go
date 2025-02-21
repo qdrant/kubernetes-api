@@ -117,8 +117,8 @@ type QdrantCloudRegionStatus struct {
 type StorageClass struct {
 	// Name specifies the name of the storage class
 	Name string `json:"name"`
-	// IsDefault specifies whether the storage class is the default storage class
-	IsDefault bool `json:"isDefault"`
+	// Default specifies whether the storage class is the default storage class
+	Default bool `json:"default"`
 	// Provisioner specifies the provisioner of the storage class
 	Provisioner string `json:"provisioner"`
 	// AllowVolumeExpansion specifies whether the storage class allows volume expansion

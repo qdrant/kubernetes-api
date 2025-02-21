@@ -1850,8 +1850,8 @@ spec:
                       description: AllowVolumeExpansion specifies whether the storage
                         class allows volume expansion
                       type: boolean
-                    isDefault:
-                      description: IsDefault specifies whether the storage class is
+                    default:
+                      description: Default specifies whether the storage class is
                         the default storage class
                       type: boolean
                     name:
@@ -1873,7 +1873,7 @@ spec:
                       type: string
                   required:
                   - allowVolumeExpansion
-                  - isDefault
+                  - default
                   - name
                   - provisioner
                   - reclaimPolicy
