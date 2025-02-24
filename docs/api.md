@@ -126,6 +126,22 @@ _Appears in:_
 | `object` _[HelmRepository](#helmrepository)_ | Object specifies the helm repository object |  | EmbeddedResource: {} <br /> |
 
 
+#### InferenceConfig
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantConfiguration](#qdrantconfiguration)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `token` _string_ | Token passed to inference endpoint |  | MinLength: 1 <br /> |
+
+
 #### Ingress
 
 
@@ -675,6 +691,7 @@ _Appears in:_
 | `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  |  |
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
 | `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
+| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration |  |  |
 
 
 #### QdrantConfigurationCollection

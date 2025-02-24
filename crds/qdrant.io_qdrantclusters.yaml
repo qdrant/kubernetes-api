@@ -90,6 +90,16 @@ spec:
                         format: int64
                         type: integer
                     type: object
+                  inference:
+                    description: Inference configuration
+                    properties:
+                      token:
+                        description: Token passed to inference endpoint
+                        minLength: 1
+                        type: string
+                    required:
+                    - token
+                    type: object
                   log_level:
                     description: LogLevel specifies the log level for Qdrant.
                     type: string
