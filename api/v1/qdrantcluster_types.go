@@ -398,6 +398,15 @@ type QdrantConfiguration struct {
 	// Storage specifies the storage configuration for Qdrant.
 	// +optional
 	Storage *StorageConfig `json:"storage,omitempty"`
+	// Inference configuration
+	// +optional
+	Inference InferenceConfig `json:"inference,omitempty"`
+}
+
+type InferenceConfig struct {
+	// Token passed to inference endpoint
+	// +kubebuilder:validation:MinLength:=1
+	Token string `json:"token"`
 }
 
 type StorageConfig struct {
