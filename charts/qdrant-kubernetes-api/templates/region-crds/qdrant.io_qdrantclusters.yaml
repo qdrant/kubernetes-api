@@ -286,6 +286,16 @@ spec:
                         type: object
                     type: object
                 type: object
+              gpu:
+                description: GPU specifies GPU configuration for the cluster.
+                properties:
+                  gpuType:
+                    description: GPUType specifies the type of the GPU to use.
+                    enum:
+                    - nvida
+                    - amd
+                    type: string
+                type: object
               id:
                 description: Id specifies the unique identifier of the cluster
                 type: string

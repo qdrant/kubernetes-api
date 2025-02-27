@@ -92,6 +92,35 @@ _Appears in:_
 | `message` _string_ | Message specifies the info explaining the current phase of the component |  |  |
 
 
+#### GPU
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantClusterSpec](#qdrantclusterspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `gpuType` _[GPUType](#gputype)_ | GPUType specifies the type of the GPU to use. |  | Enum: [nvida amd] <br /> |
+
+
+#### GPUType
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [GPU](#gpu)
+
+
+
 #### HelmRelease
 
 
@@ -647,6 +676,7 @@ _Appears in:_
 | `config` _[QdrantConfiguration](#qdrantconfiguration)_ | Config specifies the Qdrant configuration setttings for the clusters. |  |  |
 | `ingress` _[Ingress](#ingress)_ | Ingress specifies the ingress for the cluster. |  |  |
 | `service` _[KubernetesService](#kubernetesservice)_ | Service specifies the configuration of the Qdrant Kubernetes Service. |  |  |
+| `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. |  |  |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  |  |
 | `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
 | `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  |  |

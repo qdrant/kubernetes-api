@@ -72,6 +72,13 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	return result
 }
 
+type GPUType string
+
+const (
+	GPUTypeNvida GPUType = "nvidia"
+	GPUTypeAmd   GPUType = "amd"
+)
+
 // QdrantClusterSpec defines the desired state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterSpec struct {
@@ -125,6 +132,9 @@ type QdrantClusterSpec struct {
 	// Service specifies the configuration of the Qdrant Kubernetes Service.
 	// +optional
 	Service *KubernetesService `json:"service,omitempty"`
+	// GPU specifies GPU configuration for the cluster.
+	// +optional
+	GPU *GPU `json:"gpu,omitempty"`
 	// StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet.
 	// +optional
 	StatefulSet *KubernetesStatefulSet `json:"statefulSet,omitempty"`
@@ -165,6 +175,20 @@ func (s QdrantClusterSpec) GetServicePerNode() bool {
 		return true
 	}
 	return *s.ServicePerNode
+}
+
+type GPU struct {
+	// GPUType specifies the type of the GPU to use.
+	// +kubebuilder:validation:Enum=nvida;amd
+	// +optional
+	GPUType GPUType `json:"gpuType,omitempty"`
+}
+
+func (g *GPU) GetGPUType() GPUType {
+	if g == nil {
+		return ""
+	}
+	return g.GPUType
 }
 
 type KubernetesService struct {
