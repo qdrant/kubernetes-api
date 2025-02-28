@@ -9,11 +9,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//goland:noinspection GoUnusedConst
 const (
 	KindQdrantCluster     = "QdrantCluster"
 	ResourceQdrantCluster = "qdrantclusters"
 )
 
+//goland:noinspection GoUnusedConst
 const (
 	// RestartedAtAnnotationKey is the annotation key to trigger a restart.
 	// The annotation should be placed on the QdrantCluster instance.
@@ -74,6 +76,7 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 
 type GPUType string
 
+//goland:noinspection GoUnusedConst
 const (
 	GPUTypeNvidia GPUType = "nvidia"
 	GPUTypeAmd    GPUType = "amd"
@@ -161,7 +164,7 @@ type QdrantClusterSpec struct {
 	StartupDelaySeconds *int `json:"startupDelaySeconds,omitempty"`
 }
 
-// Validates if there are incorrect settings in the CRD
+// Validate if there are incorrect settings in the CRD
 func (s QdrantClusterSpec) Validate() error {
 	if err := s.Resources.Validate("Spec.Resources"); err != nil {
 		return err
@@ -319,7 +322,7 @@ type Resources struct {
 	Requests ResourceRequests `json:"requests,omitempty"`
 }
 
-// Validates if there are incorrect settings in the CRD
+// Validate if there are incorrect settings in the CRD
 func (s Resources) Validate(base string) error {
 	if _, err := resource.ParseQuantity(s.CPU); err != nil {
 		return fmt.Errorf("%s.CPU error: %w", base, err)
@@ -359,7 +362,7 @@ type ResourceRequests struct {
 	Memory string `json:"memory,omitempty"`
 }
 
-// Validates if there are incorrect settings in the CRD
+// Validate if there are incorrect settings in the CRD
 func (s ResourceRequests) Validate(base string) error {
 	if s.CPU != "" {
 		if _, err := resource.ParseQuantity(s.CPU); err != nil {
@@ -702,6 +705,7 @@ func (n *StorageClassNames) GetSnapshots() *string {
 
 type ClusterPhase string
 
+//goland:noinspection GoUnusedConst
 const (
 	ClusterActiveStateSuffix = "ing"
 	ClusterFailedStatePrefix = "FailedTo"
@@ -730,6 +734,7 @@ const (
 
 type ClusterCondition string
 
+//goland:noinspection GoUnusedConst
 const (
 	ClusterConditionAcceptingConnection ClusterCondition = "AcceptingConnection"
 	ClusterConditionRecoveryMode        ClusterCondition = "RecoveryMode"

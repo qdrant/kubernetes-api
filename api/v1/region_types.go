@@ -6,6 +6,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//goland:noinspection GoUnusedConst
 const (
 	KindQdrantCloudRegion     = "QdrantCloudRegion"
 	ResourceQdrantCloudRegion = "qdrantcloudregions"
@@ -62,6 +63,7 @@ type HelmRelease struct {
 
 type RegionPhase string
 
+//goland:noinspection GoUnusedConst
 const (
 	RegionPhaseReady    RegionPhase = "Ready"
 	RegionPhaseNotReady RegionPhase = "NotReady"
@@ -70,6 +72,7 @@ const (
 
 type MetricSource string
 
+//goland:noinspection GoUnusedConst
 const (
 	KubeletMetricSource MetricSource = "kubelet"
 	ApiMetricSource     MetricSource = "api"
@@ -189,6 +192,7 @@ type RegionCapabilities struct {
 
 type KubernetesDistribution string
 
+//goland:noinspection GoUnusedConst
 const (
 	K8sDistributionUnknown   KubernetesDistribution = "unknown"
 	K8sDistributionAWS       KubernetesDistribution = "aws"
@@ -208,6 +212,7 @@ const (
 
 type ComponentPhase string
 
+//goland:noinspection GoUnusedConst
 const (
 	ComponentPhaseReady    ComponentPhase = "Ready"
 	ComponentPhaseNotReady ComponentPhase = "NotReady"
