@@ -1,8 +1,4 @@
 repos:
-  - repo: https://github.com/golangci/golangci-lint
-    rev: v1.61.0
-    hooks:
-      - id: golangci-lint-config-verify
   - repo: https://github.com/tekwizely/pre-commit-golang
     rev: v1.0.0-rc.1
     hooks:
