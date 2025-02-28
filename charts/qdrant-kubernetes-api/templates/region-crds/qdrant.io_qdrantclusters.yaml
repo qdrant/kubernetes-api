@@ -296,6 +296,19 @@ spec:
                         type: object
                     type: object
                 type: object
+              gpu:
+                description: GPU specifies GPU configuration for the cluster. If this
+                  field is not set, no GPU will be used.
+                properties:
+                  gpuType:
+                    description: GPUType specifies the type of the GPU to use.
+                    enum:
+                    - nvidia
+                    - amd
+                    type: string
+                required:
+                - gpuType
+                type: object
               id:
                 description: Id specifies the unique identifier of the cluster
                 type: string

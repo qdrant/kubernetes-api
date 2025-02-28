@@ -2,6 +2,7 @@ package v1
 
 import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+//goland:noinspection GoUnusedConst
 const (
 	KindQdrantClusterSnapshot     = "QdrantClusterSnapshot"
 	ResourceQdrantClusterSnapshot = "qdrantclustersnapshots"
@@ -28,6 +29,7 @@ type QdrantClusterSnapshotSpec struct {
 
 type QdrantClusterSnapshotPhase string
 
+//goland:noinspection GoUnusedConst
 const (
 	SnapshotRunning   QdrantClusterSnapshotPhase = "Running"
 	SnapshotSkipped   QdrantClusterSnapshotPhase = "Skipped"

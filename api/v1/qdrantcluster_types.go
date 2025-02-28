@@ -9,11 +9,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+//goland:noinspection GoUnusedConst
 const (
 	KindQdrantCluster     = "QdrantCluster"
 	ResourceQdrantCluster = "qdrantclusters"
 )
 
+//goland:noinspection GoUnusedConst
 const (
 	// RestartedAtAnnotationKey is the annotation key to trigger a restart.
 	// The annotation should be placed on the QdrantCluster instance.
@@ -72,6 +74,14 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	return result
 }
 
+type GPUType string
+
+//goland:noinspection GoUnusedConst
+const (
+	GPUTypeNvidia GPUType = "nvidia"
+	GPUTypeAmd    GPUType = "amd"
+)
+
 // QdrantClusterSpec defines the desired state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterSpec struct {
@@ -125,6 +135,9 @@ type QdrantClusterSpec struct {
 	// Service specifies the configuration of the Qdrant Kubernetes Service.
 	// +optional
 	Service *KubernetesService `json:"service,omitempty"`
+	// GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used.
+	// +optional
+	GPU *GPU `json:"gpu,omitempty"`
 	// StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet.
 	// +optional
 	StatefulSet *KubernetesStatefulSet `json:"statefulSet,omitempty"`
@@ -151,7 +164,7 @@ type QdrantClusterSpec struct {
 	StartupDelaySeconds *int `json:"startupDelaySeconds,omitempty"`
 }
 
-// Validates if there are incorrect settings in the CRD
+// Validate if there are incorrect settings in the CRD
 func (s QdrantClusterSpec) Validate() error {
 	if err := s.Resources.Validate("Spec.Resources"); err != nil {
 		return err
@@ -165,6 +178,19 @@ func (s QdrantClusterSpec) GetServicePerNode() bool {
 		return true
 	}
 	return *s.ServicePerNode
+}
+
+type GPU struct {
+	// GPUType specifies the type of the GPU to use.
+	// +kubebuilder:validation:Enum=nvidia;amd
+	GPUType GPUType `json:"gpuType"`
+}
+
+func (g *GPU) GetGPUType() GPUType {
+	if g == nil {
+		return ""
+	}
+	return g.GPUType
 }
 
 type KubernetesService struct {
@@ -296,7 +322,7 @@ type Resources struct {
 	Requests ResourceRequests `json:"requests,omitempty"`
 }
 
-// Validates if there are incorrect settings in the CRD
+// Validate if there are incorrect settings in the CRD
 func (s Resources) Validate(base string) error {
 	if _, err := resource.ParseQuantity(s.CPU); err != nil {
 		return fmt.Errorf("%s.CPU error: %w", base, err)
@@ -336,7 +362,7 @@ type ResourceRequests struct {
 	Memory string `json:"memory,omitempty"`
 }
 
-// Validates if there are incorrect settings in the CRD
+// Validate if there are incorrect settings in the CRD
 func (s ResourceRequests) Validate(base string) error {
 	if s.CPU != "" {
 		if _, err := resource.ParseQuantity(s.CPU); err != nil {
@@ -688,6 +714,7 @@ func (n *StorageClassNames) GetSnapshots() *string {
 
 type ClusterPhase string
 
+//goland:noinspection GoUnusedConst
 const (
 	ClusterActiveStateSuffix = "ing"
 	ClusterFailedStatePrefix = "FailedTo"
@@ -716,6 +743,7 @@ const (
 
 type ClusterCondition string
 
+//goland:noinspection GoUnusedConst
 const (
 	ClusterConditionAcceptingConnection ClusterCondition = "AcceptingConnection"
 	ClusterConditionRecoveryMode        ClusterCondition = "RecoveryMode"

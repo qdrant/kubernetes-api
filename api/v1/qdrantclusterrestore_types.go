@@ -2,6 +2,7 @@ package v1
 
 import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+//goland:noinspection GoUnusedConst
 const (
 	KindQdrantClusterRestore     = "QdrantClusterRestore"
 	ResourceQdrantClusterRestore = "qdrantclusterrestores"
@@ -31,6 +32,7 @@ type RestoreDestination struct {
 
 type RestorePhase string
 
+//goland:noinspection GoUnusedConst
 const (
 	RestoreRunning   RestorePhase = "Running"
 	RestoreSkipped   RestorePhase = "Skipped"
