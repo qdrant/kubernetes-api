@@ -424,15 +424,15 @@ type QdrantConfiguration struct {
 	// Storage specifies the storage configuration for Qdrant.
 	// +optional
 	Storage *StorageConfig `json:"storage,omitempty"`
-	// Inference configuration
+	// Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster.
 	// +optional
-	Inference InferenceConfig `json:"inference,omitempty"`
+	Inference *InferenceConfig `json:"inference,omitempty"`
 }
 
 type InferenceConfig struct {
-	// Token passed to inference endpoint
-	// +kubebuilder:validation:MinLength:=1
-	Token string `json:"token"`
+	// Enabled specifies whether to enable inference for the cluster or not.
+	// +optional
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 type StorageConfig struct {

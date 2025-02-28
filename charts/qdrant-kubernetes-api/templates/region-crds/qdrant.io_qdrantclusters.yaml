@@ -92,14 +92,13 @@ spec:
                         type: integer
                     type: object
                   inference:
-                    description: Inference configuration
+                    description: Inference configuration. This is used in Qdrant Managed
+                      Cloud only. If not set Inference is not available to this cluster.
                     properties:
-                      token:
-                        description: Token passed to inference endpoint
-                        minLength: 1
-                        type: string
-                    required:
-                    - token
+                      enabled:
+                        description: Enabled specifies whether to enable inference
+                          for the cluster or not.
+                        type: boolean
                     type: object
                   log_level:
                     description: LogLevel specifies the log level for Qdrant.
