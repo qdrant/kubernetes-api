@@ -424,7 +424,7 @@ type QdrantConfiguration struct {
 	// Storage specifies the storage configuration for Qdrant.
 	// +optional
 	Storage *StorageConfig `json:"storage,omitempty"`
-	// Inference configuration. This is used in Qdrant Managed Cloud only.
+	// Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster.
 	// +optional
 	Inference *InferenceConfig `json:"inference,omitempty"`
 }

@@ -93,7 +93,7 @@ spec:
                     type: object
                   inference:
                     description: Inference configuration. This is used in Qdrant Managed
-                      Cloud only.
+                      Cloud only. If not set Inference is not available to this cluster.
                     properties:
                       enabled:
                         description: Enabled specifies whether to enable inference

@@ -721,7 +721,7 @@ _Appears in:_
 | `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  |  |
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
 | `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
-| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. |  |  |
+| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster. |  |  |
 
 
 #### QdrantConfigurationCollection
