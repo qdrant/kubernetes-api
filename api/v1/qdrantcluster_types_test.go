@@ -56,14 +56,14 @@ func getQdrantClusterCrdHash(qc QdrantCluster) (string, error) {
 // Get hash of provided value.
 // Returns the first 7 characters of the hash (like GitHub).
 func getHash(v any) (string, error) {
-	json, err := json.Marshal(v)
+	jsonObj, err := json.Marshal(v)
 	if err != nil {
 		return "", fmt.Errorf("marshal failed: %w", err)
 	}
 	// Initialize hash
 	hash := sha256.New()
 	// add the serialized content
-	hash.Write(json)
+	hash.Write(jsonObj)
 	// close hash
 	sum := hash.Sum(nil)
 	// Return first 7 characters

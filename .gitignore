@@ -4,3 +4,4 @@ out
 gen
 vendor/
 bin/
+cover.out
