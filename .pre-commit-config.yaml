@@ -1,15 +1,45 @@
 repos:
   - repo: https://github.com/golangci/golangci-lint
-    rev: v1.59.1
+    rev: v1.61.0
     hooks:
-      - id: golangci-lint-full
+      - id: golangci-lint-config-verify
   - repo: https://github.com/tekwizely/pre-commit-golang
     rev: v1.0.0-rc.1
     hooks:
       - id: go-mod-tidy-repo
-      - id: go-fmt
-      - id: go-test-repo-mod
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.23
     hooks:
       - id: helmlint
+  - repo: local
+    hooks:
+      - id: gen
+        name: fmt
+        entry: make fmt
+        language: system
+        types: [ file ]
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: gen
+        name: golangci-lint
+        entry: make lint
+        language: system
+        types: [ file ]
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: gen
+        name: Generate files
+        entry: make gen
+        language: system
+        types: [ file ]
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: gen
+        name: Tests
+        entry: make test
+        language: system
+        types: [ file ]
+        pass_filenames: false
