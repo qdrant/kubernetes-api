@@ -168,7 +168,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `token` _string_ | Token passed to inference endpoint |  | MinLength: 1 <br /> |
+| `enabled` _boolean_ | Enabled specifies whether to enable inference for the cluster or not. |  |  |
 
 
 #### Ingress
@@ -721,7 +721,7 @@ _Appears in:_
 | `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  |  |
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
 | `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
-| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration |  |  |
+| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. |  |  |
 
 
 #### QdrantConfigurationCollection
