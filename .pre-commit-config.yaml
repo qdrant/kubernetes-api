@@ -13,7 +13,7 @@ repos:
       - id: helmlint
   - repo: local
     hooks:
-      - id: gen
+      - id: fmt
         name: fmt
         entry: make fmt
         language: system
@@ -21,7 +21,7 @@ repos:
         pass_filenames: false
   - repo: local
     hooks:
-      - id: gen
+      - id: lint
         name: golangci-lint
         entry: make lint
         language: system
@@ -37,7 +37,7 @@ repos:
         pass_filenames: false
   - repo: local
     hooks:
-      - id: gen
+      - id: test
         name: Tests
         entry: make test
         language: system
