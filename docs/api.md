@@ -168,7 +168,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ | Enabled specifies whether to enable inference for the cluster or not. |  |  |
+| `enabled` _boolean_ | Enabled specifies whether to enable inference for the cluster or not. | false |  |
 
 
 #### Ingress
