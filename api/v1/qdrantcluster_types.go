@@ -431,8 +431,9 @@ type QdrantConfiguration struct {
 
 type InferenceConfig struct {
 	// Enabled specifies whether to enable inference for the cluster or not.
+	// +kubebuilder:default=false
 	// +optional
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled bool `json:"enabled"`
 }
 
 type StorageConfig struct {
