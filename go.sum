@@ -10,12 +10,12 @@ github.com/emicklei/go-restful/v3 v3.12.1 h1:PJMDIM/ak7btuL8Ex0iYET9hxM3CI2sjZtz
 github.com/emicklei/go-restful/v3 v3.12.1/go.mod h1:6n3XBCmQQb25CM2LCACGz8ukIrRry+4bhvbpWn3mrbc=
 github.com/evanphx/json-patch/v5 v5.9.11 h1:/8HVnzMq13/3x9TPvjG08wUGqBTmZBsCWzjTM0wiaDU=
 github.com/evanphx/json-patch/v5 v5.9.11/go.mod h1:3j+LviiESTElxA4p3EMKAB9HXj3/XEtnUf6OZxqIQTM=
-github.com/fluxcd/helm-controller/api v1.1.0 h1:NS5Wm3U6Kv4w7Cw2sDOV++vf2ecGfFV00x1+2Y3QcOY=
-github.com/fluxcd/helm-controller/api v1.1.0/go.mod h1:BgHMgMY6CWynzl4KIbHpd6Wpn3FN9BqgkwmvoKCp6iE=
+github.com/fluxcd/helm-controller/api v1.2.0 h1:cjpHBpJQv+8WyYQNwoujoNMFOQx2llllv4peLIiWyxU=
+github.com/fluxcd/helm-controller/api v1.2.0/go.mod h1:3NZts/4n6PpD4sONSDJWXPQzfPpBk3YpknIFA6rLW3I=
 github.com/fluxcd/pkg/apis/acl v0.6.0 h1:rllf5uQLzTow81ZCslkQ6LPpDNqVQr6/fWaNksdUEtc=
 github.com/fluxcd/pkg/apis/acl v0.6.0/go.mod h1:IVDZx3MAoDWjlLrJHMF9Z27huFuXAEQlnbWw0M6EcTs=
-github.com/fluxcd/pkg/apis/kustomize v1.8.0 h1:HH6YRa3SMS72KK4cUyb9m5sK/dZH+Eti1qhjWDCgwKg=
-github.com/fluxcd/pkg/apis/kustomize v1.8.0/go.mod h1:QCKIFj1ocdndaWSkrLs5JKvdGNYyTzQX1ZB3lYTwma0=
+github.com/fluxcd/pkg/apis/kustomize v1.9.0 h1:SJpT1CK58AnTvCpDKeGfMNA0Xud/4VReZNvPe8XkTxo=
+github.com/fluxcd/pkg/apis/kustomize v1.9.0/go.mod h1:AZl2GU03oPVue6SUivdiIYd/3mvF94j7t1G2JO26d4s=
 github.com/fluxcd/pkg/apis/meta v1.10.0 h1:rqbAuyl5ug7A5jjRf/rNwBXmNl6tJ9wG2iIsriwnQUk=
 github.com/fluxcd/pkg/apis/meta v1.10.0/go.mod h1:n7NstXHDaleAUMajcXTVkhz0MYkvEXy1C/eLI/t1xoI=
 github.com/fluxcd/source-controller/api v1.5.0 h1:caSR+u/r2Vh0jq/0pNR0r1zLxyvgatWuGSV2mxgTB/I=
