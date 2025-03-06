@@ -16,14 +16,65 @@ jobs:
       # write permission is required to create a github release
       contents: write
       pull-requests: write
+      id-token: write  # needed for cosign keyless signing with OIDC
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Extract build info
-        id: extract_build_info
+      - name: Get latest release
+        id: get_latest_release
         run: |
-          echo "commit_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "release=$(git branch -r | grep releases\/v | sort -V | tail -1 |  awk -F'/' '{ print $3 }')" >> $GITHUB_OUTPUT
+
+      - name: 'Get next patch version'
+        id: semvers
+        uses: "WyriHaximus/github-action-next-semvers@18aa9ed4152808ab99b88d71f5481e41f8d89930"
+        with:
+          version: ${{ steps.get_latest_release.outputs.release }}
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.8.0
+
+      - name: Login to registry.cloud.qdrant.io
+        uses: docker/login-action@v3
+        with:
+          registry: registry.cloud.qdrant.io
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_TOKEN }}
+
+      - name: Create full version
+        id: create_full_version
+        run: |
+          unix_timestamp=$(date +%s)
+          commit_short=$(git rev-parse --short HEAD)
+          echo "version=${{ steps.semvers.outputs.v_patch }}-${unix_timestamp}-${commit_short}" >> $GITHUB_OUTPUT
+
+      - name: Package helm chart (CRDs)
+        run: |
+          # Ensure correct versions in Chart.yaml
+          helm package --app-version ${{ steps.create_full_version.outputs.version }} --version ${{ steps.create_full_version.outputs.version }} charts/qdrant-kubernetes-api/
+
+      - name: Push helm (CRDs) chart to registry.cloud.qdrant.io
+        id: push-helm-chart-crds
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          HARBOR_TOKEN: ${{ secrets.HARBOR_TOKEN }}
+        run: |
+          helm registry login registry.cloud.qdrant.io -u "${HARBOR_USERNAME}" --password "${HARBOR_TOKEN}"
+          push_output=$(helm push qdrant-kubernetes-api-${{ steps.create_full_version.outputs.version }}.tgz oci://registry.cloud.qdrant.io/qdrant-charts 2>&1)
+          echo $push_output
+          digest=$(echo $push_output | grep -oP '(?<=Digest: ).*')
+          echo $digest
+          echo "digest=${digest}" >> $GITHUB_OUTPUT
+
+      - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io
+        run: |
+          cosign sign --yes "${TAGS}@${DIGEST}"
+        env:
+          TAGS: registry.cloud.qdrant.io/qdrant-charts/qdrant-kubernetes-api:${{ steps.create_full_version.outputs.version }}
+          DIGEST: ${{ steps.push-helm-chart-crds.outputs.digest }}
 
       - name: Update Release Draft
         uses: release-drafter/release-drafter@v6
