@@ -192,14 +192,14 @@ type GPU struct {
 	// DeviceFilter for GPU devices by hardware name. Case-insensitive.
 	// List of substrings to match against the gpu device name.
 	// Example: [- "nvidia"]
-	// Default: all devices are accepted.
+	// If not specified, all devices are accepted.
 	// +optional
 	DeviceFilter []string `json:"deviceFilter,omitempty"`
 	// Devices is a List of explicit GPU devices to use.
 	// If host has multiple GPUs, this option allows to select specific devices
 	// by their index in the list of found devices.
 	// If `deviceFilter` is set, indexes are applied after filtering.
-	// By default, all devices are accepted.
+	// If not specified, all devices are accepted.
 	// +optional
 	Devices []string `json:"devices,omitempty"`
 	// ParallelIndexes is the number of parallel indexes to run on the GPU.
