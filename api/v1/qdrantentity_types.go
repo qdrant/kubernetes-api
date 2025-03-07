@@ -31,7 +31,7 @@ type QdrantEntitySpec struct {
 	// Generic payload for this entity
 	Payload apiextensions.JSON `json:"payload,omitempty"`
 	// The hash (sha-256) for the current spec for this entity
-	// (including Id, EntityTpe, CrreatedAt, LastUpdatedDate, DeletedAt and the Payload)
+	// (including Id, EntityTpe, CreatedAt, LastUpdatedDate, DeletedAt and the Payload)
 	// This is for easier comparisson.
 	SpecHash string `json:"spechash,omitempty"`
 }
