@@ -181,9 +181,44 @@ func (s QdrantClusterSpec) GetServicePerNode() bool {
 }
 
 type GPU struct {
-	// GPUType specifies the type of the GPU to use.
+	// GPUType specifies the type of the GPU to use. If set, GPU indexing is enabled.
 	// +kubebuilder:validation:Enum=nvidia;amd
 	GPUType GPUType `json:"gpuType"`
+	// ForceHalfPrecision for `f32` values while indexing.
+	// `f16` conversion will take place
+	// only inside GPU memory and won't affect storage type.
+	// +kubebuilder:default=false
+	ForceHalfPrecision bool `json:"forceHalfPrecision"`
+	// DeviceFilter for GPU devices by hardware name. Case-insensitive.
+	// List of substrings to match against the gpu device name.
+	// Example: [- "nvidia"]
+	// If not specified, all devices are accepted.
+	// +kubebuilder:validation:MinItems:=1
+	// +optional
+	DeviceFilter []string `json:"deviceFilter,omitempty"`
+	// Devices is a List of explicit GPU devices to use.
+	// If host has multiple GPUs, this option allows to select specific devices
+	// by their index in the list of found devices.
+	// If `deviceFilter` is set, indexes are applied after filtering.
+	// If not specified, all devices are accepted.
+	// +kubebuilder:validation:MinItems:=1
+	// +optional
+	Devices []string `json:"devices,omitempty"`
+	// ParallelIndexes is the number of parallel indexes to run on the GPU.
+	// +kubebuilder:default=1
+	// +kubebuilder:validation:Minimum:=1
+	ParallelIndexes int `json:"parallelIndexes"`
+	// GroupsCount is the amount of used vulkan "groups" of GPU.
+	// In other words, how many parallel points can be indexed by GPU.
+	// Optimal value might depend on the GPU model.
+	// Proportional, but doesn't necessary equal to the physical number of warps.
+	// Do not change this value unless you know what you are doing.
+	// +optional
+	// +kubebuilder:validation:Minimum:=1
+	GroupsCount int `json:"groupsCount,omitempty"`
+	// AllowIntegrated specifies whether to allow integrated GPUs to be used.
+	// +kubebuilder:default=false
+	AllowIntegrated bool `json:"allowIntegrated"`
 }
 
 func (g *GPU) GetGPUType() GPUType {
