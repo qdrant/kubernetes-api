@@ -193,6 +193,7 @@ type GPU struct {
 	// List of substrings to match against the gpu device name.
 	// Example: [- "nvidia"]
 	// If not specified, all devices are accepted.
+	// +kubebuilder:validation:MinItems:=1
 	// +optional
 	DeviceFilter []string `json:"deviceFilter,omitempty"`
 	// Devices is a List of explicit GPU devices to use.
@@ -200,10 +201,12 @@ type GPU struct {
 	// by their index in the list of found devices.
 	// If `deviceFilter` is set, indexes are applied after filtering.
 	// If not specified, all devices are accepted.
+	// +kubebuilder:validation:MinItems:=1
 	// +optional
 	Devices []string `json:"devices,omitempty"`
 	// ParallelIndexes is the number of parallel indexes to run on the GPU.
 	// +kubebuilder:default=1
+	// +kubebuilder:validation:Minimum:=1
 	ParallelIndexes int `json:"parallelIndexes"`
 	// GroupsCount is the amount of used vulkan "groups" of GPU.
 	// In other words, how many parallel points can be indexed by GPU.
@@ -211,6 +214,7 @@ type GPU struct {
 	// Proportional, but doesn't necessary equal to the physical number of warps.
 	// Do not change this value unless you know what you are doing.
 	// +optional
+	// +kubebuilder:validation:Minimum:=1
 	GroupsCount int `json:"groupsCount,omitempty"`
 	// AllowIntegrated specifies whether to allow integrated GPUs to be used.
 	// +kubebuilder:default=false

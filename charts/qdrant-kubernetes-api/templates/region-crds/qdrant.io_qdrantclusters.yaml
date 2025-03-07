@@ -312,6 +312,7 @@ spec:
                       If not specified, all devices are accepted.
                     items:
                       type: string
+                    minItems: 1
                     type: array
                   devices:
                     description: |-
@@ -322,6 +323,7 @@ spec:
                       If not specified, all devices are accepted.
                     items:
                       type: string
+                    minItems: 1
                     type: array
                   forceHalfPrecision:
                     default: false
@@ -344,11 +346,13 @@ spec:
                       Optimal value might depend on the GPU model.
                       Proportional, but doesn't necessary equal to the physical number of warps.
                       Do not change this value unless you know what you are doing.
+                    minimum: 1
                     type: integer
                   parallelIndexes:
                     default: 1
                     description: ParallelIndexes is the number of parallel indexes
                       to run on the GPU.
+                    minimum: 1
                     type: integer
                 required:
                 - allowIntegrated
