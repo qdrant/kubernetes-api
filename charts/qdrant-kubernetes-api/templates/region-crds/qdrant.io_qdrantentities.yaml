@@ -1,0 +1,133 @@
+{{ if .Values.includeRegionCRDs }}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.16.1
+  name: qdrantentities.qdrant.io
+spec:
+  group: qdrant.io
+  names:
+    kind: QdrantEntity
+    listKind: QdrantEntityList
+    plural: qdrantentities
+    shortNames:
+    - qe
+    singular: qdrantentity
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.phase
+      name: Phase
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: QdrantEntity is the Schema for the qdrantentities API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: QdrantEntitySpec defines the desired state of QdrantEntity
+            properties:
+              created_at:
+                description: Timestamp when the entity was created.
+                format: date-time
+                type: string
+              deleted_at:
+                description: |-
+                  Timestamp when the entity was deleted (or is started to be deleting).
+                  If not set the entity is not deleted
+                format: date-time
+                type: string
+              entity_type:
+                description: The type of the entity.
+                type: string
+              id:
+                description: The unique identifier of the entity (in UUID format).
+                type: string
+              last_updated_at:
+                description: Timestamp when the entity was last updated.
+                format: date-time
+                type: string
+              payload:
+                description: Generic payload for this entity
+                x-kubernetes-preserve-unknown-fields: true
+              spechash:
+                description: |-
+                  The hash (sha-256) for the current spec for this entity
+                  (including Id, EntityTpe, CrreatedAt, LastUpdatedDate, DeletedAt and the Payload)
+                  This is for easier comparisson.
+                type: string
+            type: object
+          status:
+            properties:
+              last_used_spec_hash:
+                description: |-
+                  Last used hash from the spec to invoke the manager
+                  If the hash of the spec and this hash differs the manager needs to be invoked.
+                type: string
+              last_used_status_hash:
+                description: |-
+                  Last used hash from the status update towards the backend.
+                  If the hash of the status and this hash differs the backend needs to be invoked.
+                type: string
+              phase:
+                description: Phase is the current phase of the entity
+                enum:
+                - Creating
+                - Ready
+                - Failing
+                - Deleting
+                - Deleted
+                type: string
+              result:
+                description: Result is the last result from the invocation to a manager
+                properties:
+                  payload:
+                    description: The optional payload of the status.
+                    x-kubernetes-preserve-unknown-fields: true
+                  reason:
+                    description: The reason of the result (e.g. in case of an error)
+                    type: string
+                  result:
+                    description: The result of last reconcile of the entity
+                    enum:
+                    - Ok
+                    - Pending
+                    - Error
+                    type: string
+                type: object
+              status_hash:
+                description: |-
+                  The hash (sha-256) for the current status
+                  (including Phase and Result, not including the hashes).
+                  This is for easier comparisson.
+                type: string
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+{{ end }}
