@@ -19,6 +19,8 @@ Package v1 contains API Schema definitions for the qdrant.io v1 API group
 - [QdrantClusterScheduledSnapshotList](#qdrantclusterscheduledsnapshotlist)
 - [QdrantClusterSnapshot](#qdrantclustersnapshot)
 - [QdrantClusterSnapshotList](#qdrantclustersnapshotlist)
+- [QdrantEntity](#qdrantentity)
+- [QdrantEntityList](#qdrantentitylist)
 - [QdrantRelease](#qdrantrelease)
 - [QdrantReleaseList](#qdrantreleaselist)
 
@@ -90,6 +92,32 @@ _Appears in:_
 | `version` _string_ | Version specifies the version of the component |  |  |
 | `phase` _[ComponentPhase](#componentphase)_ | Phase specifies the current phase of the component |  |  |
 | `message` _string_ | Message specifies the info explaining the current phase of the component |  |  |
+
+
+#### EntityPhase
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [QdrantEntityStatus](#qdrantentitystatus)
+
+
+
+#### EntityResult
+
+_Underlying type:_ _string_
+
+EntityResult is the last result from the invocation to a manager
+
+
+
+_Appears in:_
+- [QdrantEntityStatusResult](#qdrantentitystatusresult)
+
 
 
 #### GPU
@@ -794,6 +822,85 @@ _Appears in:_
 | `cert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server certificate chain file |  |  |
 | `key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server private key file |  |  |
 | `caCert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the CA certificate file |  |  |
+
+
+#### QdrantEntity
+
+
+
+QdrantEntity is the Schema for the qdrantentities API
+
+
+
+_Appears in:_
+- [QdrantEntityList](#qdrantentitylist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantEntity` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[QdrantEntitySpec](#qdrantentityspec)_ |  |  |  |
+
+
+#### QdrantEntityList
+
+
+
+QdrantEntityList contains a list of QdrantEntity objects
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantEntityList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[QdrantEntity](#qdrantentity) array_ |  |  |  |
+
+
+#### QdrantEntitySpec
+
+
+
+QdrantEntitySpec defines the desired state of QdrantEntity
+
+
+
+_Appears in:_
+- [QdrantEntity](#qdrantentity)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `id` _string_ | The unique identifier of the entity (in UUID format). |  |  |
+| `entity_type` _string_ | The type of the entity. |  |  |
+| `created_at` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was created. |  |  |
+| `last_updated_at` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was last updated. |  |  |
+| `deleted_at` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was deleted (or is started to be deleting).<br />If not set the entity is not deleted |  |  |
+| `payload` _[JSON](#json)_ | Generic payload for this entity |  |  |
+| `spechash` _string_ | The hash (sha-256) for the current spec for this entity<br />(including Id, EntityTpe, CrreatedAt, LastUpdatedDate, DeletedAt and the Payload)<br />This is for easier comparisson. |  |  |
+
+
+
+
+#### QdrantEntityStatusResult
+
+
+
+QdrantEntityStatusResult is the last result from the invocation to a manager
+
+
+
+_Appears in:_
+- [QdrantEntityStatus](#qdrantentitystatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `result` _[EntityResult](#entityresult)_ | The result of last reconcile of the entity |  | Enum: [Ok Pending Error] <br /> |
+| `reason` _string_ | The reason of the result (e.g. in case of an error) |  |  |
+| `payload` _[JSON](#json)_ | The optional payload of the status. |  |  |
 
 
 #### QdrantImage
