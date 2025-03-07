@@ -4,6 +4,9 @@ on:
     types: [ synchronize, opened, reopened]
     branches: [ 'main' ]
 
+permissions:
+  contents: read
+
 jobs:
   linter:
     name: Linter
