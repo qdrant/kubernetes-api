@@ -105,7 +105,13 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `gpuType` _[GPUType](#gputype)_ | GPUType specifies the type of the GPU to use. |  | Enum: [nvidia amd] <br /> |
+| `gpuType` _[GPUType](#gputype)_ | GPUType specifies the type of the GPU to use. If set, GPU indexing is enabled. |  | Enum: [nvidia amd] <br /> |
+| `forceHalfPrecision` _boolean_ | ForceHalfPrecision for `f32` values while indexing.<br />`f16` conversion will take place<br />only inside GPU memory and won't affect storage type. | false |  |
+| `deviceFilter` _string array_ | DeviceFilter for GPU devices by hardware name. Case-insensitive.<br />List of substrings to match against the gpu device name.<br />Example: [- "nvidia"]<br />Default: all devices are accepted. |  |  |
+| `devices` _string array_ | Devices is a List of explicit GPU devices to use.<br />If host has multiple GPUs, this option allows to select specific devices<br />by their index in the list of found devices.<br />If `deviceFilter` is set, indexes are applied after filtering.<br />By default, all devices are accepted. |  |  |
+| `parallelIndexes` _integer_ | ParallelIndexes is the number of parallel indexes to run on the GPU. | 1 |  |
+| `groupsCount` _integer_ | GroupsCount is the amount of used vulkan "groups" of GPU.<br />In other words, how many parallel points can be indexed by GPU.<br />Optimal value might depend on the GPU model.<br />Proportional, but doesn't necessary equal to the physical number of warps.<br />Do not change this value unless you know what you are doing. |  |  |
+| `allowIntegrated` _boolean_ | AllowIntegrated specifies whether to allow integrated GPUs to be used. | false |  |
 
 
 #### GPUType
