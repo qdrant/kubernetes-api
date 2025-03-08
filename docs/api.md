@@ -875,12 +875,11 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `id` _string_ | The unique identifier of the entity (in UUID format). |  |  |
-| `entity_type` _string_ | The type of the entity. |  |  |
-| `created_at` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was created. |  |  |
-| `last_updated_at` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was last updated. |  |  |
-| `deleted_at` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was deleted (or is started to be deleting).<br />If not set the entity is not deleted |  |  |
+| `entityType` _string_ | The type of the entity. |  |  |
+| `createdAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was created. |  |  |
+| `lastUpdatedAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was last updated. |  |  |
+| `deletedAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was deleted (or is started to be deleting).<br />If not set the entity is not deleted |  |  |
 | `payload` _[JSON](#json)_ | Generic payload for this entity |  |  |
-| `spechash` _string_ | The hash (sha-256) for the current spec for this entity<br />(including Id, EntityTpe, CreatedAt, LastUpdatedDate, DeletedAt and the Payload)<br />This is for easier comparisson. |  |  |
 
 
 

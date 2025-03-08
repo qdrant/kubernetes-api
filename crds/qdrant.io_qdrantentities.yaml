@@ -48,48 +48,32 @@ spec:
           spec:
             description: QdrantEntitySpec defines the desired state of QdrantEntity
             properties:
-              created_at:
+              createdAt:
                 description: Timestamp when the entity was created.
                 format: date-time
                 type: string
-              deleted_at:
+              deletedAt:
                 description: |-
                   Timestamp when the entity was deleted (or is started to be deleting).
                   If not set the entity is not deleted
                 format: date-time
                 type: string
-              entity_type:
+              entityType:
                 description: The type of the entity.
                 type: string
               id:
                 description: The unique identifier of the entity (in UUID format).
                 type: string
-              last_updated_at:
+              lastUpdatedAt:
                 description: Timestamp when the entity was last updated.
                 format: date-time
                 type: string
               payload:
                 description: Generic payload for this entity
                 x-kubernetes-preserve-unknown-fields: true
-              spechash:
-                description: |-
-                  The hash (sha-256) for the current spec for this entity
-                  (including Id, EntityTpe, CreatedAt, LastUpdatedDate, DeletedAt and the Payload)
-                  This is for easier comparisson.
-                type: string
             type: object
           status:
             properties:
-              last_used_spec_hash:
-                description: |-
-                  Last used hash from the spec to invoke the manager
-                  If the hash of the spec and this hash differs the manager needs to be invoked.
-                type: string
-              last_used_status_hash:
-                description: |-
-                  Last used hash from the status update towards the backend.
-                  If the hash of the status and this hash differs the backend needs to be invoked.
-                type: string
               phase:
                 description: Phase is the current phase of the entity
                 enum:
@@ -116,12 +100,6 @@ spec:
                     - Error
                     type: string
                 type: object
-              status_hash:
-                description: |-
-                  The hash (sha-256) for the current status
-                  (including Phase and Result, not including the hashes).
-                  This is for easier comparisson.
-                type: string
             type: object
             x-kubernetes-preserve-unknown-fields: true
         type: object

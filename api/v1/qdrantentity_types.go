@@ -20,20 +20,16 @@ type QdrantEntitySpec struct {
 	// The unique identifier of the entity (in UUID format).
 	Id string `json:"id,omitempty"`
 	// The type of the entity.
-	EntityType string `json:"entity_type,omitempty"`
+	EntityType string `json:"entityType,omitempty"`
 	// Timestamp when the entity was created.
-	CreatedAt metav1.Time `json:"created_at,omitempty"`
+	CreatedAt metav1.Time `json:"createdAt,omitempty"`
 	// Timestamp when the entity was last updated.
-	LastUpdatedAt metav1.Time `json:"last_updated_at,omitempty"`
+	LastUpdatedAt metav1.Time `json:"lastUpdatedAt,omitempty"`
 	// Timestamp when the entity was deleted (or is started to be deleting).
 	// If not set the entity is not deleted
-	DeletedAt metav1.Time `json:"deleted_at,omitempty"`
+	DeletedAt metav1.Time `json:"deletedAt,omitempty"`
 	// Generic payload for this entity
 	Payload apiextensions.JSON `json:"payload,omitempty"`
-	// The hash (sha-256) for the current spec for this entity
-	// (including Id, EntityTpe, CreatedAt, LastUpdatedDate, DeletedAt and the Payload)
-	// This is for easier comparisson.
-	SpecHash string `json:"spechash,omitempty"`
 }
 
 // GetPayloadForGRPC gets the current payload
@@ -74,16 +70,6 @@ type QdrantEntityStatus struct {
 	Phase EntityPhase `json:"phase,omitempty"`
 	// Result is the last result from the invocation to a manager
 	Result QdrantEntityStatusResult `json:"result,omitempty"`
-	// The hash (sha-256) for the current status
-	// (including Phase and Result, not including the hashes).
-	// This is for easier comparisson.
-	StatusHash string `json:"status_hash,omitempty"`
-	// Last used hash from the spec to invoke the manager
-	// If the hash of the spec and this hash differs the manager needs to be invoked.
-	LastUsedSpecHash string `json:"last_used_spec_hash,omitempty"`
-	// Last used hash from the status update towards the backend.
-	// If the hash of the status and this hash differs the backend needs to be invoked.
-	LastUsedStatusHash string `json:"last_used_status_hash,omitempty"`
 }
 
 // EntityResult is the last result from the invocation to a manager
@@ -159,7 +145,6 @@ func apiextensionsJSONToStructpb(in apiextensions.JSON) (*structpb.Struct, error
 	if err := json.Unmarshal(in.Raw, &data); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal apiextensions.JSON: %w", err)
 	}
-
 	result, err := structpb.NewStruct(data)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create *structpb.Struct: %w", err)
@@ -173,11 +158,9 @@ func structpbToApiextensionsJSON(in *structpb.Struct) (apiextensions.JSON, error
 		return apiextensions.JSON{}, nil
 	}
 	data := in.AsMap()
-
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return apiextensions.JSON{}, fmt.Errorf("failed to marshal to JSON: %w", err)
 	}
-
 	return apiextensions.JSON{Raw: jsonData}, nil
 }
