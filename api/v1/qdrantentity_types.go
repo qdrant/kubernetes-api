@@ -141,26 +141,37 @@ func init() {
 
 // apiextensionsJSONToStructpb converts apiextensions.JSON to *structpb.Struct.
 func apiextensionsJSONToStructpb(in apiextensions.JSON) (*structpb.Struct, error) {
+	// Handle empty json
+	if len(in.Raw) == 0 {
+		return &structpb.Struct{Fields: map[string]*structpb.Value{}}, nil
+	}
+	// Unmarshal the provided JSON into a data struct
 	var data map[string]interface{}
 	if err := json.Unmarshal(in.Raw, &data); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal apiextensions.JSON: %w", err)
 	}
+	// Convert the data into a Struct
 	result, err := structpb.NewStruct(data)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create *structpb.Struct: %w", err)
 	}
+	// Return the Struct
 	return result, nil
 }
 
 // structpbToApiextensionsJSON converts *structpb.Struct to apiextensions.JSON.
 func structpbToApiextensionsJSON(in *structpb.Struct) (apiextensions.JSON, error) {
+	// Handle empty struct
 	if in == nil {
-		return apiextensions.JSON{}, nil
+		return apiextensions.JSON{Raw: []byte{}}, nil
 	}
+	// Convert the Struct into a data struct
 	data := in.AsMap()
+	// Marshal the data into a JSON
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return apiextensions.JSON{}, fmt.Errorf("failed to marshal to JSON: %w", err)
 	}
+	// Return the JSON (with the raw Json data)
 	return apiextensions.JSON{Raw: jsonData}, nil
 }
