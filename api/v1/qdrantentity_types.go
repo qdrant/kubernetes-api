@@ -21,6 +21,9 @@ type QdrantEntitySpec struct {
 	Id string `json:"id,omitempty"`
 	// The type of the entity.
 	EntityType string `json:"entityType,omitempty"`
+	// The optional cluster identifier
+	// +optional
+	ClusterId *string `json:"clusterID,omitempty"`
 	// Timestamp when the entity was created.
 	CreatedAt metav1.Time `json:"createdAt,omitempty"`
 	// Timestamp when the entity was last updated.
