@@ -48,7 +48,7 @@ spec:
           spec:
             description: QdrantEntitySpec defines the desired state of QdrantEntity
             properties:
-              clusterID:
+              clusterId:
                 description: The optional cluster identifier
                 type: string
               createdAt:

@@ -882,7 +882,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `id` _string_ | The unique identifier of the entity (in UUID format). |  |  |
 | `entityType` _string_ | The type of the entity. |  |  |
-| `clusterID` _string_ | The optional cluster identifier |  |  |
+| `clusterId` _string_ | The optional cluster identifier |  |  |
 | `createdAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was created. |  |  |
 | `lastUpdatedAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was last updated. |  |  |
 | `deletedAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Timestamp when the entity was deleted (or is started to be deleting).<br />If not set the entity is not deleted |  |  |
