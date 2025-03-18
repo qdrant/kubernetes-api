@@ -119,6 +119,7 @@ func (r *QdrantEntityStatusResult) SetPayloadFromGRPC(payload *structpb.Struct) 
 // +kubebuilder:resource:path=qdrantentities,singular=qdrantentity,shortName=qe
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
+// +kubebuilder:selectablefield:JSONPath=`.spec.entityType`
 
 // QdrantEntity is the Schema for the qdrantentities API
 type QdrantEntity struct {
