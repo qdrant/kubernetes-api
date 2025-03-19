@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           go install github.com/yannh/kubeconform/cmd/kubeconform@latest
-          helm template charts/operator | kubeconform
+          helm template charts/qdrant-kubernetes-api | kubeconform
 
       - name: Check Go Formatting
         run: |
