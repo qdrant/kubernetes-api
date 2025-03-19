@@ -25,6 +25,12 @@ jobs:
         run: |
           helm lint charts/qdrant-kubernetes-api
 
+      - name: Run kubeconform
+        shell: bash
+        run: |
+          go install github.com/yannh/kubeconform/cmd/kubeconform@latest
+          helm template charts/operator | kubeconform
+
       - name: Check Go Formatting
         run: |
           files=$(gofmt -l .) && echo $files && [ -z "$files" ]
