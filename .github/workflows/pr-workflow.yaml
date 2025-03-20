@@ -28,7 +28,7 @@ jobs:
       - name: Run kubeconform
         shell: bash
         run: |
-          go install github.com/yannh/kubeconform/cmd/kubeconform@latest
+          go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.7
           helm template charts/qdrant-kubernetes-api | kubeconform --summary -output pretty -schema-location default -schema-location "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/{{.NormalizedKubernetesVersion}}/{{.ResourceKind}}.json"
 
       - name: Check Go Formatting
