@@ -57,12 +57,12 @@ type EntityPhase string
 
 //goland:noinspection GoUnusedConst
 const (
-	EntityPhaseCreating  EntityPhase = "Creating"
-	EntityPhaseReady     EntityPhase = "Ready"
-	EntityPhaseModifying EntityPhase = "Modifying"
-	EntityPhaseFailing   EntityPhase = "Failing"
-	EntityPhaseDeleting  EntityPhase = "Deleting"
-	EntityPhaseDeleted   EntityPhase = "Deleted"
+	EntityPhaseCreating EntityPhase = "Creating"
+	EntityPhaseReady    EntityPhase = "Ready"
+	EntityPhaseUpdating EntityPhase = "Updating"
+	EntityPhaseFailing  EntityPhase = "Failing"
+	EntityPhaseDeleting EntityPhase = "Deleting"
+	EntityPhaseDeleted  EntityPhase = "Deleted"
 )
 
 // QdrantEntitySpecStatus defines the observed state of QdrantEntitySpec
@@ -70,7 +70,7 @@ const (
 
 type QdrantEntityStatus struct {
 	// Phase is the current phase of the entity
-	// +kubebuilder:validation:Enum=Creating;Ready;Modifying;Failing;Deleting;Deleted
+	// +kubebuilder:validation:Enum=Creating;Ready;Updating;Failing;Deleting;Deleted
 	Phase EntityPhase `json:"phase,omitempty"`
 	// Result is the last result from the invocation to a manager
 	Result QdrantEntityStatusResult `json:"result,omitempty"`
