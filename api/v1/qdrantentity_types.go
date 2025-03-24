@@ -59,6 +59,7 @@ type EntityPhase string
 const (
 	EntityPhaseCreating EntityPhase = "Creating"
 	EntityPhaseReady    EntityPhase = "Ready"
+	EntityPhaseUpdating EntityPhase = "Updating"
 	EntityPhaseFailing  EntityPhase = "Failing"
 	EntityPhaseDeleting EntityPhase = "Deleting"
 	EntityPhaseDeleted  EntityPhase = "Deleted"
@@ -69,10 +70,12 @@ const (
 
 type QdrantEntityStatus struct {
 	// Phase is the current phase of the entity
-	// +kubebuilder:validation:Enum=Creating;Ready;Failing;Deleting;Deleted
+	// +kubebuilder:validation:Enum=Creating;Ready;Updating;Failing;Deleting;Deleted
 	Phase EntityPhase `json:"phase,omitempty"`
 	// Result is the last result from the invocation to a manager
 	Result QdrantEntityStatusResult `json:"result,omitempty"`
+	// Timestamp when the status was last updated.
+	LastUpdatedAt metav1.Time `json:"lastUpdatedAt,omitempty"`
 }
 
 // EntityResult is the last result from the invocation to a manager

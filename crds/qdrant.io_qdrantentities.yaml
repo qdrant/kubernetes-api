@@ -77,11 +77,16 @@ spec:
             type: object
           status:
             properties:
+              lastUpdatedAt:
+                description: Timestamp when the status was last updated.
+                format: date-time
+                type: string
               phase:
                 description: Phase is the current phase of the entity
                 enum:
                 - Creating
                 - Ready
+                - Updating
                 - Failing
                 - Deleting
                 - Deleted
