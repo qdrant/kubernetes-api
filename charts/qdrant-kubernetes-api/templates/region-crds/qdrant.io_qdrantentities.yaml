@@ -87,6 +87,7 @@ spec:
                 enum:
                 - Creating
                 - Ready
+                - Modifying
                 - Failing
                 - Deleting
                 - Deleted
