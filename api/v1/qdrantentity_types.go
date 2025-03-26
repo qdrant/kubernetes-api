@@ -25,12 +25,12 @@ type QdrantEntitySpec struct {
 	// +optional
 	ClusterId string `json:"clusterId,omitempty"`
 	// Timestamp when the entity was created.
-	CreatedAt metav1.Time `json:"createdAt,omitempty"`
+	CreatedAt metav1.MicroTime `json:"createdAt,omitempty"`
 	// Timestamp when the entity was last updated.
-	LastUpdatedAt metav1.Time `json:"lastUpdatedAt,omitempty"`
+	LastUpdatedAt metav1.MicroTime `json:"lastUpdatedAt,omitempty"`
 	// Timestamp when the entity was deleted (or is started to be deleting).
 	// If not set the entity is not deleted
-	DeletedAt metav1.Time `json:"deletedAt,omitempty"`
+	DeletedAt metav1.MicroTime `json:"deletedAt,omitempty"`
 	// Generic payload for this entity
 	Payload apiextensions.JSON `json:"payload,omitempty"`
 }
