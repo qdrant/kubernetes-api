@@ -75,7 +75,7 @@ type QdrantEntityStatus struct {
 	// Result is the last result from the invocation to a manager
 	Result QdrantEntityStatusResult `json:"result,omitempty"`
 	// Timestamp when the status was last updated.
-	LastUpdatedAt metav1.Time `json:"lastUpdatedAt,omitempty"`
+	LastUpdatedAt metav1.MicroTime `json:"lastUpdatedAt,omitempty"`
 }
 
 // EntityResult is the last result from the invocation to a manager
