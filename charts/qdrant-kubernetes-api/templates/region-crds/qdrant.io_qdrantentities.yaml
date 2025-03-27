@@ -78,10 +78,11 @@ spec:
             type: object
           status:
             properties:
-              lastUpdatedAt:
-                description: Timestamp when the status was last updated.
-                format: date-time
-                type: string
+              observedGeneration:
+                description: ObservedGeneration is the entity.Generation the Status
+                  is related to
+                format: int64
+                type: integer
               phase:
                 description: Phase is the current phase of the entity
                 enum:
