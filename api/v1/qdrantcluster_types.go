@@ -43,7 +43,7 @@ func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
 	// Add the restartAt annot if needed
 	if annots := qc.GetAnnotations(); annots != nil {
 		if val, found := annots[RestartedAtAnnotationKey]; found {
-			result.ObjectMeta.Annotations[RestartedAtAnnotationKey] = val
+			result.Annotations[RestartedAtAnnotationKey] = val
 		}
 	}
 	cloned := qc.Spec.DeepCopy()
