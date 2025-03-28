@@ -79,8 +79,8 @@ spec:
           status:
             properties:
               observedGeneration:
-                description: ObservedGeneration is the entity.Generation the Status
-                  is related to
+                description: ObservedGeneration is the 'Generation' of the resource
+                  that was last processed by the controller
                 format: int64
                 type: integer
               phase:
