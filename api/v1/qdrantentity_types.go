@@ -74,8 +74,8 @@ type QdrantEntityStatus struct {
 	Phase EntityPhase `json:"phase,omitempty"`
 	// Result is the last result from the invocation to a manager
 	Result QdrantEntityStatusResult `json:"result,omitempty"`
-	// Timestamp when the status was last updated.
-	LastUpdatedAt metav1.MicroTime `json:"lastUpdatedAt,omitempty"`
+	// ObservedGeneration is the 'Generation' of the resource that was last processed by the controller
+	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 }
 
 // EntityResult is the last result from the invocation to a manager
