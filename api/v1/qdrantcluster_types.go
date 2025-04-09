@@ -172,6 +172,7 @@ type QdrantClusterSpec struct {
 	// +optional
 	StartupDelaySeconds *int `json:"startupDelaySeconds,omitempty"`
 	// RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
+	// Cluster-manager needs to be enabled for this feature to work.
 	// +optional
 	RebalanceStrategy *RebalanceStrategy `json:"rebalanceStrategy,omitempty"`
 }
