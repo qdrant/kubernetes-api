@@ -733,6 +733,7 @@ _Appears in:_
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted like when RestartedAtAnnotationKey is added/updated or the Qdrant version need to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart. |  |  |
 | `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  |  |
+| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster. |  |  |
 
 
 
@@ -1021,6 +1022,19 @@ _Appears in:_
 | `user` _integer_ | User specifies the user to run the Qdrant process as. |  |  |
 | `group` _integer_ | Group specifies the group to run the Qdrant process as. |  |  |
 | `fsGroup` _integer_ | FsGroup specifies file system group to run the Qdrant process as. |  |  |
+
+
+#### RebalanceStrategy
+
+_Underlying type:_ _string_
+
+
+
+
+
+_Appears in:_
+- [QdrantClusterSpec](#qdrantclusterspec)
+
 
 
 #### RegionCapabilities
