@@ -82,6 +82,15 @@ const (
 	GPUTypeAmd    GPUType = "amd"
 )
 
+type RebalanceStrategy string
+
+//goland:noinspection GoUnusedConst
+const (
+	ByCount        RebalanceStrategy = "by_count"
+	BySize         RebalanceStrategy = "by_size"
+	ByCountAndSize RebalanceStrategy = "by_count_and_size"
+)
+
 // QdrantClusterSpec defines the desired state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterSpec struct {
@@ -162,6 +171,10 @@ type QdrantClusterSpec struct {
 	// to inspect the attached storage.
 	// +optional
 	StartupDelaySeconds *int `json:"startupDelaySeconds,omitempty"`
+	// RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
+	// Cluster-manager needs to be enabled for this feature to work.
+	// +optional
+	RebalanceStrategy *RebalanceStrategy `json:"rebalanceStrategy,omitempty"`
 }
 
 // Validate if there are incorrect settings in the CRD

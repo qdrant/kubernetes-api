@@ -565,6 +565,11 @@ spec:
                       the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default).
                     type: string
                 type: object
+              rebalanceStrategy:
+                description: |-
+                  RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
+                  Cluster-manager needs to be enabled for this feature to work.
+                type: string
               resources:
                 description: Resources specifies the resources to allocate for each
                   Qdrant node.
