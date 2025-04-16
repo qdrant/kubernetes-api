@@ -1230,8 +1230,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `optimizerCPUBudget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  |  |
-| `asyncScorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
+| `optimizer_cpu_budget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  |  |
+| `async_scorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
 
 
 #### TraefikConfig
@@ -1248,6 +1248,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
+| `entryPoint` _string array_ | EntryPoints is the list of traefik entry points to use for the ingress route.<br />If nothing is set, it will take the entryPoints configured in the operator config. |  |  |
 
 
 #### VolumeSnapshotClass

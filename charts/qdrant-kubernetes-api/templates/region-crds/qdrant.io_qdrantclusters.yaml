@@ -188,10 +188,10 @@ spec:
                       performance:
                         description: Performance configuration
                         properties:
-                          asyncScorer:
+                          async_scorer:
                             description: AsyncScorer enables io_uring when rescoring
                             type: boolean
-                          optimizerCPUBudget:
+                          optimizer_cpu_budget:
                             description: |-
                               OptimizerCPUBudget defines the number of CPU allocation.
                               If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size
@@ -433,6 +433,13 @@ spec:
                       allowedSourceRanges:
                         description: AllowedSourceRanges specifies the allowed CIDR
                           source ranges for the ingress.
+                        items:
+                          type: string
+                        type: array
+                      entryPoint:
+                        description: |-
+                          EntryPoints is the list of traefik entry points to use for the ingress route.
+                          If nothing is set, it will take the entryPoints configured in the operator config.
                         items:
                           type: string
                         type: array
