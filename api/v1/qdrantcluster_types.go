@@ -496,10 +496,10 @@ type StoragePerformanceConfig struct {
 	// If negative - subtract this number of CPUs from the available CPUs.
 	// If positive - use this exact number of CPUs.
 	// +optional
-	OptimizerCPUBudget *int64 `json:"optimizerCPUBudget,omitempty"`
+	OptimizerCPUBudget *int64 `json:"optimizer_cpu_budget,omitempty"`
 	// AsyncScorer enables io_uring when rescoring
 	// +optional
-	AsyncScorer *bool `json:"asyncScorer,omitempty"`
+	AsyncScorer *bool `json:"async_scorer,omitempty"`
 }
 
 func (c *QdrantConfiguration) GetService() *QdrantConfigurationService {
@@ -729,6 +729,9 @@ type TraefikConfig struct {
 	// AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress.
 	// +optional
 	AllowedSourceRanges []string `json:"allowedSourceRanges,omitempty"`
+	// EntryPoints is the list of traefik entry points to use for the ingress route.
+	// If nothing is set, it will take the entryPoints configured in the operator config.
+	EntryPoints []string `json:"entryPoint,omitempty"`
 }
 
 func (c *TraefikConfig) GetAllowedSourceRanges() []string {
