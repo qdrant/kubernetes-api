@@ -83,9 +83,9 @@ type EntityResult string
 
 //goland:noinspection GoUnusedConst
 const (
-	EntityResultOk       EntityResult = "Ok"
-	EntityRersultPending EntityResult = "Pending"
-	EntityResultError    EntityResult = "Error"
+	EntityResultOk      EntityResult = "Ok"
+	EntityResultPending EntityResult = "Pending"
+	EntityResultError   EntityResult = "Error"
 )
 
 // QdrantEntityStatusResult is the last result from the invocation to a manager
