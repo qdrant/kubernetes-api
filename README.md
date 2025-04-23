@@ -20,3 +20,5 @@ git push origin releases/v1.2.3
 ```
 
 A GitHub Action will create and tag a new release with the given version number. Important: the version number must be in the format `vX.Y.Z`, and prefixed with a `v`.
+
+Deployment to different environments is coupled with operator release, please see [qdrant/operator: Release process](https://github.com/qdrant/operator?tab=readme-ov-file#release-process) for details.
