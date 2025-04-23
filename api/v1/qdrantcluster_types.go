@@ -731,7 +731,7 @@ type TraefikConfig struct {
 	AllowedSourceRanges []string `json:"allowedSourceRanges,omitempty"`
 	// EntryPoints is the list of traefik entry points to use for the ingress route.
 	// If nothing is set, it will take the entryPoints configured in the operator config.
-	EntryPoints []string `json:"entryPoint,omitempty"`
+	EntryPoints []string `json:"entryPoints,omitempty"`
 }
 
 func (c *TraefikConfig) GetAllowedSourceRanges() []string {
