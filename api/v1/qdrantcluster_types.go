@@ -31,49 +31,6 @@ const (
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
 
-// GetQdrantClusterCrdForHash creates a QdrantCluster for the use of creating a hash for the provided QdrantCluster,
-// It uses a subset only, so it ignores e.g. majority of the the status and some fields from the spec.
-func GetQdrantClusterCrdForHash(qc QdrantCluster) QdrantCluster {
-	// Only include the items to be inspected (basically the spec and a single annot)
-	result := QdrantCluster{
-		ObjectMeta: metav1.ObjectMeta{
-			Annotations: map[string]string{},
-		},
-	}
-	// Add the restartAt annot if needed
-	if annots := qc.GetAnnotations(); annots != nil {
-		if val, found := annots[RestartedAtAnnotationKey]; found {
-			result.Annotations[RestartedAtAnnotationKey] = val
-		}
-	}
-	cloned := qc.Spec.DeepCopy()
-	// Version is a special case, we can upgrade via an upgade-path,
-	// so we should take care of the version in status instead
-	if v := qc.Status.Version; v != "" {
-		cloned.Version = v
-	}
-	// Remove all fields (aka set a fixed value) which shouldn't restart the pod
-	// The list is sorted alphabetically, for easier maintainability
-	cloned.ClusterManager = nil
-	cloned.Ingress = nil
-	cloned.Pauses = nil
-	cloned.Resources.Storage = ""
-	cloned.RestartAllPodsConcurrently = false
-	cloned.Service = nil
-	cloned.ServicePerNode = nil
-	cloned.Size = 1
-	if v := cloned.StatefulSet; v != nil {
-		v.Annotations = nil
-	}
-	cloned.StartupDelaySeconds = nil
-	cloned.StorageClassNames = nil
-	cloned.Suspend = false
-	// Set Spec for result
-	result.Spec = *cloned
-	// Return result
-	return result
-}
-
 type GPUType string
 
 //goland:noinspection GoUnusedConst
