@@ -5,8 +5,8 @@
 package v1
 
 import (
-	"github.com/fluxcd/helm-controller/api/v2beta2"
-	"github.com/fluxcd/source-controller/api/v1beta2"
+	"github.com/fluxcd/helm-controller/api/v2"
+	apiv1 "github.com/fluxcd/source-controller/api/v1"
 	corev1 "k8s.io/api/core/v1"
 	policyv1 "k8s.io/api/policy/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -78,7 +78,7 @@ func (in *HelmRelease) DeepCopyInto(out *HelmRelease) {
 	}
 	if in.Object != nil {
 		in, out := &in.Object, &out.Object
-		*out = new(v2beta2.HelmRelease)
+		*out = new(v2.HelmRelease)
 		(*in).DeepCopyInto(*out)
 	}
 }
@@ -103,7 +103,7 @@ func (in *HelmRepository) DeepCopyInto(out *HelmRepository) {
 	}
 	if in.Object != nil {
 		in, out := &in.Object, &out.Object
-		*out = new(v1beta2.HelmRepository)
+		*out = new(apiv1.HelmRepository)
 		(*in).DeepCopyInto(*out)
 	}
 }

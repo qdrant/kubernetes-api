@@ -1,8 +1,8 @@
 package v1
 
 import (
-	helmapi "github.com/fluxcd/helm-controller/api/v2beta2"
-	srcapi "github.com/fluxcd/source-controller/api/v1beta2"
+	helmapiv2 "github.com/fluxcd/helm-controller/api/v2"
+	srcapiv1 "github.com/fluxcd/source-controller/api/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -49,7 +49,7 @@ type HelmRepository struct {
 	MarkedForDeletionAt *string `json:"markedForDeletionAt,omitempty"`
 	// Object specifies the helm repository object
 	// +kubebuilder:validation:EmbeddedResource
-	Object *srcapi.HelmRepository `json:"object,omitempty"`
+	Object *srcapiv1.HelmRepository `json:"object,omitempty"`
 }
 
 type HelmRelease struct {
@@ -58,7 +58,7 @@ type HelmRelease struct {
 	MarkedForDeletionAt *string `json:"markedForDeletionAt,omitempty"`
 	// Object specifies the helm release object
 	// +kubebuilder:validation:EmbeddedResource
-	Object *helmapi.HelmRelease `json:"object,omitempty"`
+	Object *helmapiv2.HelmRelease `json:"object,omitempty"`
 }
 
 type RegionPhase string
