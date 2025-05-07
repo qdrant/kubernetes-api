@@ -118,10 +118,11 @@ type QdrantClusterSpec struct {
 	PodDisruptionBudget *policyv1.PodDisruptionBudgetSpec `json:"podDisruptionBudget,omitempty"`
 	// RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).
 	// If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods
-	// need to be restarted like when RestartedAtAnnotationKey is added/updated or the Qdrant version need to be upgraded.
-	// This helps sharded but not replicated clusters to reduce downtime to possible minimum during restart.
+	// need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.
+	// This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.
+	// If unset, the operator is going to restart nodes concurrently if none of the collections if replicated.
 	// +optional
-	RestartAllPodsConcurrently bool `json:"restartAllPodsConcurrently,omitempty"`
+	RestartAllPodsConcurrently *bool `json:"restartAllPodsConcurrently"`
 	// If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.
 	// The sleep will be added when a pod is restarted, it will not force any pod to restart.
 	// This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way
