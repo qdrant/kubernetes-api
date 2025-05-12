@@ -967,6 +967,11 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 		*out = new(policyv1.PodDisruptionBudgetSpec)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.RestartAllPodsConcurrently != nil {
+		in, out := &in.RestartAllPodsConcurrently, &out.RestartAllPodsConcurrently
+		*out = new(bool)
+		**out = **in
+	}
 	if in.StartupDelaySeconds != nil {
 		in, out := &in.StartupDelaySeconds, &out.StartupDelaySeconds
 		*out = new(int)
