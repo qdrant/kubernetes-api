@@ -122,7 +122,7 @@ type QdrantClusterSpec struct {
 	// This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.
 	// If unset, the operator is going to restart nodes concurrently if none of the collections if replicated.
 	// +optional
-	RestartAllPodsConcurrently *bool `json:"restartAllPodsConcurrently"`
+	RestartAllPodsConcurrently *bool `json:"restartAllPodsConcurrently,omitempty"`
 	// If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.
 	// The sleep will be added when a pod is restarted, it will not force any pod to restart.
 	// This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way
