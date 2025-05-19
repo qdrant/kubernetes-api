@@ -333,11 +333,15 @@ spec:
                       only inside GPU memory and won't affect storage type.
                     type: boolean
                   gpuType:
+                    allOf:
+                    - enum:
+                      - nvidia
+                      - amd
+                    - enum:
+                      - nvidia
+                      - amd
                     description: GPUType specifies the type of the GPU to use. If
                       set, GPU indexing is enabled.
-                    enum:
-                    - nvidia
-                    - amd
                     type: string
                   groupsCount:
                     description: |-
@@ -575,6 +579,10 @@ spec:
                 description: |-
                   RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
                   Cluster-manager needs to be enabled for this feature to work.
+                enum:
+                - by_count
+                - by_size
+                - by_count_and_size
                 type: string
               resources:
                 description: Resources specifies the resources to allocate for each

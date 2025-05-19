@@ -31,6 +31,8 @@ const (
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
 )
 
+// GPUType specifies the type of GPU to use.
+// +kubebuilder:validation:Enum=nvidia;amd
 type GPUType string
 
 //goland:noinspection GoUnusedConst
@@ -39,6 +41,8 @@ const (
 	GPUTypeAmd    GPUType = "amd"
 )
 
+// RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
+// +kubebuilder:validation:Enum=by_count;by_size;by_count_and_size
 type RebalanceStrategy string
 
 //goland:noinspection GoUnusedConst

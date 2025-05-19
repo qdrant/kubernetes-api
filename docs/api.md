@@ -182,9 +182,10 @@ _Appears in:_
 
 _Underlying type:_ _string_
 
+GPUType specifies the type of GPU to use.
 
-
-
+_Validation:_
+- Enum: [nvidia amd]
 
 _Appears in:_
 - [GPU](#gpu)
@@ -799,7 +800,7 @@ _Appears in:_
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  |  |
 | `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  |  |
-| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  |  |
+| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size] <br /> |
 
 
 
@@ -1094,9 +1095,10 @@ _Appears in:_
 
 _Underlying type:_ _string_
 
+RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
 
-
-
+_Validation:_
+- Enum: [by_count by_size by_count_and_size]
 
 _Appears in:_
 - [QdrantClusterSpec](#qdrantclusterspec)
