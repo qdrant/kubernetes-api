@@ -55,7 +55,7 @@ $(CONTROLLER_GEN): $(LOCALBIN)
 .PHONY: crd-ref-doc
 crd-ref-docs: $(CRD_REF_DOCS) ## Download crd-ref-doc locally if necessary. If wrong version is installed, it will be overwritten.
 $(CRD_REF_DOCS): $(LOCALBIN)
-	test -s $(LOCALBIN)/crd-ref-docs || \
+	test -s $(LOCALBIN)/crd-ref-docs && $(LOCALBIN)/crd-ref-docs --version | grep -q $(CRD_REF_DOCS_VERSION) || \
 	GOBIN=$(LOCALBIN) go install github.com/elastic/crd-ref-docs@$(CRD_REF_DOCS_VERSION)
 
 .PHONY: go_fmt
