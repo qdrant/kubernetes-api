@@ -824,6 +824,7 @@ _Appears in:_
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
 | `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
 | `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster. |  |  |
+| `maxCollections` _integer_ | MaxCollections represents the maximal number of collections allowed to be created.<br />It can be set for Qdrant version >= 1.14.1<br />Default to 1000 if omitted and Qdrant version >= 1.15.0 |  | Minimum: 1 <br /> |
 
 
 #### QdrantConfigurationCollection

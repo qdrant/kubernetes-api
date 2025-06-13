@@ -103,6 +103,13 @@ spec:
                   log_level:
                     description: LogLevel specifies the log level for Qdrant.
                     type: string
+                  maxCollections:
+                    description: |-
+                      MaxCollections represents the maximal number of collections allowed to be created.
+                      It can be set for Qdrant version >= 1.14.1
+                      Default to 1000 if omitted and Qdrant version >= 1.15.0
+                    minimum: 1
+                    type: integer
                   service:
                     description: Service specifies the service level configuration
                       for Qdrant.

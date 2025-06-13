@@ -437,6 +437,12 @@ type QdrantConfiguration struct {
 	// Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster.
 	// +optional
 	Inference *InferenceConfig `json:"inference,omitempty"`
+	// MaxCollections represents the maximal number of collections allowed to be created.
+	// It can be set for Qdrant version >= 1.14.1
+	// Default to 1000 if omitted and Qdrant version >= 1.15.0
+	// +optional
+	// +kubebuilder:validation:Minimum:=1
+	MaxCollections *uint `json:"maxCollections,omitempty"`
 }
 
 type InferenceConfig struct {
