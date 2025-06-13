@@ -1303,6 +1303,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  |  |
+| `maxCollections` _integer_ | MaxCollections represents the maximal number of collections allowed to be created.<br />It can be set for Qdrant version >= 1.14.1<br />Default to 1000 if omitted and Qdrant version >= 1.15.0 |  | Minimum: 1 <br /> |
 
 
 #### StoragePerformanceConfig
