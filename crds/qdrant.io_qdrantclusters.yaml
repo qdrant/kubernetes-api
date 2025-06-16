@@ -184,6 +184,13 @@ spec:
                   storage:
                     description: Storage specifies the storage configuration for Qdrant.
                     properties:
+                      maxCollections:
+                        description: |-
+                          MaxCollections represents the maximal number of collections allowed to be created.
+                          It can be set for Qdrant version >= 1.14.1
+                          Default to 1000 if omitted and Qdrant version >= 1.15.0
+                        minimum: 1
+                        type: integer
                       performance:
                         description: Performance configuration
                         properties:
