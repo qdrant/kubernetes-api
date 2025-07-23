@@ -29,6 +29,9 @@ const (
 	// The value should be non-empty, but is free to use, and will be used in Events.
 	// This feature requires that the cluster-manager is enabled.
 	RecreateNodeAnnotationKey = "operator.qdrant.com/recreate-node"
+	// ReinitAnnotationKey is the annotation key to trigger reinitialization of the given cluster.
+	// The annotation value is ignored and can be used to document why reinitialization is requested.
+	ReinitAnnotationKey = "operator.qdrant.com/reinit"
 )
 
 // GPUType specifies the type of GPU to use.
