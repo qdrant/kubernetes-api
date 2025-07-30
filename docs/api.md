@@ -878,6 +878,7 @@ _Appears in:_
 | `jwt_rbac` _boolean_ | JwtRbac specifies whether to enable jwt rbac for the qdrant instance<br />Default is false |  |  |
 | `hide_jwt_dashboard` _boolean_ | HideJwtDashboard specifies whether to hide the JWT dashboard of the embedded UI<br />Default is false |  |  |
 | `enable_tls` _boolean_ | EnableTLS specifies whether to enable tls for the qdrant instance<br />Default is false |  |  |
+| `max_request_size_mb` _integer_ | MaxRequestSizeMb specifies them maximum size of POST data in a single request in megabytes<br />Default, if not set is 32 (MB) |  |  |
 
 
 #### QdrantConfigurationTLS

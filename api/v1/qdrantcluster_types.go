@@ -524,6 +524,10 @@ type QdrantConfigurationService struct {
 	// Default is false
 	// +optional
 	EnableTLS *bool `json:"enable_tls,omitempty"`
+	// MaxRequestSizeMb specifies them maximum size of POST data in a single request in megabytes
+	// Default, if not set is 32 (MB)
+	// +optional
+	MaxRequestSizeMb *int64 `json:"max_request_size_mb,omitempty"`
 }
 
 func (c *QdrantConfigurationService) GetApiKey() *QdrantSecretKeyRef {
@@ -559,6 +563,13 @@ func (c *QdrantConfigurationService) GetEnableTLS() bool {
 		return false
 	}
 	return *c.EnableTLS
+}
+
+func (c *QdrantConfigurationService) GetMaxRequestSizeMb() int64 {
+	if c == nil || c.MaxRequestSizeMb == nil {
+		return 32
+	}
+	return *c.MaxRequestSizeMb
 }
 
 type QdrantSecretKeyRef struct {
