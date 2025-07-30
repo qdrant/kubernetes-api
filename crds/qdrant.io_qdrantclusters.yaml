@@ -151,6 +151,12 @@ spec:
                           JwtRbac specifies whether to enable jwt rbac for the qdrant instance
                           Default is false
                         type: boolean
+                      max_request_size_mb:
+                        description: |-
+                          MaxRequestSizeMb specifies them maximum size of POST data in a single request in megabytes
+                          Default, if not set is 32 (MB)
+                        format: int64
+                        type: integer
                       read_only_api_key:
                         description: ReadOnlyApiKey for the qdrant instance
                         properties:
