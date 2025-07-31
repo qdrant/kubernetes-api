@@ -28,6 +28,12 @@ type RestoreDestination struct {
 	Name string `json:"name"`
 	// Namespace of the destination cluster
 	Namespace string `json:"namespace"`
+	// Create when set to true indicates that
+	// a new cluster with the specified name should be created.
+	// Otherwise, if set to false, the existing cluster is going to be restored
+	// to the specified state.
+	// +optional
+	Create bool `json:"create"`
 }
 
 type RestorePhase string

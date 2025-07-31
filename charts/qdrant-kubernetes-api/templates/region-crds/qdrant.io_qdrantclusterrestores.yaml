@@ -55,6 +55,13 @@ spec:
                 description: Destination defines the destination cluster where the
                   source data will end up
                 properties:
+                  create:
+                    description: |-
+                      Create when set to true indicates that
+                      a new cluster with the specified name should be created.
+                      Otherwise, if set to false, the existing cluster is going to be restored
+                      to the specified state.
+                    type: boolean
                   name:
                     description: Name of the destination cluster
                     type: string
