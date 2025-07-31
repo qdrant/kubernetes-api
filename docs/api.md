@@ -1197,6 +1197,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `name` _string_ | Name of the destination cluster |  |  |
 | `namespace` _string_ | Namespace of the destination cluster |  |  |
+| `create` _boolean_ | Create when set to true indicates that<br />a new cluster with the specified name should be created.<br />Otherwise, if set to false, the existing cluster is going to be restored<br />to the specified state. |  |  |
 
 
 #### RestorePhase
