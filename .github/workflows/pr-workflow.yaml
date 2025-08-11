@@ -14,7 +14,7 @@ jobs:
     timeout-minutes: 10 # Sets a timeout of 10 minutes for this job (default is 1 minute)
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: actions/setup-go@v5
         with:
