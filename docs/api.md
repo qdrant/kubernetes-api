@@ -1217,6 +1217,7 @@ _Appears in:_
 | `Skipped` |  |
 | `Failed` |  |
 | `Succeeded` |  |
+| `Pending` |  |
 
 
 #### RestoreSource

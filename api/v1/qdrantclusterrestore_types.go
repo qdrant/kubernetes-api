@@ -44,13 +44,14 @@ const (
 	RestoreSkipped   RestorePhase = "Skipped"
 	RestoreFailed    RestorePhase = "Failed"
 	RestoreSucceeded RestorePhase = "Succeeded"
+	RestorePending   RestorePhase = "Pending"
 )
 
 // QdrantClusterRestoreStatus defines the observed state of QdrantClusterRestore
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterRestoreStatus struct {
 	// Phase is the current phase of the restore
-	// +kubebuilder:validation:Enum=Running;Skipped;Failed;Succeeded
+	// +kubebuilder:validation:Enum=Running;Skipped;Failed;Succeeded;Pending
 	Phase RestorePhase `json:"phase,omitempty"`
 	// Message from the operator in case of failures, like snapshot not found
 	// +optional
