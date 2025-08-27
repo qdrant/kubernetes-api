@@ -106,6 +106,7 @@ spec:
                 - Skipped
                 - Failed
                 - Succeeded
+                - Pending
                 type: string
             type: object
             x-kubernetes-preserve-unknown-fields: true
