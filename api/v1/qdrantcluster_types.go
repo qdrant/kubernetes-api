@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"encoding/json"
 	"fmt"
 
 	corev1 "k8s.io/api/core/v1"
@@ -897,7 +898,24 @@ type QdrantClusterStatus struct {
 	// The version (to be) used in the cluster.
 	// This version can differ from the spec, because version updates need to be done in order (see `update-path` annotation)
 	// +optional
-	Version string `json:"version,omitempty"`
+	Version               string                `json:"version,omitempty"`
+	ClusterManagerReponse ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
+}
+
+type ClusterManagerReponse struct {
+	ExecutedActions *[]json.RawMessage `json:"executed_actions"`
+	RequiredActions *[]json.RawMessage `json:"required_actions"`
+
+	// SuggestedActions Those Actions are NOT scheduled to be executed, just suggested
+	SuggestedActions *[]json.RawMessage `json:"suggested_actions"`
+}
+
+type KubernetesEventInfo struct {
+	Message        string      `json:"message,omitempty"`
+	Reason         string      `json:"reason,omitempty"`
+	Count          int32       `json:"count,omitempty"`
+	FirstTimestamp metav1.Time `json:"firstTimestamp,omitempty"`
+	LastTimestamp  metav1.Time `json:"lastTimestamp,omitempty"`
 }
 
 type NodeStatus struct {
@@ -917,6 +935,23 @@ type NodeStatus struct {
 	// This is needed to beter report recovery process to the user.
 	// +optional
 	Liveness bool `json:"liveness,omitempty"`
+
+	PodPhase          corev1.PodPhase          `json:"podPhase,omitempty"`
+	PodConditions     []corev1.PodCondition    `json:"podConditions,omitempty"`
+	PodMessage        string                   `json:"podMessage,omitempty"`
+	PodReason         string                   `json:"podReason,omitempty"`
+	ContainerStatuses []corev1.ContainerStatus `json:"containerStatuses,omitempty"`
+	PodEvents         []KubernetesEventInfo    `json:"events,omitempty"`
+
+	DatabasePVCStatus  NodePVCStatus `json:"databasePVCStatus,omitempty"`
+	SnapshotsPVCStatus NodePVCStatus `json:"snapshotsPVCStatus,omitempty"`
+}
+
+type NodePVCStatus struct {
+	StorageClassName string                                  `json:"storageClassName,omitempty"`
+	Phase            corev1.PersistentVolumeClaimPhase       `json:"phase,omitempty"`
+	Conditions       []corev1.PersistentVolumeClaimCondition `json:"conditions,omitempty"`
+	Events           []KubernetesEventInfo                   `json:"events,omitempty"`
 }
 
 //+kubebuilder:object:root=true

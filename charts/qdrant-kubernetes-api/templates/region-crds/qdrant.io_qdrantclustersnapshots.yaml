@@ -109,6 +109,40 @@ spec:
                   were created
                 items:
                   properties:
+                    error:
+                      description: VolumeSnapshotError describes an error encountered
+                        during snapshot creation.
+                      properties:
+                        message:
+                          description: |-
+                            message is a string detailing the encountered error during snapshot
+                            creation if specified.
+                            NOTE: message may be logged, and it should not contain sensitive
+                            information.
+                          type: string
+                        time:
+                          description: time is the timestamp when the error was encountered.
+                          format: date-time
+                          type: string
+                      type: object
+                    events:
+                      items:
+                        properties:
+                          count:
+                            format: int32
+                            type: integer
+                          firstTimestamp:
+                            format: date-time
+                            type: string
+                          lastTimestamp:
+                            format: date-time
+                            type: string
+                          message:
+                            type: string
+                          reason:
+                            type: string
+                        type: object
+                      type: array
                     readyToUse:
                       description: ReadyToUse indicates if the volume snapshot is
                         ready to use

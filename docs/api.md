@@ -77,6 +77,24 @@ Package v1 contains API Schema definitions for the qdrant.io v1 API group
 
 
 
+#### ClusterManagerReponse
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantClusterStatus](#qdrantclusterstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `executed_actions` _[RawMessage](#rawmessage)_ |  |  |  |
+| `required_actions` _[RawMessage](#rawmessage)_ |  |  |  |
+| `suggested_actions` _[RawMessage](#rawmessage)_ | SuggestedActions Those Actions are NOT scheduled to be executed, just suggested |  |  |
+
+
 #### ClusterPhase
 
 _Underlying type:_ _string_
@@ -347,6 +365,28 @@ _Appears in:_
 | `k3s` |  |
 
 
+#### KubernetesEventInfo
+
+
+
+
+
+
+
+_Appears in:_
+- [NodePVCStatus](#nodepvcstatus)
+- [NodeStatus](#nodestatus)
+- [VolumeSnapshotInfo](#volumesnapshotinfo)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `message` _string_ |  |  |  |
+| `reason` _string_ |  |  |  |
+| `count` _integer_ |  |  |  |
+| `firstTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ |  |  |  |
+| `lastTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ |  |  |  |
+
+
 #### KubernetesPod
 
 
@@ -472,6 +512,25 @@ _Appears in:_
 | `allocatable` _[NodeResourceInfo](#noderesourceinfo)_ | Allocatable specifies the allocatable resources of the node |  |  |
 
 
+#### NodePVCStatus
+
+
+
+
+
+
+
+_Appears in:_
+- [NodeStatus](#nodestatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `storageClassName` _string_ |  |  |  |
+| `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ |  |  |  |
+| `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ |  |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ |  |  |  |
+
+
 #### NodeResourceInfo
 
 
@@ -509,6 +568,14 @@ _Appears in:_
 | `state` _object (keys:[PodConditionType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podconditiontype-v1-core), values:[ConditionStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#conditionstatus-v1-core))_ | States specifies the condition states of the node |  |  |
 | `version` _string_ | Version specifies the version of Qdrant running on the node |  |  |
 | `liveness` _boolean_ | Reports if qdrant node responded to liveness request (before readiness).<br />This is needed to beter report recovery process to the user. |  |  |
+| `podPhase` _[PodPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podphase-v1-core)_ |  |  |  |
+| `podConditions` _[PodCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podcondition-v1-core) array_ |  |  |  |
+| `podMessage` _string_ |  |  |  |
+| `podReason` _string_ |  |  |  |
+| `containerStatuses` _[ContainerStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#containerstatus-v1-core) array_ |  |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ |  |  |  |
+| `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ |  |  |  |
+| `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ |  |  |  |
 
 
 #### Pause
@@ -1481,6 +1548,8 @@ _Appears in:_
 | `volumeName` _string_ | VolumeName is the name of the volume that was backed up |  |  |
 | `readyToUse` _boolean_ | ReadyToUse indicates if the volume snapshot is ready to use |  |  |
 | `snapshotHandle` _string_ | SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider |  |  |
+| `error` _[VolumeSnapshotError](#volumesnapshoterror)_ |  |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ |  |  |  |
 
 
 #### WriteCluster
