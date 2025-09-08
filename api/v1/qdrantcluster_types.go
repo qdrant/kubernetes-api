@@ -898,16 +898,16 @@ type QdrantClusterStatus struct {
 	// The version (to be) used in the cluster.
 	// This version can differ from the spec, because version updates need to be done in order (see `update-path` annotation)
 	// +optional
-	Version               string                `json:"version,omitempty"`
-	ClusterManagerReponse ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
+	Version               string                 `json:"version,omitempty"`
+	ClusterManagerReponse *ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
 }
 
 type ClusterManagerReponse struct {
-	ExecutedActions *[]json.RawMessage `json:"executed_actions"`
-	RequiredActions *[]json.RawMessage `json:"required_actions"`
+	ExecutedActions *[]json.RawMessage `json:"executed_actions,omitempty"`
+	RequiredActions *[]json.RawMessage `json:"required_actions,omitempty"`
 
 	// SuggestedActions Those Actions are NOT scheduled to be executed, just suggested
-	SuggestedActions *[]json.RawMessage `json:"suggested_actions"`
+	SuggestedActions *[]json.RawMessage `json:"suggested_actions,omitempty"`
 }
 
 type KubernetesEventInfo struct {
