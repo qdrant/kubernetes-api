@@ -1221,10 +1221,6 @@ spec:
                       format: byte
                       type: string
                     type: array
-                required:
-                - executed_actions
-                - required_actions
-                - suggested_actions
                 type: object
               conditions:
                 description: Conditions specifies the conditions of different checks
