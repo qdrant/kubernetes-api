@@ -76,6 +76,18 @@ spec:
                           of replicas of each shard
                         format: int64
                         type: integer
+                      strict_mode:
+                        description: StrictMode specifies the strict mode configuration
+                          for the collection
+                        properties:
+                          max_payload_index_count:
+                            description: |-
+                              MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
+                              It can be set for Qdrant version >= 1.15.5
+                              Default to 100 if omitted and Qdrant version >= 1.15.5
+                            minimum: 1
+                            type: integer
+                        type: object
                       vectors:
                         description: Vectors specifies the default parameters for
                           vectors
@@ -196,13 +208,6 @@ spec:
                           MaxCollections represents the maximal number of collections allowed to be created.
                           It can be set for Qdrant version >= 1.14.1
                           Default to 1000 if omitted and Qdrant version >= 1.15.0
-                        minimum: 1
-                        type: integer
-                      maxPayloadIndexCount:
-                        description: |-
-                          MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
-                          It can be set for Qdrant version >= 1.15.5
-                          Default to 100 if omitted and Qdrant version >= 1.15.5
                         minimum: 1
                         type: integer
                       performance:
