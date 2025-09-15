@@ -459,6 +459,12 @@ type StorageConfig struct {
 	// +optional
 	// +kubebuilder:validation:Minimum:=1
 	MaxCollections *uint `json:"maxCollections,omitempty"`
+	// MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
+	// It can be set for Qdrant version >= 1.15.5
+	// Default to 100 if omitted and Qdrant version >= 1.15.5
+	// +optional
+	// +kubebuilder:validation:Minimum:=1
+	MaxPayloadIndexCount *uint `json:"maxPayloadIndexCount,omitempty"`
 }
 
 type StoragePerformanceConfig struct {

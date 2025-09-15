@@ -198,6 +198,13 @@ spec:
                           Default to 1000 if omitted and Qdrant version >= 1.15.0
                         minimum: 1
                         type: integer
+                      maxPayloadIndexCount:
+                        description: |-
+                          MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
+                          It can be set for Qdrant version >= 1.15.5
+                          Default to 100 if omitted and Qdrant version >= 1.15.5
+                        minimum: 1
+                        type: integer
                       performance:
                         description: Performance configuration
                         properties:
