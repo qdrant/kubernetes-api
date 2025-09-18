@@ -90,6 +90,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
+| `lastResponseTime` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The last time the cluster-manager responded in UTC |  |  |
 | `executed_actions` _[RawMessage](#rawmessage)_ |  |  |  |
 | `required_actions` _[RawMessage](#rawmessage)_ |  |  |  |
 | `suggested_actions` _[RawMessage](#rawmessage)_ | SuggestedActions Those Actions are NOT scheduled to be executed, just suggested |  |  |

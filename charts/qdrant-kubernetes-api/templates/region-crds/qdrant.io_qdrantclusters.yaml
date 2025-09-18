@@ -1192,6 +1192,7 @@ spec:
                   As default the value from AvailableNodeIndexes[0] will be used.
                 type: integer
               clusterManagerResponse:
+                description: The last response from the cluster-manager manage endpiont
                 properties:
                   executed_actions:
                     items:
@@ -1202,6 +1203,10 @@ spec:
                       format: byte
                       type: string
                     type: array
+                  lastResponseTime:
+                    description: The last time the cluster-manager responded in UTC
+                    format: date-time
+                    type: string
                   required_actions:
                     items:
                       description: |-
