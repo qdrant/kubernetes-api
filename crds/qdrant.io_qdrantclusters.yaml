@@ -83,7 +83,6 @@ spec:
                             description: |-
                               MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
                               It can be set for Qdrant version >= 1.15.5
-                              Default to 100 if omitted and Qdrant version >= 1.15.5
                             minimum: 1
                             type: integer
                         type: object
