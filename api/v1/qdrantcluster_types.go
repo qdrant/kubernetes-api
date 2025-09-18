@@ -497,6 +497,17 @@ type QdrantConfigurationCollection struct {
 	// Vectors specifies the default parameters for vectors
 	// +optional
 	Vectors *QdrantConfigurationCollectionVectors `json:"vectors,omitempty"`
+	// StrictMode specifies the strict mode configuration for the collection
+	// +optional
+	StrictMode *QdrantConfigurationCollectionStrictMode `json:"strict_mode,omitempty"`
+}
+
+type QdrantConfigurationCollectionStrictMode struct {
+	// MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
+	// It can be set for Qdrant version >= 1.16.0
+	// +optional
+	// +kubebuilder:validation:Minimum:=1
+	MaxPayloadIndexCount *uint `json:"max_payload_index_count,omitempty"`
 }
 
 type QdrantConfigurationCollectionVectors struct {

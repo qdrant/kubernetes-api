@@ -842,6 +842,23 @@ _Appears in:_
 | `replication_factor` _integer_ | ReplicationFactor specifies the default number of replicas of each shard |  |  |
 | `write_consistency_factor` _integer_ | WriteConsistencyFactor specifies how many replicas should apply the operation to consider it successful |  |  |
 | `vectors` _[QdrantConfigurationCollectionVectors](#qdrantconfigurationcollectionvectors)_ | Vectors specifies the default parameters for vectors |  |  |
+| `strict_mode` _[QdrantConfigurationCollectionStrictMode](#qdrantconfigurationcollectionstrictmode)_ | StrictMode specifies the strict mode configuration for the collection |  |  |
+
+
+#### QdrantConfigurationCollectionStrictMode
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantConfigurationCollection](#qdrantconfigurationcollection)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `max_payload_index_count` _integer_ | MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.<br />It can be set for Qdrant version >= 1.16.0 |  | Minimum: 1 <br /> |
 
 
 #### QdrantConfigurationCollectionVectors
