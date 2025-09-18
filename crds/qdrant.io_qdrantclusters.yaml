@@ -674,7 +674,7 @@ spec:
               size:
                 description: Size specifies the desired number of Qdrant nodes in
                   the cluster
-                maximum: 30
+                maximum: 100
                 minimum: 1
                 type: integer
               startupDelaySeconds:
