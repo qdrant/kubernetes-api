@@ -64,7 +64,7 @@ type QdrantClusterSpec struct {
 	Version string `json:"version"`
 	// Size specifies the desired number of Qdrant nodes in the cluster
 	// +kubebuilder:validation:Minimum=1
-	// +kubebuilder:validation:Maximum=30
+	// +kubebuilder:validation:Maximum=100
 	Size int `json:"size"`
 	// ServicePerNode specifies whether the cluster should start a dedicated service for each node.
 	// +kubebuilder:default=true
