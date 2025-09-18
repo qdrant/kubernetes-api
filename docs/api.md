@@ -858,7 +858,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `max_payload_index_count` _integer_ | MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.<br />It can be set for Qdrant version >= 1.15.5 |  | Minimum: 1 <br /> |
+| `max_payload_index_count` _integer_ | MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.<br />It can be set for Qdrant version >= 1.16.0 |  | Minimum: 1 <br /> |
 
 
 #### QdrantConfigurationCollectionVectors

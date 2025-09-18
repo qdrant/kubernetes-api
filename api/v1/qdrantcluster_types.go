@@ -504,7 +504,7 @@ type QdrantConfigurationCollection struct {
 
 type QdrantConfigurationCollectionStrictMode struct {
 	// MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.
-	// It can be set for Qdrant version >= 1.15.5
+	// It can be set for Qdrant version >= 1.16.0
 	// +optional
 	// +kubebuilder:validation:Minimum:=1
 	MaxPayloadIndexCount *uint `json:"max_payload_index_count,omitempty"`
