@@ -1192,7 +1192,7 @@ spec:
                   As default the value from AvailableNodeIndexes[0] will be used.
                 type: integer
               clusterManagerResponse:
-                description: The last response from the cluster-manager manage endpiont
+                description: The last response from the cluster-manager manage endpoint
                 properties:
                   executed_actions:
                     items:

@@ -899,7 +899,7 @@ type QdrantClusterStatus struct {
 	// This version can differ from the spec, because version updates need to be done in order (see `update-path` annotation)
 	// +optional
 	Version string `json:"version,omitempty"`
-	// The last response from the cluster-manager manage endpiont
+	// The last response from the cluster-manager manage endpoint
 	// +optional
 	ClusterManagerReponse *ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
 }
