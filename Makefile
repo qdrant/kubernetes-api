@@ -26,8 +26,8 @@ gen: manifests generate format vet ## Generate code containing DeepCopy, DeepCop
 
 .PHONY: manifests
 manifests: controller-gen ## Generate CustomResourceDefinition objects.
-	rm $(CHART_DIR)/templates/management-crds/*.yaml
-	rm $(CHART_DIR)/templates/region-crds/*.yaml
+	rm $(CHART_DIR)/templates/management-crds/*.yaml || true
+	rm $(CHART_DIR)/templates/region-crds/*.yaml || true
 	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=$(CRDS_DIR)
 	mv $(CRDS_DIR)/qdrant.io_qdrantreleases.yaml $(CHART_DIR)/templates/management-crds/
 	cp $(CRDS_DIR)/qdrant*.yaml $(CHART_DIR)/templates/region-crds/
