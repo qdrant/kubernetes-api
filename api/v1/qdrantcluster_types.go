@@ -143,7 +143,7 @@ type QdrantClusterSpec struct {
 	// ReadClusters specifies the read clusters for this cluster to synchronize.
 	// Cluster-manager needs to be enabled for this feature to work.
 	// +optional
-	ReadClusters *[]ReadCluster `json:"readClusters,omitempty"`
+	ReadClusters []ReadCluster `json:"readClusters,omitempty"`
 	// WriteCluster specifies the write cluster for this cluster. This is used for adminstrative purposes only.
 	// +optional
 	WriteCluster *WriteCluster `json:"writeCluster,omitempty"`

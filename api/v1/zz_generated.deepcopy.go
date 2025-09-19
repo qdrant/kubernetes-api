@@ -984,12 +984,8 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 	}
 	if in.ReadClusters != nil {
 		in, out := &in.ReadClusters, &out.ReadClusters
-		*out = new([]ReadCluster)
-		if **in != nil {
-			in, out := *in, *out
-			*out = make([]ReadCluster, len(*in))
-			copy(*out, *in)
-		}
+		*out = make([]ReadCluster, len(*in))
+		copy(*out, *in)
 	}
 	if in.WriteCluster != nil {
 		in, out := &in.WriteCluster, &out.WriteCluster
