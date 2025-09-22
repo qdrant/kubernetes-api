@@ -128,17 +128,22 @@ spec:
                       items:
                         properties:
                           count:
+                            description: How many times the event has occurred
                             format: int32
                             type: integer
                           firstTimestamp:
+                            description: The first time the event was seen
                             format: date-time
                             type: string
                           lastTimestamp:
+                            description: The last time the event was seen
                             format: date-time
                             type: string
                           message:
+                            description: Event message
                             type: string
                           reason:
+                            description: Event reason
                             type: string
                         type: object
                       type: array
