@@ -1195,6 +1195,8 @@ spec:
                 description: The last response from the cluster-manager manage endpoint
                 properties:
                   executed_actions:
+                    description: ExecutedActions are the actions that have been executed
+                      by the cluster-manager
                     items:
                       description: |-
                         RawMessage is a raw encoded JSON value.
@@ -1208,6 +1210,8 @@ spec:
                     format: date-time
                     type: string
                   required_actions:
+                    description: RequiredActions are the actions that are required
+                      to be executed by the operator as instructed by cluster-manager
                     items:
                       description: |-
                         RawMessage is a raw encoded JSON value.
@@ -1217,8 +1221,8 @@ spec:
                       type: string
                     type: array
                   suggested_actions:
-                    description: SuggestedActions Those Actions are NOT scheduled
-                      to be executed, just suggested
+                    description: SuggestedActions are suggested but not required actions
+                      to be executed by the operator as instructed by cluster-manager
                     items:
                       description: |-
                         RawMessage is a raw encoded JSON value.
@@ -1303,6 +1307,7 @@ spec:
                 additionalProperties:
                   properties:
                     containerStatuses:
+                      description: Details container statuses of the Pod of the node
                       items:
                         description: ContainerStatus contains details for the current
                           status of this container.
@@ -1698,8 +1703,10 @@ spec:
                         type: object
                       type: array
                     databasePVCStatus:
+                      description: Status of the database storage PVC
                       properties:
                         conditions:
+                          description: Conditions of the PVC
                           items:
                             description: PersistentVolumeClaimCondition contains details
                               about state of pvc
@@ -1741,43 +1748,58 @@ spec:
                             type: object
                           type: array
                         events:
+                          description: Recent Kubernetes Events related to the PVC
                           items:
                             properties:
                               count:
+                                description: How many times the event has occurred
                                 format: int32
                                 type: integer
                               firstTimestamp:
+                                description: The first time the event was seen
                                 format: date-time
                                 type: string
                               lastTimestamp:
+                                description: The last time the event was seen
                                 format: date-time
                                 type: string
                               message:
+                                description: Event message
                                 type: string
                               reason:
+                                description: Event reason
                                 type: string
                             type: object
                           type: array
                         phase:
+                          description: Status phase of the PVC
                           type: string
                         storageClassName:
+                          description: Name of the StorageClass used by the PVC
                           type: string
                       type: object
                     events:
+                      description: Recent Kubernetes Events related to the Pod of
+                        the node
                       items:
                         properties:
                           count:
+                            description: How many times the event has occurred
                             format: int32
                             type: integer
                           firstTimestamp:
+                            description: The first time the event was seen
                             format: date-time
                             type: string
                           lastTimestamp:
+                            description: The last time the event was seen
                             format: date-time
                             type: string
                           message:
+                            description: Event message
                             type: string
                           reason:
+                            description: Event reason
                             type: string
                         type: object
                       type: array
@@ -1790,6 +1812,7 @@ spec:
                       description: Name specifies the name of the node
                       type: string
                     podConditions:
+                      description: Conditions of the Pod of the node
                       items:
                         description: PodCondition contains details for the current
                           condition of this pod.
@@ -1834,16 +1857,24 @@ spec:
                         type: object
                       type: array
                     podMessage:
+                      description: Status message of the Pod of the node
                       type: string
                     podPhase:
-                      description: PodPhase is a label for the condition of a pod
-                        at the current time.
+                      description: Status phase of the Pod of the node
                       type: string
                     podReason:
+                      description: Status reason of the Pod of the node
                       type: string
+                    restartCount:
+                      description: The number of times the main qdrant container has
+                        been restarted.
+                      format: int32
+                      type: integer
                     snapshotsPVCStatus:
+                      description: Status of the snapshots storage PVC
                       properties:
                         conditions:
+                          description: Conditions of the PVC
                           items:
                             description: PersistentVolumeClaimCondition contains details
                               about state of pvc
@@ -1885,26 +1916,34 @@ spec:
                             type: object
                           type: array
                         events:
+                          description: Recent Kubernetes Events related to the PVC
                           items:
                             properties:
                               count:
+                                description: How many times the event has occurred
                                 format: int32
                                 type: integer
                               firstTimestamp:
+                                description: The first time the event was seen
                                 format: date-time
                                 type: string
                               lastTimestamp:
+                                description: The last time the event was seen
                                 format: date-time
                                 type: string
                               message:
+                                description: Event message
                                 type: string
                               reason:
+                                description: Event reason
                                 type: string
                             type: object
                           type: array
                         phase:
+                          description: Status phase of the PVC
                           type: string
                         storageClassName:
+                          description: Name of the StorageClass used by the PVC
                           type: string
                       type: object
                     started_at:

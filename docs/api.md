@@ -91,9 +91,9 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `lastResponseTime` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The last time the cluster-manager responded in UTC |  |  |
-| `executed_actions` _[RawMessage](#rawmessage)_ |  |  |  |
-| `required_actions` _[RawMessage](#rawmessage)_ |  |  |  |
-| `suggested_actions` _[RawMessage](#rawmessage)_ | SuggestedActions Those Actions are NOT scheduled to be executed, just suggested |  |  |
+| `executed_actions` _[RawMessage](#rawmessage)_ | ExecutedActions are the actions that have been executed by the cluster-manager |  |  |
+| `required_actions` _[RawMessage](#rawmessage)_ | RequiredActions are the actions that are required to be executed by the operator as instructed by cluster-manager |  |  |
+| `suggested_actions` _[RawMessage](#rawmessage)_ | SuggestedActions are suggested but not required actions to be executed by the operator as instructed by cluster-manager |  |  |
 
 
 #### ClusterPhase
@@ -381,11 +381,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `message` _string_ |  |  |  |
-| `reason` _string_ |  |  |  |
-| `count` _integer_ |  |  |  |
-| `firstTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ |  |  |  |
-| `lastTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ |  |  |  |
+| `message` _string_ | Event message |  |  |
+| `reason` _string_ | Event reason |  |  |
+| `count` _integer_ | How many times the event has occurred |  |  |
+| `firstTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The first time the event was seen |  |  |
+| `lastTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The last time the event was seen |  |  |
 
 
 #### KubernetesPod
@@ -526,10 +526,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `storageClassName` _string_ |  |  |  |
-| `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ |  |  |  |
-| `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ |  |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ |  |  |  |
+| `storageClassName` _string_ | Name of the StorageClass used by the PVC |  |  |
+| `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ | Status phase of the PVC |  |  |
+| `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ | Conditions of the PVC |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the PVC |  |  |
 
 
 #### NodeResourceInfo
@@ -569,14 +569,15 @@ _Appears in:_
 | `state` _object (keys:[PodConditionType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podconditiontype-v1-core), values:[ConditionStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#conditionstatus-v1-core))_ | States specifies the condition states of the node |  |  |
 | `version` _string_ | Version specifies the version of Qdrant running on the node |  |  |
 | `liveness` _boolean_ | Reports if qdrant node responded to liveness request (before readiness).<br />This is needed to beter report recovery process to the user. |  |  |
-| `podPhase` _[PodPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podphase-v1-core)_ |  |  |  |
-| `podConditions` _[PodCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podcondition-v1-core) array_ |  |  |  |
-| `podMessage` _string_ |  |  |  |
-| `podReason` _string_ |  |  |  |
-| `containerStatuses` _[ContainerStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#containerstatus-v1-core) array_ |  |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ |  |  |  |
-| `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ |  |  |  |
-| `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ |  |  |  |
+| `podPhase` _[PodPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podphase-v1-core)_ | Status phase of the Pod of the node |  |  |
+| `podConditions` _[PodCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podcondition-v1-core) array_ | Conditions of the Pod of the node |  |  |
+| `podMessage` _string_ | Status message of the Pod of the node |  |  |
+| `podReason` _string_ | Status reason of the Pod of the node |  |  |
+| `containerStatuses` _[ContainerStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#containerstatus-v1-core) array_ | Details container statuses of the Pod of the node |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the Pod of the node |  |  |
+| `restartCount` _integer_ | The number of times the main qdrant container has been restarted. |  |  |
+| `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the database storage PVC |  |  |
+| `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the snapshots storage PVC |  |  |
 
 
 #### Pause
