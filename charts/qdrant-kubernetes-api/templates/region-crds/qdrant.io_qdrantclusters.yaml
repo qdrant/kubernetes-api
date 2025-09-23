@@ -598,6 +598,20 @@ spec:
                       if they encounter an unrecognized policy in this field.
                     type: string
                 type: object
+              readClusters:
+                description: |-
+                  ReadClusters specifies the read clusters for this cluster to synchronize.
+                  Cluster-manager needs to be enabled for this feature to work.
+                items:
+                  properties:
+                    id:
+                      description: Id specifies the unique identifier of the read
+                        cluster
+                      type: string
+                  required:
+                  - id
+                  type: object
+                type: array
               rebalanceStrategy:
                 description: |-
                   RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
@@ -1080,6 +1094,16 @@ spec:
               version:
                 description: Version specifies the version of Qdrant to deploy
                 type: string
+              writeCluster:
+                description: WriteCluster specifies the write cluster for this cluster.
+                  This configures the NetworkPolicy to allow egress to the write cluster.
+                properties:
+                  id:
+                    description: Id specifies the unique identifier of the write cluster
+                    type: string
+                required:
+                - id
+                type: object
             required:
             - id
             - size
