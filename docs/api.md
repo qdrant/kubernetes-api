@@ -802,7 +802,7 @@ _Appears in:_
 | `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  |  |
 | `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size] <br /> |
 | `readClusters` _[ReadCluster](#readcluster) array_ | ReadClusters specifies the read clusters for this cluster to synchronize.<br />Cluster-manager needs to be enabled for this feature to work. |  |  |
-| `writeCluster` _[WriteCluster](#writecluster)_ | WriteCluster specifies the write cluster for this cluster. This is used for adminstrative purposes only. |  |  |
+| `writeCluster` _[WriteCluster](#writecluster)_ | WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster. |  |  |
 
 
 

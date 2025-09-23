@@ -144,7 +144,7 @@ type QdrantClusterSpec struct {
 	// Cluster-manager needs to be enabled for this feature to work.
 	// +optional
 	ReadClusters []ReadCluster `json:"readClusters,omitempty"`
-	// WriteCluster specifies the write cluster for this cluster. This is used for adminstrative purposes only.
+	// WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster.
 	// +optional
 	WriteCluster *WriteCluster `json:"writeCluster,omitempty"`
 }
