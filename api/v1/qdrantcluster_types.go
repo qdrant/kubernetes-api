@@ -882,6 +882,7 @@ type NodeStatus struct {
 // +kubebuilder:printcolumn:name="Version",type=string,JSONPath=`.spec.version`
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
+// +kubebuilder:subresource:status
 
 // QdrantCluster is the Schema for the qdrantclusters API
 type QdrantCluster struct {

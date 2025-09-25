@@ -75,6 +75,7 @@ type VolumeSnapshotInfo struct {
 // +kubebuilder:printcolumn:name="retainUntil",type=string,JSONPath=`.status.retainUntil`
 // +kubebuilder:printcolumn:name="completion-time",type=string,JSONPath=`.status.completionTime`
 // +kubebuilder:printcolumn:name="age",type=date,JSONPath=`.metadata.creationTimestamp`
+// +kubebuilder:subresource:status
 
 // QdrantClusterSnapshot is the Schema for the qdrantclustersnapshots API
 type QdrantClusterSnapshot struct {

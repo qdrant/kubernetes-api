@@ -62,6 +62,7 @@ type QdrantClusterRestoreStatus struct {
 // +kubebuilder:resource:path=qdrantclusterrestores,singular=qdrantclusterrestore,shortName=qcrs;qcr
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
+// +kubebuilder:subresource:status
 
 // QdrantClusterRestore is the Schema for the qdrantclusterrestores API
 type QdrantClusterRestore struct {
