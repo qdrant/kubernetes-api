@@ -109,6 +109,48 @@ spec:
                   were created
                 items:
                   properties:
+                    error:
+                      description: Error contains the error details if the snapshot
+                        creation failed
+                      properties:
+                        message:
+                          description: |-
+                            message is a string detailing the encountered error during snapshot
+                            creation if specified.
+                            NOTE: message may be logged, and it should not contain sensitive
+                            information.
+                          type: string
+                        time:
+                          description: time is the timestamp when the error was encountered.
+                          format: date-time
+                          type: string
+                      type: object
+                    events:
+                      description: |-
+                        Recent Kubernetes Events related to the VolumeSnapshot
+                        Events that happened in the last 30 minutes are stored.
+                      items:
+                        properties:
+                          count:
+                            description: How many times the event has occurred
+                            format: int32
+                            type: integer
+                          firstTimestamp:
+                            description: The first time the event was seen
+                            format: date-time
+                            type: string
+                          lastTimestamp:
+                            description: The last time the event was seen
+                            format: date-time
+                            type: string
+                          message:
+                            description: Event message
+                            type: string
+                          reason:
+                            description: Event reason
+                            type: string
+                        type: object
+                      type: array
                     readyToUse:
                       description: ReadyToUse indicates if the volume snapshot is
                         ready to use
