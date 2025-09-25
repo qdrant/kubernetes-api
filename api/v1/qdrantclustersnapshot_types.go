@@ -68,9 +68,14 @@ type VolumeSnapshotInfo struct {
 	ReadyToUse bool `json:"readyToUse"`
 	// SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider
 	// +optional
-	SnapshotHandle string                                `json:"snapshotHandle,omitempty"`
-	Error          *volumesnapshotv1.VolumeSnapshotError `json:"error,omitempty"`
-	Events         []KubernetesEventInfo                 `json:"events,omitempty"`
+	SnapshotHandle string `json:"snapshotHandle,omitempty"`
+	// Error contains the error details if the snapshot creation failed
+	// +optional
+	Error *volumesnapshotv1.VolumeSnapshotError `json:"error,omitempty"`
+	// Recent Kubernetes Events related to the VolumeSnapshot
+	// Events that happened in the last 30 minutes are stored.
+	// +optional
+	Events []KubernetesEventInfo `json:"events,omitempty"`
 }
 
 // +kubebuilder:object:root=true

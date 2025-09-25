@@ -529,7 +529,7 @@ _Appears in:_
 | `storageClassName` _string_ | Name of the StorageClass used by the PVC |  |  |
 | `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ | Status phase of the PVC |  |  |
 | `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ | Conditions of the PVC |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the PVC |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the PVC<br />Events that happened in the last 30 minutes are stored. |  |  |
 
 
 #### NodeResourceInfo
@@ -574,7 +574,7 @@ _Appears in:_
 | `podMessage` _string_ | Status message of the Pod of the node |  |  |
 | `podReason` _string_ | Status reason of the Pod of the node |  |  |
 | `containerStatuses` _[ContainerStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#containerstatus-v1-core) array_ | Details container statuses of the Pod of the node |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the Pod of the node |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the Pod of the node<br />Events that happened in the last 30 minutes are stored. |  |  |
 | `restartCount` _integer_ | The number of times the main qdrant container has been restarted. |  |  |
 | `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the database storage PVC |  |  |
 | `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the snapshots storage PVC |  |  |
@@ -1550,8 +1550,8 @@ _Appears in:_
 | `volumeName` _string_ | VolumeName is the name of the volume that was backed up |  |  |
 | `readyToUse` _boolean_ | ReadyToUse indicates if the volume snapshot is ready to use |  |  |
 | `snapshotHandle` _string_ | SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider |  |  |
-| `error` _[VolumeSnapshotError](#volumesnapshoterror)_ |  |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ |  |  |  |
+| `error` _[VolumeSnapshotError](#volumesnapshoterror)_ | Error contains the error details if the snapshot creation failed |  |  |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the VolumeSnapshot<br />Events that happened in the last 30 minutes are stored. |  |  |
 
 
 #### WriteCluster

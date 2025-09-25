@@ -971,6 +971,7 @@ type NodeStatus struct {
 	// +optional
 	ContainerStatuses []corev1.ContainerStatus `json:"containerStatuses,omitempty"`
 	// Recent Kubernetes Events related to the Pod of the node
+	// Events that happened in the last 30 minutes are stored.
 	// +optional
 	PodEvents []KubernetesEventInfo `json:"events,omitempty"`
 
@@ -997,6 +998,7 @@ type NodePVCStatus struct {
 	// +optional
 	Conditions []corev1.PersistentVolumeClaimCondition `json:"conditions,omitempty"`
 	// Recent Kubernetes Events related to the PVC
+	// Events that happened in the last 30 minutes are stored.
 	// +optional
 	Events []KubernetesEventInfo `json:"events,omitempty"`
 }
