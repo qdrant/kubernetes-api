@@ -1667,7 +1667,9 @@ spec:
                             type: object
                           type: array
                         events:
-                          description: Recent Kubernetes Events related to the PVC
+                          description: |-
+                            Recent Kubernetes Events related to the PVC
+                            Events that happened in the last 30 minutes are stored.
                           items:
                             properties:
                               count:
@@ -1698,8 +1700,9 @@ spec:
                           type: string
                       type: object
                     events:
-                      description: Recent Kubernetes Events related to the Pod of
-                        the node
+                      description: |-
+                        Recent Kubernetes Events related to the Pod of the node
+                        Events that happened in the last 30 minutes are stored.
                       items:
                         properties:
                           count:
@@ -1830,7 +1833,9 @@ spec:
                             type: object
                           type: array
                         events:
-                          description: Recent Kubernetes Events related to the PVC
+                          description: |-
+                            Recent Kubernetes Events related to the PVC
+                            Events that happened in the last 30 minutes are stored.
                           items:
                             properties:
                               count:

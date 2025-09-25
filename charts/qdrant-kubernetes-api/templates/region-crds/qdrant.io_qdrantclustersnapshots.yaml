@@ -110,8 +110,8 @@ spec:
                 items:
                   properties:
                     error:
-                      description: VolumeSnapshotError describes an error encountered
-                        during snapshot creation.
+                      description: Error contains the error details if the snapshot
+                        creation failed
                       properties:
                         message:
                           description: |-
@@ -126,6 +126,9 @@ spec:
                           type: string
                       type: object
                     events:
+                      description: |-
+                        Recent Kubernetes Events related to the VolumeSnapshot
+                        Events that happened in the last 30 minutes are stored.
                       items:
                         properties:
                           count:
