@@ -52,6 +52,7 @@ type QdrantClusterScheduledSnapshotStatus struct {
 // +kubebuilder:printcolumn:name="retention",type=string,JSONPath=`.spec.retention`
 // +kubebuilder:printcolumn:name="scheduled",type=string,JSONPath=`.status.scheduled`
 // +kubebuilder:printcolumn:name="age",type=date,JSONPath=`.metadata.creationTimestamp`
+// +kubebuilder:subresource:status
 
 // QdrantClusterScheduledSnapshot is the Schema for the qdrantclusterscheduledsnapshots API
 type QdrantClusterScheduledSnapshot struct {
