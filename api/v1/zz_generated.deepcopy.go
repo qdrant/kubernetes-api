@@ -902,7 +902,11 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 		(*in).DeepCopyInto(*out)
 	}
 	out.Resources = in.Resources
-	in.Storage.DeepCopyInto(&out.Storage)
+	if in.Storage != nil {
+		in, out := &in.Storage, &out.Storage
+		*out = new(Storage)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Security != nil {
 		in, out := &in.Security, &out.Security
 		*out = new(QdrantSecurityContext)
@@ -1616,6 +1620,11 @@ func (in *Storage) DeepCopyInto(out *Storage) {
 		in, out := &in.StorageClassNames, &out.StorageClassNames
 		*out = new(StorageClassNames)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.StorageTier != nil {
+		in, out := &in.StorageTier, &out.StorageTier
+		*out = new(StorageTier)
+		**out = **in
 	}
 }
 

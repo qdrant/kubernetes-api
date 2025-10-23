@@ -119,7 +119,7 @@ func TestGetStorageClassNames(t *testing.T) {
 		{
 			name: "Only .spec.storage.storageClassNames specified",
 			spec: QdrantClusterSpec{
-				Storage: Storage{
+				Storage: &Storage{
 					StorageClassNames: &StorageClassNames{
 						DB:        ptr.To("foo"),
 						Snapshots: ptr.To("bar"),
@@ -138,7 +138,7 @@ func TestGetStorageClassNames(t *testing.T) {
 					DB:        ptr.To("foo-old"),
 					Snapshots: ptr.To("bar-old"),
 				},
-				Storage: Storage{
+				Storage: &Storage{
 					StorageClassNames: &StorageClassNames{
 						DB:        ptr.To("foo"),
 						Snapshots: ptr.To("bar"),
@@ -156,7 +156,7 @@ func TestGetStorageClassNames(t *testing.T) {
 				StorageClassNames: &StorageClassNames{
 					DB: ptr.To("foo"),
 				},
-				Storage: Storage{
+				Storage: &Storage{
 					StorageClassNames: &StorageClassNames{
 						Snapshots: ptr.To("bar"),
 					},
