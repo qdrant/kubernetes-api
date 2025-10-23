@@ -55,6 +55,17 @@ const (
 	ByCountAndSize RebalanceStrategy = "by_count_and_size"
 )
 
+// StorageTier specifies the performance profile for the disk to use.
+// +kubebuilder:validation:Enum=budget;balanced;performance
+type StorageTier string
+
+//goland:noinspection GoUnusedConst
+const (
+	StorageTierBudget      StorageTier = "budget"
+	StorageTierBalanced    StorageTier = "balanced"
+	StorageTierPerformance StorageTier = "performance"
+)
+
 // QdrantClusterSpec defines the desired state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterSpec struct {
@@ -117,6 +128,10 @@ type QdrantClusterSpec struct {
 	// StorageClassNames specifies the storage class names for db and snapshots.
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
+	// StorageTier specifies the performance tier to use for the disk
+	// +kubebuilder:validation:Enum=budget;balanced;performance
+	// +optional
+	StorageTier *StorageTier `json:"storageTier,omitempty"`
 	// TopologySpreadConstraints specifies the topology spread constraints for the cluster.
 	// +optional
 	TopologySpreadConstraints *[]corev1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`

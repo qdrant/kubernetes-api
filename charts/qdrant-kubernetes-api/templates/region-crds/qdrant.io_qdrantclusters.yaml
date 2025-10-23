@@ -870,6 +870,19 @@ spec:
                       volume.
                     type: string
                 type: object
+              storageTier:
+                allOf:
+                - enum:
+                  - budget
+                  - balanced
+                  - performance
+                - enum:
+                  - budget
+                  - balanced
+                  - performance
+                description: StorageTier specifies the performance tier to use for
+                  the disk
+                type: string
               suspend:
                 default: false
                 description: |-

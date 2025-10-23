@@ -951,6 +951,11 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 		*out = new(StorageClassNames)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.StorageTier != nil {
+		in, out := &in.StorageTier, &out.StorageTier
+		*out = new(StorageTier)
+		**out = **in
+	}
 	if in.TopologySpreadConstraints != nil {
 		in, out := &in.TopologySpreadConstraints, &out.TopologySpreadConstraints
 		*out = new([]corev1.TopologySpreadConstraint)
