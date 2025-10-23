@@ -646,9 +646,8 @@ spec:
                         type: string
                     type: object
                   storage:
-                    description: |-
-                      Storage specifies the storage amount for each Qdrant node.
-                      Deprecated: Use .Spec.Storage.Size instead
+                    description: Storage specifies the storage amount for each Qdrant
+                      node.
                     type: string
                 type: object
               restartAllPodsConcurrently:
@@ -863,10 +862,6 @@ spec:
                 description: Storage specifies the storage configuration for each
                   Qdrant node.
                 properties:
-                  size:
-                    description: Storage specifies the storage amount for each Qdrant
-                      node.
-                    type: string
                   storageClassNames:
                     description: StorageClassNames specifies the storage class names
                       for db and snapshots.
@@ -894,9 +889,8 @@ spec:
                     type: string
                 type: object
               storageClassNames:
-                description: |-
-                  StorageClassNames specifies the storage class names for db and snapshots.
-                  Deprecated: Use .Spec.Storage.StorageClassNames instead
+                description: StorageClassNames specifies the storage class names for
+                  db and snapshots.
                 properties:
                   db:
                     description: DB specifies the storage class name for db volume.

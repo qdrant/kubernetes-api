@@ -129,7 +129,6 @@ type QdrantClusterSpec struct {
 	// +optional
 	StatefulSet *KubernetesStatefulSet `json:"statefulSet,omitempty"`
 	// StorageClassNames specifies the storage class names for db and snapshots.
-	// Deprecated: Use .Spec.Storage.StorageClassNames instead
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
 	// TopologySpreadConstraints specifies the topology spread constraints for the cluster.
@@ -166,16 +165,6 @@ type QdrantClusterSpec struct {
 
 // Validate if there are incorrect settings in the CRD
 func (s QdrantClusterSpec) Validate() error {
-	// Must specify either .spec.storage.size or .spec.resources.storage
-	if s.Storage.Size == "" && s.Resources.Storage == "" {
-		return fmt.Errorf("must specify either .spec.storage.size or .spec.resources.storage")
-	}
-	// Verify storage size is a valid resource
-	storage := s.GetStorageSize()
-	if _, err := resource.ParseQuantity(storage); err != nil {
-		return fmt.Errorf("invalid storage size: %s error: %w", storage, err)
-	}
-	// Validate CPU and Memory resources
 	if err := s.Resources.Validate("Spec.Resources"); err != nil {
 		return err
 	}
@@ -188,14 +177,6 @@ func (s QdrantClusterSpec) GetServicePerNode() bool {
 		return true
 	}
 	return *s.ServicePerNode
-}
-
-// GetStorageSize get the amount of storage per node
-func (s QdrantClusterSpec) GetStorageSize() string {
-	if s.Storage.Size != "" {
-		return s.Storage.Size
-	}
-	return s.Resources.Storage
 }
 
 // GetStorageClassNames returns the storage class names for db and snapshot disks
@@ -400,8 +381,6 @@ type Resources struct {
 	// Memory specifies the memory limit for each Qdrant node.
 	Memory string `json:"memory,omitempty"`
 	// Storage specifies the storage amount for each Qdrant node.
-	// Deprecated: Use .Spec.Storage.Size instead
-	// +optional
 	Storage string `json:"storage,omitempty"`
 	// Requests specifies the resource requests for each Qdrant node.
 	// +optional
@@ -415,6 +394,9 @@ func (s Resources) Validate(base string) error {
 	}
 	if _, err := resource.ParseQuantity(s.Memory); err != nil {
 		return fmt.Errorf("%s.Memory error: %w", base, err)
+	}
+	if _, err := resource.ParseQuantity(s.Storage); err != nil {
+		return fmt.Errorf("%s.Storage error: %w", base, err)
 	}
 	if err := s.Requests.Validate(base + ".Request"); err != nil {
 		return err
@@ -461,9 +443,6 @@ func (s ResourceRequests) Validate(base string) error {
 }
 
 type Storage struct {
-	// Storage specifies the storage amount for each Qdrant node.
-	// +optional
-	Size string `json:"size,omitempty"`
 	// StorageClassNames specifies the storage class names for db and snapshots.
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`

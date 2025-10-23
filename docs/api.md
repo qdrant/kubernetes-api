@@ -796,7 +796,7 @@ _Appears in:_
 | `service` _[KubernetesService](#kubernetesservice)_ | Service specifies the configuration of the Qdrant Kubernetes Service. |  |  |
 | `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  |  |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  |  |
-| `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots.<br />Deprecated: Use .Spec.Storage.StorageClassNames instead |  |  |
+| `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
 | `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  |  |
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  |  |
@@ -1214,7 +1214,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `cpu` _string_ | CPU specifies the CPU limit for each Qdrant node. |  |  |
 | `memory` _string_ | Memory specifies the memory limit for each Qdrant node. |  |  |
-| `storage` _string_ | Storage specifies the storage amount for each Qdrant node.<br />Deprecated: Use .Spec.Storage.Size instead |  |  |
+| `storage` _string_ | Storage specifies the storage amount for each Qdrant node. |  |  |
 | `requests` _[ResourceRequests](#resourcerequests)_ | Requests specifies the resource requests for each Qdrant node. |  |  |
 
 
@@ -1303,7 +1303,6 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `size` _string_ | Storage specifies the storage amount for each Qdrant node. |  |  |
 | `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
 | `storageTier` _[StorageTier](#storagetier)_ | StorageTier specifies the performance tier to use for the disk |  | Enum: [budget balanced performance] <br /> |
 
