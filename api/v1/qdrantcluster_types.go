@@ -101,9 +101,6 @@ type QdrantClusterSpec struct {
 	Image *QdrantImage `json:"image,omitempty"`
 	// Resources specifies the resources to allocate for each Qdrant node.
 	Resources Resources `json:"resources,omitempty"`
-	// Storage specifies the storage configuration for each Qdrant node.
-	// +optional
-	Storage *Storage `json:"storage"`
 	// Security specifies the security context for each Qdrant node.
 	// +optional
 	Security *QdrantSecurityContext `json:"security,omitempty"`
@@ -131,6 +128,10 @@ type QdrantClusterSpec struct {
 	// StorageClassNames specifies the storage class names for db and snapshots.
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
+	// StorageTier specifies the performance tier to use for the disk
+	// +kubebuilder:validation:Enum=budget;balanced;performance
+	// +optional
+	StorageTier *StorageTier `json:"storageTier,omitempty"`
 	// TopologySpreadConstraints specifies the topology spread constraints for the cluster.
 	// +optional
 	TopologySpreadConstraints *[]corev1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
@@ -177,27 +178,6 @@ func (s QdrantClusterSpec) GetServicePerNode() bool {
 		return true
 	}
 	return *s.ServicePerNode
-}
-
-// GetStorageClassNames returns the storage class names for db and snapshot disks
-func (s *QdrantClusterSpec) GetStorageClassNames() *StorageClassNames {
-	if s.Storage == nil {
-		return s.StorageClassNames
-	}
-	if s.StorageClassNames == nil {
-		return s.Storage.StorageClassNames
-	}
-	storageClassNames := s.StorageClassNames
-	// overwrite from new field
-	if s.Storage.StorageClassNames != nil {
-		if s.Storage.StorageClassNames.DB != nil {
-			storageClassNames.DB = s.Storage.StorageClassNames.DB
-		}
-		if s.Storage.StorageClassNames.Snapshots != nil {
-			storageClassNames.Snapshots = s.Storage.StorageClassNames.Snapshots
-		}
-	}
-	return storageClassNames
 }
 
 type ReadCluster struct {
@@ -440,16 +420,6 @@ func (s ResourceRequests) Validate(base string) error {
 		}
 	}
 	return nil
-}
-
-type Storage struct {
-	// StorageClassNames specifies the storage class names for db and snapshots.
-	// +optional
-	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
-	// StorageTier specifies the performance tier to use for the disk
-	// +kubebuilder:validation:Enum=budget;balanced;performance
-	// +optional
-	StorageTier *StorageTier `json:"storageTier,omitempty"`
 }
 
 type QdrantSecurityContext struct {

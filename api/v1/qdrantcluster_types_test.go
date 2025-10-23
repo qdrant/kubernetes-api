@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/ptr"
 )
 
 func TestValidate(t *testing.T) {
@@ -87,95 +86,6 @@ func TestValidate(t *testing.T) {
 				assert.NoError(t, err)
 			} else {
 				assert.EqualError(t, err, tt.expectedError.Error())
-			}
-		})
-	}
-}
-
-func TestGetStorageClassNames(t *testing.T) {
-	testCases := []struct {
-		name     string
-		spec     QdrantClusterSpec
-		expected *StorageClassNames
-	}{
-		{
-			name:     "Neither .spec.storageClassNames nor .spec.storage.storageClassNames specified",
-			spec:     QdrantClusterSpec{},
-			expected: nil,
-		},
-		{
-			name: "Only .spec.storageClassNames specified",
-			spec: QdrantClusterSpec{
-				StorageClassNames: &StorageClassNames{
-					DB:        ptr.To("foo"),
-					Snapshots: ptr.To("bar"),
-				},
-			},
-			expected: &StorageClassNames{
-				DB:        ptr.To("foo"),
-				Snapshots: ptr.To("bar"),
-			},
-		},
-		{
-			name: "Only .spec.storage.storageClassNames specified",
-			spec: QdrantClusterSpec{
-				Storage: &Storage{
-					StorageClassNames: &StorageClassNames{
-						DB:        ptr.To("foo"),
-						Snapshots: ptr.To("bar"),
-					},
-				},
-			},
-			expected: &StorageClassNames{
-				DB:        ptr.To("foo"),
-				Snapshots: ptr.To("bar"),
-			},
-		},
-		{
-			name: "Both .spec.storageClassNames and .spec.storage.storageClassNames specified",
-			spec: QdrantClusterSpec{
-				StorageClassNames: &StorageClassNames{
-					DB:        ptr.To("foo-old"),
-					Snapshots: ptr.To("bar-old"),
-				},
-				Storage: &Storage{
-					StorageClassNames: &StorageClassNames{
-						DB:        ptr.To("foo"),
-						Snapshots: ptr.To("bar"),
-					},
-				},
-			},
-			expected: &StorageClassNames{
-				DB:        ptr.To("foo"),
-				Snapshots: ptr.To("bar"),
-			},
-		},
-		{
-			name: "DB and Snapshot storageclass specified in different places",
-			spec: QdrantClusterSpec{
-				StorageClassNames: &StorageClassNames{
-					DB: ptr.To("foo"),
-				},
-				Storage: &Storage{
-					StorageClassNames: &StorageClassNames{
-						Snapshots: ptr.To("bar"),
-					},
-				},
-			},
-			expected: &StorageClassNames{
-				DB:        ptr.To("foo"),
-				Snapshots: ptr.To("bar"),
-			},
-		},
-	}
-
-	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
-			actual := tt.spec.GetStorageClassNames()
-			if tt.expected == nil || actual == nil {
-				assert.Equal(t, tt.expected, actual)
-			} else {
-				assert.EqualValues(t, tt.expected, actual)
 			}
 		})
 	}

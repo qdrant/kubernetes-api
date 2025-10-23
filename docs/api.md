@@ -787,7 +787,6 @@ _Appears in:_
 | `pauses` _[Pause](#pause) array_ | Pauses specifies a list of pause request by developer for manual maintenance.<br />Operator will skip handling any changes in the CR if any pause request is present. |  |  |
 | `image` _[QdrantImage](#qdrantimage)_ | Image specifies the image to use for each Qdrant node. |  |  |
 | `resources` _[Resources](#resources)_ | Resources specifies the resources to allocate for each Qdrant node. |  |  |
-| `storage` _[Storage](#storage)_ | Storage specifies the storage configuration for each Qdrant node. |  |  |
 | `security` _[QdrantSecurityContext](#qdrantsecuritycontext)_ | Security specifies the security context for each Qdrant node. |  |  |
 | `tolerations` _[Toleration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#toleration-v1-core) array_ | Tolerations specifies the tolerations for each Qdrant node. |  |  |
 | `nodeSelector` _object (keys:string, values:string)_ | NodeSelector specifies the node selector for each Qdrant node. |  |  |
@@ -797,6 +796,7 @@ _Appears in:_
 | `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  |  |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  |  |
 | `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
+| `storageTier` _[StorageTier](#storagetier)_ | StorageTier specifies the performance tier to use for the disk |  | Enum: [budget balanced performance] <br /> |
 | `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  |  |
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  |  |
@@ -1290,23 +1290,6 @@ _Appears in:_
 | `Disabled` |  |
 
 
-#### Storage
-
-
-
-
-
-
-
-_Appears in:_
-- [QdrantClusterSpec](#qdrantclusterspec)
-
-| Field | Description | Default | Validation |
-| --- | --- | --- | --- |
-| `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
-| `storageTier` _[StorageTier](#storagetier)_ | StorageTier specifies the performance tier to use for the disk |  | Enum: [budget balanced performance] <br /> |
-
-
 #### StorageClass
 
 
@@ -1338,7 +1321,6 @@ _Appears in:_
 
 _Appears in:_
 - [QdrantClusterSpec](#qdrantclusterspec)
-- [Storage](#storage)
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
@@ -1390,7 +1372,7 @@ _Validation:_
 - Enum: [budget balanced performance]
 
 _Appears in:_
-- [Storage](#storage)
+- [QdrantClusterSpec](#qdrantclusterspec)
 
 | Field | Description |
 | --- | --- |
