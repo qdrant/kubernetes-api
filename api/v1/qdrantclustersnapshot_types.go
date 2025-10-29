@@ -1,6 +1,9 @@
 package v1
 
-import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+import (
+	volumesnapshotv1 "github.com/kubernetes-csi/external-snapshotter/client/v8/apis/volumesnapshot/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
 
 //goland:noinspection GoUnusedConst
 const (
@@ -66,6 +69,13 @@ type VolumeSnapshotInfo struct {
 	// SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider
 	// +optional
 	SnapshotHandle string `json:"snapshotHandle,omitempty"`
+	// Error contains the error details if the snapshot creation failed
+	// +optional
+	Error *volumesnapshotv1.VolumeSnapshotError `json:"error,omitempty"`
+	// Recent Kubernetes Events related to the VolumeSnapshot
+	// Events that happened in the last 30 minutes are stored.
+	// +optional
+	Events []KubernetesEventInfo `json:"events,omitempty"`
 }
 
 // +kubebuilder:object:root=true
