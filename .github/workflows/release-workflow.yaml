@@ -86,14 +86,14 @@ jobs:
 
       - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io
         run: |
-          cosign sign --yes "${TAGS}@${DIGEST}"
+          cosign sign --new-bundle-format=false --use-signing-config=false --yes "${TAGS}@${DIGEST}"
         env:
           TAGS: registry.cloud.qdrant.io/qdrant-charts/qdrant-kubernetes-api:${{ steps.extract_build_info.outputs.tag }}
           DIGEST: ${{ steps.push-helm-chart-crds.outputs.digest }}
 
       - name: Sign helm chart (CRDs) at registry.cloud.qdrant.io in public repo
         run: |
-          cosign sign --yes "${TAGS}@${DIGEST}"
+          cosign sign --new-bundle-format=false --use-signing-config=false --yes "${TAGS}@${DIGEST}"
         env:
           TAGS: registry.cloud.qdrant.io/library/qdrant-kubernetes-api:${{ steps.extract_build_info.outputs.tag }}
           DIGEST: ${{ steps.push-helm-chart-crds-public.outputs.public_digest }}
