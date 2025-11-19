@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"k8s.io/utils/pointer"
 )
 
 func TestValidate(t *testing.T) {
@@ -76,6 +77,103 @@ func TestValidate(t *testing.T) {
 				},
 			},
 			expectedError: fmt.Errorf("Spec.Resources.Memory error: quantities must match the regular expression '^([+-]?[0-9.]+)([eEinumkKMGTP]*[-+]?[0-9]*)$'"),
+		},
+		{
+			name: "No storage configuration",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+			},
+			expectedError: nil,
+		},
+		{
+			name: "Empty storage configuration",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+				Storage: &Storage{},
+			},
+			expectedError: nil,
+		},
+		{
+			name: "Only VolumeAttributeClassName specified",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+				Storage: &Storage{
+					VolumeAttributesClassName: pointer.String("foo"),
+				},
+			},
+			expectedError: nil,
+		},
+
+		{
+			name: "Both VolumeAttributeClassName and IOPS/Throughput specified",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+				Storage: &Storage{
+					VolumeAttributesClassName: pointer.String("foo"),
+					IOPS:                      pointer.Int(10000),
+					Throughput:                pointer.Int(500),
+				},
+			},
+			expectedError: fmt.Errorf(".spec.storage: can not specify both VolumeAttributesClassName and IOPS/Throughput"),
+		},
+		{
+			name: "Only IOPS specified",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+				Storage: &Storage{
+					IOPS: pointer.Int(10000),
+				},
+			},
+			expectedError: fmt.Errorf(".spec.storage: must specify both IOPS and Throughput"),
+		},
+		{
+			name: "Only Throughput specified",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+				Storage: &Storage{
+					Throughput: pointer.Int(500),
+				},
+			},
+			expectedError: fmt.Errorf(".spec.storage: must specify both IOPS and Throughput"),
+		},
+		{
+			name: "Both IOPS/Throughput specified",
+			spec: QdrantClusterSpec{
+				Resources: Resources{
+					CPU:     "100m",
+					Memory:  "1Gi",
+					Storage: "2Gi",
+				},
+				Storage: &Storage{
+					IOPS:       pointer.Int(10000),
+					Throughput: pointer.Int(500),
+				},
+			},
+			expectedError: nil,
 		},
 	}
 
