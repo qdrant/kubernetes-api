@@ -796,7 +796,7 @@ _Appears in:_
 | `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  |  |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  |  |
 | `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
-| `storageTier` _[StorageTier](#storagetier)_ | StorageTier specifies the performance tier to use for the disk |  | Enum: [budget balanced performance] <br /> |
+| `storage` _[Storage](#storage)_ | Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied. |  |  |
 | `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  |  |
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  |  |
@@ -1290,6 +1290,24 @@ _Appears in:_
 | `Disabled` |  |
 
 
+#### Storage
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantClusterSpec](#qdrantclusterspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `volumeAttributesClassName` _string_ | VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs |  |  |
+| `iops` _integer_ | IOPS defines the IOPS number to configure for the storage PVCs |  |  |
+| `throughput` _integer_ | Throughput defines the throughput number in MB/s for the storage PVCs |  |  |
+
+
 #### StorageClass
 
 
@@ -1360,25 +1378,6 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `optimizer_cpu_budget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  |  |
 | `async_scorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
-
-
-#### StorageTier
-
-_Underlying type:_ _string_
-
-StorageTier specifies the performance profile for the disk to use.
-
-_Validation:_
-- Enum: [budget balanced performance]
-
-_Appears in:_
-- [QdrantClusterSpec](#qdrantclusterspec)
-
-| Field | Description |
-| --- | --- |
-| `budget` |  |
-| `balanced` |  |
-| `performance` |  |
 
 
 #### TraefikConfig

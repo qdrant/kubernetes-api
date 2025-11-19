@@ -858,6 +858,24 @@ spec:
                         type: object
                     type: object
                 type: object
+              storage:
+                description: Storage specifies the storage specification for the PVCs
+                  of the cluster. If the field is not set, no configuration will be
+                  applied.
+                properties:
+                  iops:
+                    description: IOPS defines the IOPS number to configure for the
+                      storage PVCs
+                    type: integer
+                  throughput:
+                    description: Throughput defines the throughput number in MB/s
+                      for the storage PVCs
+                    type: integer
+                  volumeAttributesClassName:
+                    description: VolumeAttributesClassName specifies VolumeAttributeClass
+                      name to use for the storage PVCs
+                    type: string
+                type: object
               storageClassNames:
                 description: StorageClassNames specifies the storage class names for
                   db and snapshots.
@@ -870,19 +888,6 @@ spec:
                       volume.
                     type: string
                 type: object
-              storageTier:
-                allOf:
-                - enum:
-                  - budget
-                  - balanced
-                  - performance
-                - enum:
-                  - budget
-                  - balanced
-                  - performance
-                description: StorageTier specifies the performance tier to use for
-                  the disk
-                type: string
               suspend:
                 default: false
                 description: |-

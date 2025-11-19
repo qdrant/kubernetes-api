@@ -55,17 +55,6 @@ const (
 	ByCountAndSize RebalanceStrategy = "by_count_and_size"
 )
 
-// StorageTier specifies the performance profile for the disk to use.
-// +kubebuilder:validation:Enum=budget;balanced;performance
-type StorageTier string
-
-//goland:noinspection GoUnusedConst
-const (
-	StorageTierBudget      StorageTier = "budget"
-	StorageTierBalanced    StorageTier = "balanced"
-	StorageTierPerformance StorageTier = "performance"
-)
-
 // QdrantClusterSpec defines the desired state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterSpec struct {
@@ -128,10 +117,9 @@ type QdrantClusterSpec struct {
 	// StorageClassNames specifies the storage class names for db and snapshots.
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
-	// StorageTier specifies the performance tier to use for the disk
-	// +kubebuilder:validation:Enum=budget;balanced;performance
+	// Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied.
 	// +optional
-	StorageTier *StorageTier `json:"storageTier,omitempty"`
+	Storage *Storage `json:"storage,omitempty"`
 	// TopologySpreadConstraints specifies the topology spread constraints for the cluster.
 	// +optional
 	TopologySpreadConstraints *[]corev1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
@@ -167,6 +155,10 @@ type QdrantClusterSpec struct {
 // Validate if there are incorrect settings in the CRD
 func (s QdrantClusterSpec) Validate() error {
 	if err := s.Resources.Validate("Spec.Resources"); err != nil {
+		return err
+	}
+	// Validate Storage configurations
+	if err := s.Storage.Validate(); err != nil {
 		return err
 	}
 	return nil
@@ -788,6 +780,38 @@ func (n *StorageClassNames) GetSnapshots() *string {
 		return nil
 	}
 	return n.Snapshots
+}
+
+type Storage struct {
+	// VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs
+	// +optional
+	VolumeAttributesClassName *string `json:"volumeAttributesClassName,omitempty"`
+	// IOPS defines the IOPS number to configure for the storage PVCs
+	// +optional
+	IOPS *int `json:"iops,omitempty"`
+	// Throughput defines the throughput number in MB/s for the storage PVCs
+	// +optional
+	Throughput *int `json:"throughput,omitempty"`
+}
+
+// Validate storage configurations
+func (s *Storage) Validate() error {
+	if s == nil {
+		return nil
+	}
+	// User can specify either VolumeAttributesClassName or both IOPS and Throughput
+	if s.VolumeAttributesClassName != nil {
+		// Both IOPS and Throughput must be nil
+		if s.Throughput != nil || s.IOPS != nil {
+			return fmt.Errorf(".spec.storage: can not specify both VolumeAttributesClassName and IOPS/Throughput")
+		}
+		return nil
+	}
+	// Must specify either both IOPS and Throughput or none
+	if s.IOPS == nil && s.Throughput == nil {
+		return nil
+	}
+	return fmt.Errorf(".spec.storage: must specify both IOPS and Throughput")
 }
 
 type ClusterPhase string
