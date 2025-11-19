@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/utils/pointer"
+	"k8s.io/utils/ptr"
 )
 
 func TestValidate(t *testing.T) {
@@ -110,7 +110,7 @@ func TestValidate(t *testing.T) {
 					Storage: "2Gi",
 				},
 				Storage: &Storage{
-					VolumeAttributesClassName: pointer.String("foo"),
+					VolumeAttributesClassName: ptr.To("foo"),
 				},
 			},
 			expectedError: nil,
@@ -125,9 +125,9 @@ func TestValidate(t *testing.T) {
 					Storage: "2Gi",
 				},
 				Storage: &Storage{
-					VolumeAttributesClassName: pointer.String("foo"),
-					IOPS:                      pointer.Int(10000),
-					Throughput:                pointer.Int(500),
+					VolumeAttributesClassName: ptr.To("foo"),
+					IOPS:                      ptr.To(10000),
+					Throughput:                ptr.To(500),
 				},
 			},
 			expectedError: fmt.Errorf(".spec.storage: can not specify both VolumeAttributesClassName and IOPS/Throughput"),
@@ -141,7 +141,7 @@ func TestValidate(t *testing.T) {
 					Storage: "2Gi",
 				},
 				Storage: &Storage{
-					IOPS: pointer.Int(10000),
+					IOPS: ptr.To(10000),
 				},
 			},
 			expectedError: fmt.Errorf(".spec.storage: must specify both IOPS and Throughput"),
@@ -155,7 +155,7 @@ func TestValidate(t *testing.T) {
 					Storage: "2Gi",
 				},
 				Storage: &Storage{
-					Throughput: pointer.Int(500),
+					Throughput: ptr.To(500),
 				},
 			},
 			expectedError: fmt.Errorf(".spec.storage: must specify both IOPS and Throughput"),
@@ -169,8 +169,8 @@ func TestValidate(t *testing.T) {
 					Storage: "2Gi",
 				},
 				Storage: &Storage{
-					IOPS:       pointer.Int(10000),
-					Throughput: pointer.Int(500),
+					IOPS:       ptr.To(10000),
+					Throughput: ptr.To(500),
 				},
 			},
 			expectedError: nil,

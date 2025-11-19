@@ -808,7 +808,7 @@ func (s *Storage) Validate() error {
 		return nil
 	}
 	// Must specify either both IOPS and Throughput or none
-	if s.IOPS == nil && s.Throughput == nil {
+	if (s.IOPS == nil && s.Throughput == nil) || (s.IOPS != nil && s.Throughput != nil) {
 		return nil
 	}
 	return fmt.Errorf(".spec.storage: must specify both IOPS and Throughput")
