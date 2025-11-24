@@ -19,6 +19,10 @@ CRDS_DIR ?= crds
 lint:
 	bash -c 'files=$$(gofmt -l .) && echo $$files && [ -z "$$files" ]'
 	helm lint $(CHART_DIR)
+	helm lint $(CHART_DIR) --set includeManagementCRDs=true
+	helm lint $(CHART_DIR) --set includeAuthCRDs=true
+	helm lint $(CHART_DIR) --set includeManagementCRDs=true --set includeAuthCRDs=true
+	helm lint $(CHART_DIR)
 	golangci-lint run
 
 .PHONY: gen
@@ -28,15 +32,22 @@ gen: manifests generate format vet ## Generate code containing DeepCopy, DeepCop
 manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	rm $(CHART_DIR)/templates/management-crds/*.yaml
 	rm $(CHART_DIR)/templates/region-crds/*.yaml
+	rm $(CHART_DIR)/templates/auth-crds/*.yaml
 	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=$(CRDS_DIR)
 	mv $(CRDS_DIR)/qdrant.io_qdrantreleases.yaml $(CHART_DIR)/templates/management-crds/
 	cp $(CRDS_DIR)/qdrant*.yaml $(CHART_DIR)/templates/region-crds/
+	mv $(CRDS_DIR)/auth.qdrant.io*.yaml $(CHART_DIR)/templates/auth-crds/
 	for file in $(CHART_DIR)/templates/management-crds/*.yaml; do \
 		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
-	for file in $(CHART_DIR)/templates/region-crds/*.yaml; do \
+	for file in $(CHART_DIR)/templates/region-crds/qdrant*.yaml; do \
 		echo "{{ if .Values.includeRegionCRDs }}" | cat - $$file > temp && mv temp $$file; \
+		echo "{{ end }}" >> $$file; \
+	done
+	# We only want to deploy API key v1 CRD to regional clusters
+	for file in $(CHART_DIR)/templates/auth-crds/auth.qdrant.io*.yaml; do \
+		echo "{{ if .Values.includeAuthCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
 	helm lint $(CHART_DIR)

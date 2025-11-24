@@ -1,7 +1,56 @@
 # API Reference
 
 ## Packages
+- [auth.qdrant.io/v1alpha1](#authqdrantiov1alpha1)
 - [qdrant.io/v1](#qdrantiov1)
+
+
+## auth.qdrant.io/v1alpha1
+
+Package v1alpha1 contains API Schema definitions for the qdrant.io v1alpha1 API group
+
+### Resource Types
+- [APIAuthentication](#apiauthentication)
+
+
+
+#### APIAuthentication
+
+
+
+APIAuthentication is a configuration for authenticating against Qdrant clusters.
+
+
+
+_Appears in:_
+- [APIAuthenticationList](#apiauthenticationlist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `auth.qdrant.io/v1alpha1` | | |
+| `kind` _string_ | `APIAuthentication` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[APIAuthenticationSpec](#apiauthenticationspec)_ |  |  |  |
+
+
+
+
+#### APIAuthenticationSpec
+
+
+
+APIAuthenticationSpec describes the configuration for authenticating against Qdrant clusters.
+
+
+
+_Appears in:_
+- [APIAuthentication](#apiauthentication)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `sha512` _string_ | SHA512 hash of an API key. |  | MaxLength: 128 <br />MinLength: 128 <br /> |
+| `clusterIDs` _string array_ | List of cluster IDs for which the API key is valid |  |  |
+
 
 
 ## qdrant.io/v1
