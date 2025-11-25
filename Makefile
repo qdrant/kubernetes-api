@@ -11,7 +11,7 @@ CONTROLLER_GEN ?= $(LOCALBIN)/controller-gen
 CRD_REF_DOCS ?= $(LOCALBIN)/crd-ref-docs
 GCI ?= $(LOCALBIN)/gci
 
-CONTROLLER_TOOLS_VERSION ?= v0.18.0
+CONTROLLER_TOOLS_VERSION ?= v0.19.0
 CRD_REF_DOCS_VERSION ?= v0.2.0
 CHART_DIR ?= charts/qdrant-kubernetes-api
 CRDS_DIR ?= crds

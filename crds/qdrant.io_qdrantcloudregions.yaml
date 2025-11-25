@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.19.0
   name: qdrantcloudregions.qdrant.io
 spec:
   group: qdrant.io
@@ -268,6 +268,7 @@ spec:
                                   enum:
                                   - OCIRepository
                                   - HelmChart
+                                  - ExternalArtifact
                                   type: string
                                 name:
                                   description: Name of the referent.
@@ -285,22 +286,49 @@ spec:
                               - kind
                               - name
                               type: object
+                            commonMetadata:
+                              description: |-
+                                CommonMetadata specifies the common labels and annotations that are
+                                applied to all resources. Any existing label or annotation will be
+                                overridden if its key matches a common one.
+                              properties:
+                                annotations:
+                                  additionalProperties:
+                                    type: string
+                                  description: Annotations to be added to the object's
+                                    metadata.
+                                  type: object
+                                labels:
+                                  additionalProperties:
+                                    type: string
+                                  description: Labels to be added to the object's
+                                    metadata.
+                                  type: object
+                              type: object
                             dependsOn:
                               description: |-
-                                DependsOn may contain a meta.NamespacedObjectReference slice with
+                                DependsOn may contain a DependencyReference slice with
                                 references to HelmRelease resources that must be ready before this HelmRelease
                                 can be reconciled.
                               items:
-                                description: |-
-                                  NamespacedObjectReference contains enough information to locate the referenced Kubernetes resource object in any
-                                  namespace.
+                                description: DependencyReference defines a HelmRelease
+                                  dependency on another HelmRelease resource.
                                 properties:
                                   name:
                                     description: Name of the referent.
                                     type: string
                                   namespace:
-                                    description: Namespace of the referent, when not
-                                      specified it acts as LocalObjectReference.
+                                    description: |-
+                                      Namespace of the referent, defaults to the namespace of the HelmRelease
+                                      resource object that contains the reference.
+                                    type: string
+                                  readyExpr:
+                                    description: |-
+                                      ReadyExpr is a CEL expression that can be used to assess the readiness
+                                      of a dependency. When specified, the built-in readiness check
+                                      is replaced by the logic defined in the CEL expression.
+                                      To make the CEL expression additive to the built-in readiness check,
+                                      the feature gate `AdditiveCELDependencyCheck` must be set to `true`.
                                     type: string
                                 required:
                                 - name
@@ -486,6 +514,32 @@ spec:
 
                                     Deprecated use CRD policy (`crds`) attribute with value `Skip` instead.
                                   type: boolean
+                                strategy:
+                                  description: |-
+                                    Strategy defines the install strategy to use for this HelmRelease.
+                                    Defaults to 'RemediateOnFailure'.
+                                  properties:
+                                    name:
+                                      description: Name of the install strategy.
+                                      enum:
+                                      - RemediateOnFailure
+                                      - RetryOnFailure
+                                      type: string
+                                    retryInterval:
+                                      description: |-
+                                        RetryInterval is the interval at which to retry a failed install.
+                                        Can be used only when Name is set to RetryOnFailure.
+                                        Defaults to '5m'.
+                                      pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m|h))+$
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                  x-kubernetes-validations:
+                                  - message: .retryInterval cannot be set when .name
+                                      is 'RemediateOnFailure'
+                                    rule: '!has(self.retryInterval) || self.name !=
+                                      ''RemediateOnFailure'''
                                 timeout:
                                   description: |-
                                     Timeout is the time to wait for any individual Kubernetes operation (like
@@ -509,16 +563,54 @@ spec:
                                 a controller level fallback for when HelmReleaseSpec.ServiceAccountName
                                 is empty.
                               properties:
+                                configMapRef:
+                                  description: |-
+                                    ConfigMapRef holds an optional name of a ConfigMap that contains
+                                    the following keys:
+
+                                    - `provider`: the provider to use. One of `aws`, `azure`, `gcp`, or
+                                       `generic`. Required.
+                                    - `cluster`: the fully qualified resource name of the Kubernetes
+                                       cluster in the cloud provider API. Not used by the `generic`
+                                       provider. Required when one of `address` or `ca.crt` is not set.
+                                    - `address`: the address of the Kubernetes API server. Required
+                                       for `generic`. For the other providers, if not specified, the
+                                       first address in the cluster resource will be used, and if
+                                       specified, it must match one of the addresses in the cluster
+                                       resource.
+                                       If audiences is not set, will be used as the audience for the
+                                       `generic` provider.
+                                    - `ca.crt`: the optional PEM-encoded CA certificate for the
+                                       Kubernetes API server. If not set, the controller will use the
+                                       CA certificate from the cluster resource.
+                                    - `audiences`: the optional audiences as a list of
+                                       line-break-separated strings for the Kubernetes ServiceAccount
+                                       token. Defaults to the `address` for the `generic` provider, or
+                                       to specific values for the other providers depending on the
+                                       provider.
+                                    -  `serviceAccountName`: the optional name of the Kubernetes
+                                       ServiceAccount in the same namespace that should be used
+                                       for authentication. If not specified, the controller
+                                       ServiceAccount will be used.
+
+                                    Mutually exclusive with SecretRef.
+                                  properties:
+                                    name:
+                                      description: Name of the referent.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
                                 secretRef:
                                   description: |-
-                                    SecretRef holds the name of a secret that contains a key with
+                                    SecretRef holds an optional name of a secret that contains a key with
                                     the kubeconfig file as the value. If no key is set, the key will default
-                                    to 'value'.
+                                    to 'value'. Mutually exclusive with ConfigMapRef.
                                     It is recommended that the kubeconfig is self-contained, and the secret
                                     is regularly updated if credentials such as a cloud-access-token expire.
                                     Cloud specific `cmd-path` auth helpers will not function without adding
                                     binaries and credentials to the Pod that is responsible for reconciling
-                                    Kubernetes resources.
+                                    Kubernetes resources. Supported only for the generic provider.
                                   properties:
                                     key:
                                       description: Key in the Secret, when not specified
@@ -531,9 +623,14 @@ spec:
                                   required:
                                   - name
                                   type: object
-                              required:
-                              - secretRef
                               type: object
+                              x-kubernetes-validations:
+                              - message: exactly one of spec.kubeConfig.configMapRef
+                                  or spec.kubeConfig.secretRef must be specified
+                                rule: has(self.configMapRef) || has(self.secretRef)
+                              - message: exactly one of spec.kubeConfig.configMapRef
+                                  or spec.kubeConfig.secretRef must be specified
+                                rule: '!has(self.configMapRef) || !has(self.secretRef)'
                             maxHistory:
                               description: |-
                                 MaxHistory is the number of revisions saved by Helm for this HelmRelease.
@@ -917,6 +1014,32 @@ spec:
                                       - uninstall
                                       type: string
                                   type: object
+                                strategy:
+                                  description: |-
+                                    Strategy defines the upgrade strategy to use for this HelmRelease.
+                                    Defaults to 'RemediateOnFailure'.
+                                  properties:
+                                    name:
+                                      description: Name of the upgrade strategy.
+                                      enum:
+                                      - RemediateOnFailure
+                                      - RetryOnFailure
+                                      type: string
+                                    retryInterval:
+                                      description: |-
+                                        RetryInterval is the interval at which to retry a failed upgrade.
+                                        Can be used only when Name is set to RetryOnFailure.
+                                        Defaults to '5m'.
+                                      pattern: ^([0-9]+(\.[0-9]+)?(ms|s|m|h))+$
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                  x-kubernetes-validations:
+                                  - message: .retryInterval can only be set when .name
+                                      is 'RetryOnFailure'
+                                    rule: '!has(self.retryInterval) || self.name ==
+                                      ''RetryOnFailure'''
                                 timeout:
                                   description: |-
                                     Timeout is the time to wait for any individual Kubernetes operation (like
@@ -1191,10 +1314,16 @@ spec:
                             lastAttemptedReleaseAction:
                               description: |-
                                 LastAttemptedReleaseAction is the last release action performed for this
-                                HelmRelease. It is used to determine the active remediation strategy.
+                                HelmRelease. It is used to determine the active retry or remediation
+                                strategy.
                               enum:
                               - install
                               - upgrade
+                              type: string
+                            lastAttemptedReleaseActionDuration:
+                              description: |-
+                                LastAttemptedReleaseActionDuration is the duration of the last
+                                release action performed for this HelmRelease.
                               type: string
                             lastAttemptedRevision:
                               description: |-
@@ -1211,12 +1340,14 @@ spec:
                               description: |-
                                 LastAttemptedValuesChecksum is the SHA1 checksum for the values of the last
                                 reconciliation attempt.
+
                                 Deprecated: Use LastAttemptedConfigDigest instead.
                               type: string
                             lastHandledForceAt:
                               description: |-
-                                LastHandledForceAt holds the value of the most recent force request
-                                value, so a change of the annotation value can be detected.
+                                LastHandledForceAt holds the value of the most recent
+                                force request value, so a change of the annotation value
+                                can be detected.
                               type: string
                             lastHandledReconcileAt:
                               description: |-
@@ -1232,8 +1363,14 @@ spec:
                             lastReleaseRevision:
                               description: |-
                                 LastReleaseRevision is the revision of the last successful Helm release.
+
                                 Deprecated: Use History instead.
                               type: integer
+                            observedCommonMetadataDigest:
+                              description: |-
+                                ObservedCommonMetadataDigest is the digest for the common metadata of
+                                the last successful reconciliation attempt.
+                              type: string
                             observedGeneration:
                               description: ObservedGeneration is the last observed
                                 generation.
@@ -1477,6 +1614,7 @@ spec:
                                     consumption, e.g. by another controller applying the Artifact contents.
                                   type: string
                               required:
+                              - digest
                               - lastUpdateTime
                               - path
                               - revision
