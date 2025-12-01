@@ -459,6 +459,7 @@ _Appears in:_
 | `started_at` _string_ | StartedAt specifies the time when the node started (in RFC3339 format) |  |  |
 | `state` _object (keys:[PodConditionType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podconditiontype-v1-core), values:[ConditionStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#conditionstatus-v1-core))_ | States specifies the condition states of the node |  |  |
 | `version` _string_ | Version specifies the version of Qdrant running on the node |  |  |
+| `liveness` _boolean_ | Reports if qdrant node responded to liveness request (before readiness).<br />This is needed to beter report recovery process to the user. |  |  |
 
 
 #### Pause
