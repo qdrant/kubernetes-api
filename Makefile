@@ -45,7 +45,7 @@ manifests: controller-gen ## Generate CustomResourceDefinition objects.
 		echo "{{ if .Values.includeRegionCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
-	# We only want to deploy API key v1 CRD to regional clusters
+	# We only want to deploy API key CRD to regional clusters
 	for file in $(CHART_DIR)/templates/auth-crds/auth.qdrant.io*.yaml; do \
 		echo "{{ if .Values.includeAuthCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \

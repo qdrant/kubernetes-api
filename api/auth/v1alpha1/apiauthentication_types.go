@@ -25,7 +25,7 @@ type APIAuthenticationSpec struct {
 	// +kubebuilder:validation:MaxLength=128
 	// +optional
 	// SHA512 hash of an API key.
-	Sha512 *string `json:"sha512,omitempty"`
+	SHA512 *string `json:"sha512,omitempty"`
 
 	// +listType=set
 	// List of cluster IDs for which the API key is valid
