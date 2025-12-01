@@ -1265,6 +1265,11 @@ spec:
               nodes:
                 additionalProperties:
                   properties:
+                    liveness:
+                      description: |-
+                        Reports if qdrant node responded to liveness request (before readiness).
+                        This is needed to beter report recovery process to the user.
+                      type: boolean
                     name:
                       description: Name specifies the name of the node
                       type: string

@@ -913,6 +913,10 @@ type NodeStatus struct {
 	// Version specifies the version of Qdrant running on the node
 	// +optional
 	Version string `json:"version,omitempty"`
+	// Reports if qdrant node responded to liveness request (before readiness).
+	// This is needed to beter report recovery process to the user.
+	// +optional
+	Liveness bool `json:"liveness,omitempty"`
 }
 
 //+kubebuilder:object:root=true
