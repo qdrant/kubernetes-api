@@ -3,7 +3,7 @@ module github.com/qdrant/kubernetes-api
 go 1.25.0
 
 require (
-	github.com/fluxcd/helm-controller/api v1.4.4
+	github.com/fluxcd/helm-controller/api v1.4.5
 	github.com/fluxcd/source-controller/api v1.7.4
 	github.com/google/go-cmp v0.7.0
 	github.com/onsi/ginkgo/v2 v2.27.2

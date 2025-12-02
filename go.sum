@@ -12,8 +12,8 @@ github.com/emicklei/go-restful/v3 v3.13.0 h1:C4Bl2xDndpU6nJ4bc1jXd+uTmYPVUwkD6bF
 github.com/emicklei/go-restful/v3 v3.13.0/go.mod h1:6n3XBCmQQb25CM2LCACGz8ukIrRry+4bhvbpWn3mrbc=
 github.com/evanphx/json-patch/v5 v5.9.11 h1:/8HVnzMq13/3x9TPvjG08wUGqBTmZBsCWzjTM0wiaDU=
 github.com/evanphx/json-patch/v5 v5.9.11/go.mod h1:3j+LviiESTElxA4p3EMKAB9HXj3/XEtnUf6OZxqIQTM=
-github.com/fluxcd/helm-controller/api v1.4.4 h1:3IFAvJxOBaF2xXItUynqlbgw/2YzTjkL/iBiubxqcHk=
-github.com/fluxcd/helm-controller/api v1.4.4/go.mod h1:rCgx3qhjjtoIH+1EbzFC2vN71/pp0PgMDrZnGCZX5XY=
+github.com/fluxcd/helm-controller/api v1.4.5 h1:hMEBtgXUbJjp+ah0jPI3OOQNVngoToOQvTgFgVpAjNg=
+github.com/fluxcd/helm-controller/api v1.4.5/go.mod h1:rCgx3qhjjtoIH+1EbzFC2vN71/pp0PgMDrZnGCZX5XY=
 github.com/fluxcd/pkg/apis/acl v0.9.0 h1:wBpgsKT+jcyZEcM//OmZr9RiF8klL3ebrDp2u2ThsnA=
 github.com/fluxcd/pkg/apis/acl v0.9.0/go.mod h1:TttNS+gocsGLwnvmgVi3/Yscwqrjc17+vhgYfqkfrV4=
 github.com/fluxcd/pkg/apis/kustomize v1.14.0 h1:PmWqMpRX0v7/aCAUNWfohe4o1qa9G3Cg/vVr5PCedI4=
