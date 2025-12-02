@@ -1001,6 +1001,17 @@ type NodePVCStatus struct {
 	// Events that happened in the last 30 minutes are stored.
 	// +optional
 	Events []KubernetesEventInfo `json:"events,omitempty"`
+	// capacity represents the actual resources of the underlying volume.
+	// +optional
+	Capacity corev1.ResourceList `json:"capacity,omitempty"`
+	// currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.
+	// When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim
+	// +optional
+	CurrentVolumeAttributesClassName *string `json:"currentVolumeAttributesClassName,omitempty"`
+	// ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.
+	// When this is unset, there is no ModifyVolume operation being attempted.
+	// +optional
+	ModifyVolumeStatus *corev1.ModifyVolumeStatus `json:"modifyVolumeStatus,omitempty"`
 }
 
 //+kubebuilder:object:root=true

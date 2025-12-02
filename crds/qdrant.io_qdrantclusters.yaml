@@ -1704,6 +1704,16 @@ spec:
                     databasePVCStatus:
                       description: Status of the database storage PVC
                       properties:
+                        capacity:
+                          additionalProperties:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                            x-kubernetes-int-or-string: true
+                          description: capacity represents the actual resources of
+                            the underlying volume.
+                          type: object
                         conditions:
                           description: Conditions of the PVC
                           items:
@@ -1746,6 +1756,11 @@ spec:
                             - type
                             type: object
                           type: array
+                        currentVolumeAttributesClassName:
+                          description: |-
+                            currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.
+                            When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim
+                          type: string
                         events:
                           description: |-
                             Recent Kubernetes Events related to the PVC
@@ -1772,6 +1787,33 @@ spec:
                                 type: string
                             type: object
                           type: array
+                        modifyVolumeStatus:
+                          description: |-
+                            ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.
+                            When this is unset, there is no ModifyVolume operation being attempted.
+                          properties:
+                            status:
+                              description: "status is the status of the ControllerModifyVolume
+                                operation. It can be in any of following states:\n
+                                - Pending\n   Pending indicates that the PersistentVolumeClaim
+                                cannot be modified due to unmet requirements, such
+                                as\n   the specified VolumeAttributesClass not existing.\n
+                                - InProgress\n   InProgress indicates that the volume
+                                is being modified.\n - Infeasible\n  Infeasible indicates
+                                that the request has been rejected as invalid by the
+                                CSI driver. To\n\t  resolve the error, a valid VolumeAttributesClass
+                                needs to be specified.\nNote: New statuses can be
+                                added in the future. Consumers should check for unknown
+                                statuses and fail appropriately."
+                              type: string
+                            targetVolumeAttributesClassName:
+                              description: targetVolumeAttributesClassName is the
+                                name of the VolumeAttributesClass the PVC currently
+                                being reconciled
+                              type: string
+                          required:
+                          - status
+                          type: object
                         phase:
                           description: Status phase of the PVC
                           type: string
@@ -1875,6 +1917,16 @@ spec:
                     snapshotsPVCStatus:
                       description: Status of the snapshots storage PVC
                       properties:
+                        capacity:
+                          additionalProperties:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                            x-kubernetes-int-or-string: true
+                          description: capacity represents the actual resources of
+                            the underlying volume.
+                          type: object
                         conditions:
                           description: Conditions of the PVC
                           items:
@@ -1917,6 +1969,11 @@ spec:
                             - type
                             type: object
                           type: array
+                        currentVolumeAttributesClassName:
+                          description: |-
+                            currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.
+                            When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim
+                          type: string
                         events:
                           description: |-
                             Recent Kubernetes Events related to the PVC
@@ -1943,6 +2000,33 @@ spec:
                                 type: string
                             type: object
                           type: array
+                        modifyVolumeStatus:
+                          description: |-
+                            ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.
+                            When this is unset, there is no ModifyVolume operation being attempted.
+                          properties:
+                            status:
+                              description: "status is the status of the ControllerModifyVolume
+                                operation. It can be in any of following states:\n
+                                - Pending\n   Pending indicates that the PersistentVolumeClaim
+                                cannot be modified due to unmet requirements, such
+                                as\n   the specified VolumeAttributesClass not existing.\n
+                                - InProgress\n   InProgress indicates that the volume
+                                is being modified.\n - Infeasible\n  Infeasible indicates
+                                that the request has been rejected as invalid by the
+                                CSI driver. To\n\t  resolve the error, a valid VolumeAttributesClass
+                                needs to be specified.\nNote: New statuses can be
+                                added in the future. Consumers should check for unknown
+                                statuses and fail appropriately."
+                              type: string
+                            targetVolumeAttributesClassName:
+                              description: targetVolumeAttributesClassName is the
+                                name of the VolumeAttributesClass the PVC currently
+                                being reconciled
+                              type: string
+                          required:
+                          - status
+                          type: object
                         phase:
                           description: Status phase of the PVC
                           type: string

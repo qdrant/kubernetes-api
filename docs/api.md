@@ -530,6 +530,9 @@ _Appears in:_
 | `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ | Status phase of the PVC |  |  |
 | `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ | Conditions of the PVC |  |  |
 | `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the PVC<br />Events that happened in the last 30 minutes are stored. |  |  |
+| `capacity` _[ResourceList](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#resourcelist-v1-core)_ | capacity represents the actual resources of the underlying volume. |  |  |
+| `currentVolumeAttributesClassName` _string_ | currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.<br />When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim |  |  |
+| `modifyVolumeStatus` _[ModifyVolumeStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#modifyvolumestatus-v1-core)_ | ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.<br />When this is unset, there is no ModifyVolume operation being attempted. |  |  |
 
 
 #### NodeResourceInfo
