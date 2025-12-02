@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"encoding/json"
 	"fmt"
 
 	corev1 "k8s.io/api/core/v1"
@@ -898,6 +899,42 @@ type QdrantClusterStatus struct {
 	// This version can differ from the spec, because version updates need to be done in order (see `update-path` annotation)
 	// +optional
 	Version string `json:"version,omitempty"`
+	// The last response from the cluster-manager manage endpoint
+	// +optional
+	ClusterManagerReponse *ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
+}
+
+type ClusterManagerReponse struct {
+	// The last time the cluster-manager responded in UTC
+	// +optional
+	LastResponseTime *metav1.Time `json:"lastResponseTime,omitempty"`
+	// ExecutedActions are the actions that have been executed by the cluster-manager
+	// +optional
+	ExecutedActions *[]json.RawMessage `json:"executed_actions,omitempty"`
+	// RequiredActions are the actions that are required to be executed by the operator as instructed by cluster-manager
+	// +optional
+	RequiredActions *[]json.RawMessage `json:"required_actions,omitempty"`
+	// SuggestedActions are suggested but not required actions to be executed by the operator as instructed by cluster-manager
+	// +optional
+	SuggestedActions *[]json.RawMessage `json:"suggested_actions,omitempty"`
+}
+
+type KubernetesEventInfo struct {
+	// Event message
+	// +optional
+	Message string `json:"message,omitempty"`
+	// Event reason
+	// +optional
+	Reason string `json:"reason,omitempty"`
+	// How many times the event has occurred
+	// +optional
+	Count int32 `json:"count,omitempty"`
+	// The first time the event was seen
+	// +optional
+	FirstTimestamp metav1.Time `json:"firstTimestamp,omitempty"`
+	// The last time the event was seen
+	// +optional
+	LastTimestamp metav1.Time `json:"lastTimestamp,omitempty"`
 }
 
 type NodeStatus struct {
@@ -917,6 +954,64 @@ type NodeStatus struct {
 	// This is needed to beter report recovery process to the user.
 	// +optional
 	Liveness bool `json:"liveness,omitempty"`
+
+	// Status phase of the Pod of the node
+	// +optional
+	PodPhase corev1.PodPhase `json:"podPhase,omitempty"`
+	// Conditions of the Pod of the node
+	// +optional
+	PodConditions []corev1.PodCondition `json:"podConditions,omitempty"`
+	// Status message of the Pod of the node
+	// +optional
+	PodMessage string `json:"podMessage,omitempty"`
+	// Status reason of the Pod of the node
+	// +optional
+	PodReason string `json:"podReason,omitempty"`
+	// Details container statuses of the Pod of the node
+	// +optional
+	ContainerStatuses []corev1.ContainerStatus `json:"containerStatuses,omitempty"`
+	// Recent Kubernetes Events related to the Pod of the node
+	// Events that happened in the last 30 minutes are stored.
+	// +optional
+	PodEvents []KubernetesEventInfo `json:"events,omitempty"`
+
+	// The number of times the main qdrant container has been restarted.
+	// +optional
+	RestartCount int32 `json:"restartCount,omitempty"`
+
+	// Status of the database storage PVC
+	// +optional
+	DatabasePVCStatus NodePVCStatus `json:"databasePVCStatus,omitempty"`
+	// Status of the snapshots storage PVC
+	// +optional
+	SnapshotsPVCStatus NodePVCStatus `json:"snapshotsPVCStatus,omitempty"`
+}
+
+type NodePVCStatus struct {
+	// Name of the StorageClass used by the PVC
+	// +optional
+	StorageClassName string `json:"storageClassName,omitempty"`
+	// Status phase of the PVC
+	// +optional
+	Phase corev1.PersistentVolumeClaimPhase `json:"phase,omitempty"`
+	// Conditions of the PVC
+	// +optional
+	Conditions []corev1.PersistentVolumeClaimCondition `json:"conditions,omitempty"`
+	// Recent Kubernetes Events related to the PVC
+	// Events that happened in the last 30 minutes are stored.
+	// +optional
+	Events []KubernetesEventInfo `json:"events,omitempty"`
+	// capacity represents the actual resources of the underlying volume.
+	// +optional
+	Capacity corev1.ResourceList `json:"capacity,omitempty"`
+	// currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.
+	// When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim
+	// +optional
+	CurrentVolumeAttributesClassName *string `json:"currentVolumeAttributesClassName,omitempty"`
+	// ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.
+	// When this is unset, there is no ModifyVolume operation being attempted.
+	// +optional
+	ModifyVolumeStatus *corev1.ModifyVolumeStatus `json:"modifyVolumeStatus,omitempty"`
 }
 
 //+kubebuilder:object:root=true
