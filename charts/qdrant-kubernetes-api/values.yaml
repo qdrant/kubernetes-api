@@ -2,3 +2,5 @@
 includeManagementCRDs: false
 # Include region-crds in the deployment
 includeRegionCRDs: true
+# Include auth.qdrant.io API key CRD in the deployment
+includeAuthCRDs: false
