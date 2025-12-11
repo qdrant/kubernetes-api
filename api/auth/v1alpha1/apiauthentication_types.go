@@ -45,3 +45,7 @@ type APIAuthenticationList struct {
 	// List of APIAuthentication objects
 	Items []APIAuthentication `json:"items"`
 }
+
+func init() {
+	SchemeBuilder.Register(&APIAuthentication{}, &APIAuthenticationList{})
+}
