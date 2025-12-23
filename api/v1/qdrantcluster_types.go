@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"encoding/json"
 	"fmt"
 
 	corev1 "k8s.io/api/core/v1"
@@ -905,18 +904,12 @@ type QdrantClusterStatus struct {
 }
 
 type ClusterManagerReponse struct {
-	// The last time the cluster-manager responded in UTC
+	// Status of the last response
 	// +optional
-	LastResponseTime *metav1.Time `json:"lastResponseTime,omitempty"`
-	// ExecutedActions are the actions that have been executed by the cluster-manager
+	Status string `json:"status,omitempty"`
+	// Description contains additional information about the last response
 	// +optional
-	ExecutedActions *[]json.RawMessage `json:"executed_actions,omitempty"`
-	// RequiredActions are the actions that are required to be executed by the operator as instructed by cluster-manager
-	// +optional
-	RequiredActions *[]json.RawMessage `json:"required_actions,omitempty"`
-	// SuggestedActions are suggested but not required actions to be executed by the operator as instructed by cluster-manager
-	// +optional
-	SuggestedActions *[]json.RawMessage `json:"suggested_actions,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 type KubernetesEventInfo struct {
