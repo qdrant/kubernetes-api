@@ -2048,6 +2048,9 @@ spec:
                       description: Version specifies the version of Qdrant running
                         on the node
                       type: string
+                    zone:
+                      description: The availibility zone the node is running in.
+                      type: string
                   type: object
                 description: Nodes specifies the status of the nodes in the cluster
                 type: object
