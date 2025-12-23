@@ -954,6 +954,9 @@ type NodeStatus struct {
 	// This is needed to beter report recovery process to the user.
 	// +optional
 	Liveness bool `json:"liveness,omitempty"`
+	// The availibility zone the node is running in.
+	// +optional
+	Zone *string `json:"zone,omitempty"`
 
 	// Status phase of the Pod of the node
 	// +optional
