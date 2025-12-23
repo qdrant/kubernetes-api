@@ -90,10 +90,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `lastResponseTime` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The last time the cluster-manager responded in UTC |  |  |
-| `executed_actions` _[RawMessage](#rawmessage)_ | ExecutedActions are the actions that have been executed by the cluster-manager |  |  |
-| `required_actions` _[RawMessage](#rawmessage)_ | RequiredActions are the actions that are required to be executed by the operator as instructed by cluster-manager |  |  |
-| `suggested_actions` _[RawMessage](#rawmessage)_ | SuggestedActions are suggested but not required actions to be executed by the operator as instructed by cluster-manager |  |  |
+| `description` _string_ | Description contains additional information about the last response |  |  |
 
 
 #### ClusterPhase
