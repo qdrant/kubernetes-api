@@ -4,14 +4,14 @@ $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
 ENVTEST ?= $(LOCALBIN)/setup-envtest
 # ENVTEST_K8S_VERSION refers to the version of kubebuilder assets to be downloaded by envtest binary.
-ENVTEST_K8S_VERSION = 1.30.0
-ENVTEST_VERSION ?= release-0.19
+ENVTEST_K8S_VERSION = 1.35.0
+ENVTEST_VERSION ?= release-0.22.4
 
 CONTROLLER_GEN ?= $(LOCALBIN)/controller-gen
 CRD_REF_DOCS ?= $(LOCALBIN)/crd-ref-docs
 GCI ?= $(LOCALBIN)/gci
 
-CONTROLLER_TOOLS_VERSION ?= v0.19.0
+CONTROLLER_TOOLS_VERSION ?= v0.20.0
 CRD_REF_DOCS_VERSION ?= v0.2.0
 CHART_DIR ?= charts/qdrant-kubernetes-api
 CRDS_DIR ?= crds
