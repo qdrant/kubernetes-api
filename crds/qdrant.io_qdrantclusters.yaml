@@ -1193,43 +1193,13 @@ spec:
               clusterManagerResponse:
                 description: The last response from the cluster-manager manage endpoint
                 properties:
-                  executed_actions:
-                    description: ExecutedActions are the actions that have been executed
-                      by the cluster-manager
-                    items:
-                      description: |-
-                        RawMessage is a raw encoded JSON value.
-                        It implements [Marshaler] and [Unmarshaler] and can
-                        be used to delay JSON decoding or precompute a JSON encoding.
-                      format: byte
-                      type: string
-                    type: array
-                  lastResponseTime:
-                    description: The last time the cluster-manager responded in UTC
-                    format: date-time
+                  description:
+                    description: Description contains additional information about
+                      the last response
                     type: string
-                  required_actions:
-                    description: RequiredActions are the actions that are required
-                      to be executed by the operator as instructed by cluster-manager
-                    items:
-                      description: |-
-                        RawMessage is a raw encoded JSON value.
-                        It implements [Marshaler] and [Unmarshaler] and can
-                        be used to delay JSON decoding or precompute a JSON encoding.
-                      format: byte
-                      type: string
-                    type: array
-                  suggested_actions:
-                    description: SuggestedActions are suggested but not required actions
-                      to be executed by the operator as instructed by cluster-manager
-                    items:
-                      description: |-
-                        RawMessage is a raw encoded JSON value.
-                        It implements [Marshaler] and [Unmarshaler] and can
-                        be used to delay JSON decoding or precompute a JSON encoding.
-                      format: byte
-                      type: string
-                    type: array
+                  status:
+                    description: Status of the last response
+                    type: string
                 type: object
               conditions:
                 description: Conditions specifies the conditions of different checks
