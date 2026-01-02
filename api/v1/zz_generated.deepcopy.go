@@ -476,6 +476,11 @@ func (in *NodeStatus) DeepCopyInto(out *NodeStatus) {
 			(*out)[key] = val
 		}
 	}
+	if in.Zone != nil {
+		in, out := &in.Zone, &out.Zone
+		*out = new(string)
+		**out = **in
+	}
 	if in.PodConditions != nil {
 		in, out := &in.PodConditions, &out.PodConditions
 		*out = make([]corev1.PodCondition, len(*in))
