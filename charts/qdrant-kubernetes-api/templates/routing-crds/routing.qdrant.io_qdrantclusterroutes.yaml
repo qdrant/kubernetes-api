@@ -1,0 +1,151 @@
+{{ if .Values.includeRoutingCRDs }}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.0
+  name: qdrantclusterroutes.routing.qdrant.io
+spec:
+  group: routing.qdrant.io
+  names:
+    kind: QdrantClusterRouting
+    listKind: QdrantClusterRoutingList
+    plural: qdrantclusterroutes
+    shortNames:
+    - qcrt
+    - qcrts
+    singular: qdrantclusterroute
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.enabled
+      name: Enabled
+      type: boolean
+    - jsonPath: .spec.shared
+      name: Shared
+      type: boolean
+    - jsonPath: .spec.dedicated
+      name: Dedicated
+      type: boolean
+    - jsonPath: .status.bootstrapped
+      name: Bootstrapped
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: QdrantClusterRouting is the Schema for the routing towards Qdrant
+          clusters API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: QdrantClusterRoutingSpec describes the configuration for
+              routing towards Qdrant clusters.
+            properties:
+              allowedSourceRanges:
+                description: AllowedSourceRanges specifies the allowed CIDR source
+                  ranges for the ingress.
+                items:
+                  type: string
+                type: array
+              clusterId:
+                description: |-
+                  ClusterId specifies the unique identifier of the cluster.
+                  For shared routing this Id will be used for SNI resolving.
+                type: string
+              dedicated:
+                description: |-
+                  Set if the cluster uses (at least one) dedicated loadbalancer.
+                  Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other).
+                type: boolean
+              enableAccessLog:
+                description: If true enable (proxy) access log for this qdrant cluster.
+                type: boolean
+              enabled:
+                default: true
+                description: Enabled specifies whether to enable ingress for the cluster
+                  or not.
+                type: boolean
+              nodeIndexes:
+                description: NodeIndexes specifies the indexes of the individual nodes
+                  in the cluster.
+                items:
+                  type: integer
+                type: array
+              servicePerNode:
+                default: true
+                description: ServicePerNode specifies whether the cluster should have
+                  a dedicated route for each node.
+                type: boolean
+              shared:
+                description: |-
+                  Set if the cluster uses (at least one) shared loadbalancer.
+                  Note that this doesn't mean it doesn't have a dedicated loadbalancer as well (e.g. during a migration from one to the other).
+                type: boolean
+              tls:
+                description: TLS specifies whether tls is enabled or not at qdrant
+                  level.
+                type: boolean
+            required:
+            - clusterId
+            type: object
+          status:
+            description: QdrantClusterRoutingStatus defines the observed state of
+              QdrantClusterRouting
+            properties:
+              bootstrapInfos:
+                description: Individual bootstrap status info (e.g. when multiple
+                  routes are available for this Qdrant cluster)
+                items:
+                  description: BootstrapStatusInfo is part of QdrantClusterRoutingStatus.
+                  properties:
+                    bootstrapped:
+                      description: Set to true if routing of the Qdrant cluster has
+                        been bootstrapped once for this specific route.
+                      type: boolean
+                    dedicated:
+                      description: Set if the route uses a dedicated loadbalancer.
+                      type: boolean
+                    routeId:
+                      description: Identifier of the route this bootstrap status info
+                        belongs to.
+                      type: string
+                    shared:
+                      description: Set if the route uses a shared loadbalancer.
+                      type: boolean
+                  type: object
+                type: array
+              bootstrapped:
+                description: |-
+                  Set to true if routing of the Qdrant cluster has been bootstrapped once.
+                  This implies that at least one route is bootstrapped, for detailed information see the BootstrapInfos field
+                type: boolean
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+{{ end }}
