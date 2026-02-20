@@ -78,7 +78,7 @@ spec:
                   Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other).
                 type: boolean
               enableAccessLog:
-                description: If true enabled (proxy) access log
+                description: If true enable (proxy) access log for this qdrant cluster.
                 type: boolean
               enabled:
                 default: true

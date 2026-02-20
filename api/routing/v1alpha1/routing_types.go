@@ -54,7 +54,7 @@ type QdrantClusterRoutingSpec struct {
 	// AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress.
 	// +optional
 	AllowedSourceRanges []string `json:"allowedSourceRanges,omitempty"`
-	// If true enabled (proxy) access log
+	// If true enable (proxy) access log for this qdrant cluster.
 	// +optional
 	EnableAccessLog *bool `json:"enableAccessLog,omitempty"`
 }
