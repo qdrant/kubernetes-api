@@ -30,7 +30,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `apiVersion` _string_ | `auth.qdrant.io/v1alpha1` | | |
 | `kind` _string_ | `APIAuthentication` | | |
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  | Optional: \{\} <br /> |
 | `spec` _[APIAuthenticationSpec](#apiauthenticationspec)_ |  |  |  |
 
 
@@ -49,7 +49,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `sha512` _string_ | SHA512 hash of an API key. |  | MaxLength: 128 <br />MinLength: 128 <br /> |
+| `sha512` _string_ | SHA512 hash of an API key. |  | MaxLength: 128 <br />MinLength: 128 <br />Optional: \{\} <br /> |
 | `clusterIDs` _string array_ | List of cluster IDs for which the API key is valid |  |  |
 
 
@@ -91,7 +91,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `description` _string_ | Description contains additional information about the last response |  |  |
+| `description` _string_ | Description contains additional information about the last response |  | Optional: \{\} <br /> |
 
 
 #### ClusterPhase
@@ -160,7 +160,7 @@ _Appears in:_
 | `kind` _string_ | Kind is the type of component being referenced |  |  |
 | `name` _string_ | Name is the name of component being referenced |  |  |
 | `namespace` _string_ | Namespace is the namespace of component being referenced. |  |  |
-| `markedForDeletion` _boolean_ | MarkedForDeletion specifies whether the component is marked for deletion |  |  |
+| `markedForDeletion` _boolean_ | MarkedForDeletion specifies whether the component is marked for deletion |  | Optional: \{\} <br /> |
 
 
 #### ComponentStatus
@@ -178,9 +178,9 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `name` _string_ | Name specifies the name of the component |  |  |
 | `namespace` _string_ | Namespace specifies the namespace of the component |  |  |
-| `version` _string_ | Version specifies the version of the component |  |  |
+| `version` _string_ | Version specifies the version of the component |  | Optional: \{\} <br /> |
 | `phase` _[ComponentPhase](#componentphase)_ | Phase specifies the current phase of the component |  |  |
-| `message` _string_ | Message specifies the info explaining the current phase of the component |  |  |
+| `message` _string_ | Message specifies the info explaining the current phase of the component |  | Optional: \{\} <br /> |
 
 
 #### EntityPhase
@@ -237,10 +237,10 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `gpuType` _[GPUType](#gputype)_ | GPUType specifies the type of the GPU to use. If set, GPU indexing is enabled. |  | Enum: [nvidia amd] <br /> |
 | `forceHalfPrecision` _boolean_ | ForceHalfPrecision for `f32` values while indexing.<br />`f16` conversion will take place<br />only inside GPU memory and won't affect storage type. | false |  |
-| `deviceFilter` _string array_ | DeviceFilter for GPU devices by hardware name. Case-insensitive.<br />List of substrings to match against the gpu device name.<br />Example: [- "nvidia"]<br />If not specified, all devices are accepted. |  | MinItems: 1 <br /> |
-| `devices` _string array_ | Devices is a List of explicit GPU devices to use.<br />If host has multiple GPUs, this option allows to select specific devices<br />by their index in the list of found devices.<br />If `deviceFilter` is set, indexes are applied after filtering.<br />If not specified, all devices are accepted. |  | MinItems: 1 <br /> |
+| `deviceFilter` _string array_ | DeviceFilter for GPU devices by hardware name. Case-insensitive.<br />List of substrings to match against the gpu device name.<br />Example: [- "nvidia"]<br />If not specified, all devices are accepted. |  | MinItems: 1 <br />Optional: \{\} <br /> |
+| `devices` _string array_ | Devices is a List of explicit GPU devices to use.<br />If host has multiple GPUs, this option allows to select specific devices<br />by their index in the list of found devices.<br />If `deviceFilter` is set, indexes are applied after filtering.<br />If not specified, all devices are accepted. |  | MinItems: 1 <br />Optional: \{\} <br /> |
 | `parallelIndexes` _integer_ | ParallelIndexes is the number of parallel indexes to run on the GPU. | 1 | Minimum: 1 <br /> |
-| `groupsCount` _integer_ | GroupsCount is the amount of used vulkan "groups" of GPU.<br />In other words, how many parallel points can be indexed by GPU.<br />Optimal value might depend on the GPU model.<br />Proportional, but doesn't necessary equal to the physical number of warps.<br />Do not change this value unless you know what you are doing. |  | Minimum: 1 <br /> |
+| `groupsCount` _integer_ | GroupsCount is the amount of used vulkan "groups" of GPU.<br />In other words, how many parallel points can be indexed by GPU.<br />Optimal value might depend on the GPU model.<br />Proportional, but doesn't necessary equal to the physical number of warps.<br />Do not change this value unless you know what you are doing. |  | Minimum: 1 <br />Optional: \{\} <br /> |
 | `allowIntegrated` _boolean_ | AllowIntegrated specifies whether to allow integrated GPUs to be used. | false |  |
 
 
@@ -275,7 +275,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `markedForDeletionAt` _string_ | MarkedForDeletionAt specifies the time when the helm release was marked for deletion |  |  |
+| `markedForDeletionAt` _string_ | MarkedForDeletionAt specifies the time when the helm release was marked for deletion |  | Optional: \{\} <br /> |
 | `object` _[HelmRelease](#helmrelease)_ | Object specifies the helm release object |  | EmbeddedResource: \{\} <br /> |
 
 
@@ -292,7 +292,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `markedForDeletionAt` _string_ | MarkedForDeletionAt specifies the time when the helm repository was marked for deletion |  |  |
+| `markedForDeletionAt` _string_ | MarkedForDeletionAt specifies the time when the helm repository was marked for deletion |  | Optional: \{\} <br /> |
 | `object` _[HelmRepository](#helmrepository)_ | Object specifies the helm repository object |  | EmbeddedResource: \{\} <br /> |
 
 
@@ -309,7 +309,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ | Enabled specifies whether to enable inference for the cluster or not. | false |  |
+| `enabled` _boolean_ | Enabled specifies whether to enable inference for the cluster or not. | false | Optional: \{\} <br /> |
 
 
 #### Ingress
@@ -325,14 +325,14 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. |  |  |
-| `annotations` _object (keys:string, values:string)_ | Annotations specifies annotations for the ingress. |  |  |
-| `ingressClassName` _string_ | IngressClassName specifies the name of the ingress class |  |  |
-| `host` _string_ | Host specifies the host for the ingress. |  |  |
-| `tls` _boolean_ | TLS specifies whether to enable tls for the ingress.<br />The default depends on the ingress provider:<br />- KubernetesIngress: False<br />- NginxIngress: False<br />- QdrantCloudTraefik: Depending on the config.tls setting of the operator. |  |  |
-| `tlsSecretName` _string_ | TLSSecretName specifies the name of the secret containing the tls certificate. |  |  |
-| `nginx` _[NGINXConfig](#nginxconfig)_ | NGINX specifies the nginx ingress specific configurations. |  |  |
-| `traefik` _[TraefikConfig](#traefikconfig)_ | Traefik specifies the traefik ingress specific configurations. |  |  |
+| `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. |  | Optional: \{\} <br /> |
+| `annotations` _object (keys:string, values:string)_ | Annotations specifies annotations for the ingress. |  | Optional: \{\} <br /> |
+| `ingressClassName` _string_ | IngressClassName specifies the name of the ingress class |  | Optional: \{\} <br /> |
+| `host` _string_ | Host specifies the host for the ingress. |  | Optional: \{\} <br /> |
+| `tls` _boolean_ | TLS specifies whether to enable tls for the ingress.<br />The default depends on the ingress provider:<br />- KubernetesIngress: False<br />- NginxIngress: False<br />- QdrantCloudTraefik: Depending on the config.tls setting of the operator. |  | Optional: \{\} <br /> |
+| `tlsSecretName` _string_ | TLSSecretName specifies the name of the secret containing the tls certificate. |  | Optional: \{\} <br /> |
+| `nginx` _[NGINXConfig](#nginxconfig)_ | NGINX specifies the nginx ingress specific configurations. |  | Optional: \{\} <br /> |
+| `traefik` _[TraefikConfig](#traefikconfig)_ | Traefik specifies the traefik ingress specific configurations. |  | Optional: \{\} <br /> |
 
 
 #### KubernetesDistribution
@@ -379,11 +379,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `message` _string_ | Event message |  |  |
-| `reason` _string_ | Event reason |  |  |
-| `count` _integer_ | How many times the event has occurred |  |  |
-| `firstTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The first time the event was seen |  |  |
-| `lastTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The last time the event was seen |  |  |
+| `message` _string_ | Event message |  | Optional: \{\} <br /> |
+| `reason` _string_ | Event reason |  | Optional: \{\} <br /> |
+| `count` _integer_ | How many times the event has occurred |  | Optional: \{\} <br /> |
+| `firstTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The first time the event was seen |  | Optional: \{\} <br /> |
+| `lastTimestamp` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | The last time the event was seen |  | Optional: \{\} <br /> |
 
 
 #### KubernetesPod
@@ -399,9 +399,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the Pods. |  |  |
-| `labels` _object (keys:string, values:string)_ | Labels specifies the labels for the Pods. |  |  |
-| `extraEnv` _[EnvVar](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#envvar-v1-core) array_ | ExtraEnv specifies the extra environment variables for the Pods. |  |  |
+| `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the Pods. |  | Optional: \{\} <br /> |
+| `labels` _object (keys:string, values:string)_ | Labels specifies the labels for the Pods. |  | Optional: \{\} <br /> |
+| `extraEnv` _[EnvVar](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#envvar-v1-core) array_ | ExtraEnv specifies the extra environment variables for the Pods. |  | Optional: \{\} <br /> |
 
 
 #### KubernetesService
@@ -417,8 +417,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#servicetype-v1-core)_ | Type specifies the type of the Service: "ClusterIP", "NodePort", "LoadBalancer". | ClusterIP |  |
-| `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the Service. |  |  |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#servicetype-v1-core)_ | Type specifies the type of the Service: "ClusterIP", "NodePort", "LoadBalancer". | ClusterIP | Optional: \{\} <br /> |
+| `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the Service. |  | Optional: \{\} <br /> |
 
 
 #### KubernetesStatefulSet
@@ -434,8 +434,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the StatefulSet. |  |  |
-| `pods` _[KubernetesPod](#kubernetespod)_ | Pods  specifies the configuration of the Pods of the Qdrant StatefulSet. |  |  |
+| `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the StatefulSet. |  | Optional: \{\} <br /> |
+| `pods` _[KubernetesPod](#kubernetespod)_ | Pods  specifies the configuration of the Pods of the Qdrant StatefulSet. |  | Optional: \{\} <br /> |
 
 
 #### MetricSource
@@ -468,8 +468,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `cAdvisorMetricSource` _[MetricSource](#metricsource)_ | CAdvisorMetricSource specifies the cAdvisor metric source |  |  |
-| `nodeMetricSource` _[MetricSource](#metricsource)_ | NodeMetricSource specifies the node metric source |  |  |
+| `cAdvisorMetricSource` _[MetricSource](#metricsource)_ | CAdvisorMetricSource specifies the cAdvisor metric source |  | Optional: \{\} <br /> |
+| `nodeMetricSource` _[MetricSource](#metricsource)_ | NodeMetricSource specifies the node metric source |  | Optional: \{\} <br /> |
 
 
 #### NGINXConfig
@@ -485,8 +485,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
-| `grpcHost` _string_ | GRPCHost specifies the host name for the GRPC ingress. |  |  |
+| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  | Optional: \{\} <br /> |
+| `grpcHost` _string_ | GRPCHost specifies the host name for the GRPC ingress. |  | Optional: \{\} <br /> |
 
 
 #### NodeInfo
@@ -503,10 +503,10 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `name` _string_ | Name specifies the name of the node |  |  |
-| `region` _string_ | Region specifies the region of the node |  |  |
-| `zone` _string_ | Zone specifies the zone of the node |  |  |
-| `instanceType` _string_ | InstanceType specifies the instance type of the node |  |  |
-| `arch` _string_ | Arch specifies the CPU architecture of the node |  |  |
+| `region` _string_ | Region specifies the region of the node |  | Optional: \{\} <br /> |
+| `zone` _string_ | Zone specifies the zone of the node |  | Optional: \{\} <br /> |
+| `instanceType` _string_ | InstanceType specifies the instance type of the node |  | Optional: \{\} <br /> |
+| `arch` _string_ | Arch specifies the CPU architecture of the node |  | Optional: \{\} <br /> |
 | `capacity` _[NodeResourceInfo](#noderesourceinfo)_ | Capacity specifies the capacity of the node |  |  |
 | `allocatable` _[NodeResourceInfo](#noderesourceinfo)_ | Allocatable specifies the allocatable resources of the node |  |  |
 
@@ -524,13 +524,13 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `storageClassName` _string_ | Name of the StorageClass used by the PVC |  |  |
-| `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ | Status phase of the PVC |  |  |
-| `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ | Conditions of the PVC |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the PVC<br />Events that happened in the last 30 minutes are stored. |  |  |
-| `capacity` _[ResourceList](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#resourcelist-v1-core)_ | capacity represents the actual resources of the underlying volume. |  |  |
-| `currentVolumeAttributesClassName` _string_ | currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.<br />When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim |  |  |
-| `modifyVolumeStatus` _[ModifyVolumeStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#modifyvolumestatus-v1-core)_ | ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.<br />When this is unset, there is no ModifyVolume operation being attempted. |  |  |
+| `storageClassName` _string_ | Name of the StorageClass used by the PVC |  | Optional: \{\} <br /> |
+| `phase` _[PersistentVolumeClaimPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimphase-v1-core)_ | Status phase of the PVC |  | Optional: \{\} <br /> |
+| `conditions` _[PersistentVolumeClaimCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimcondition-v1-core) array_ | Conditions of the PVC |  | Optional: \{\} <br /> |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the PVC<br />Events that happened in the last 30 minutes are stored. |  | Optional: \{\} <br /> |
+| `capacity` _[ResourceList](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#resourcelist-v1-core)_ | capacity represents the actual resources of the underlying volume. |  | Optional: \{\} <br /> |
+| `currentVolumeAttributesClassName` _string_ | currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.<br />When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim |  | Optional: \{\} <br /> |
+| `modifyVolumeStatus` _[ModifyVolumeStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#modifyvolumestatus-v1-core)_ | ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.<br />When this is unset, there is no ModifyVolume operation being attempted. |  | Optional: \{\} <br /> |
 
 
 #### NodeResourceInfo
@@ -565,21 +565,21 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `name` _string_ | Name specifies the name of the node |  |  |
-| `started_at` _string_ | StartedAt specifies the time when the node started (in RFC3339 format) |  |  |
-| `state` _object (keys:[PodConditionType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podconditiontype-v1-core), values:[ConditionStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#conditionstatus-v1-core))_ | States specifies the condition states of the node |  |  |
-| `version` _string_ | Version specifies the version of Qdrant running on the node |  |  |
-| `liveness` _boolean_ | Reports if qdrant node responded to liveness request (before readiness).<br />This is needed to beter report recovery process to the user. |  |  |
-| `zone` _string_ | The availibility zone the node is running in. |  |  |
-| `podPhase` _[PodPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podphase-v1-core)_ | Status phase of the Pod of the node |  |  |
-| `podConditions` _[PodCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podcondition-v1-core) array_ | Conditions of the Pod of the node |  |  |
-| `podMessage` _string_ | Status message of the Pod of the node |  |  |
-| `podReason` _string_ | Status reason of the Pod of the node |  |  |
-| `containerStatuses` _[ContainerStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#containerstatus-v1-core) array_ | Details container statuses of the Pod of the node |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the Pod of the node<br />Events that happened in the last 30 minutes are stored. |  |  |
-| `restartCount` _integer_ | The number of times the main qdrant container has been restarted. |  |  |
-| `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the database storage PVC |  |  |
-| `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the snapshots storage PVC |  |  |
+| `name` _string_ | Name specifies the name of the node |  | Optional: \{\} <br /> |
+| `started_at` _string_ | StartedAt specifies the time when the node started (in RFC3339 format) |  | Optional: \{\} <br /> |
+| `state` _object (keys:[PodConditionType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podconditiontype-v1-core), values:[ConditionStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#conditionstatus-v1-core))_ | States specifies the condition states of the node |  | Optional: \{\} <br /> |
+| `version` _string_ | Version specifies the version of Qdrant running on the node |  | Optional: \{\} <br /> |
+| `liveness` _boolean_ | Reports if qdrant node responded to liveness request (before readiness).<br />This is needed to beter report recovery process to the user. |  | Optional: \{\} <br /> |
+| `zone` _string_ | The availibility zone the node is running in. |  | Optional: \{\} <br /> |
+| `podPhase` _[PodPhase](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podphase-v1-core)_ | Status phase of the Pod of the node |  | Optional: \{\} <br /> |
+| `podConditions` _[PodCondition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#podcondition-v1-core) array_ | Conditions of the Pod of the node |  | Optional: \{\} <br /> |
+| `podMessage` _string_ | Status message of the Pod of the node |  | Optional: \{\} <br /> |
+| `podReason` _string_ | Status reason of the Pod of the node |  | Optional: \{\} <br /> |
+| `containerStatuses` _[ContainerStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#containerstatus-v1-core) array_ | Details container statuses of the Pod of the node |  | Optional: \{\} <br /> |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the Pod of the node<br />Events that happened in the last 30 minutes are stored. |  | Optional: \{\} <br /> |
+| `restartCount` _integer_ | The number of times the main qdrant container has been restarted. |  | Optional: \{\} <br /> |
+| `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the database storage PVC |  | Optional: \{\} <br /> |
+| `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the snapshots storage PVC |  | Optional: \{\} <br /> |
 
 
 #### Pause
@@ -651,9 +651,9 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `id` _string_ | Id specifies the unique identifier of the region |  |  |
-| `components` _[ComponentReference](#componentreference) array_ | Components specifies the list of components to be installed in the region |  |  |
-| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region<br />Deprecated: Use "Components" instead |  |  |
-| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region<br />Deprecated: Use "Components" instead |  |  |
+| `components` _[ComponentReference](#componentreference) array_ | Components specifies the list of components to be installed in the region |  | Optional: \{\} <br /> |
+| `helmRepositories` _[HelmRepository](#helmrepository) array_ | HelmRepositories specifies the list of helm repositories to be created to the region<br />Deprecated: Use "Components" instead |  | Optional: \{\} <br /> |
+| `helmReleases` _[HelmRelease](#helmrelease) array_ | HelmReleases specifies the list of helm releases to be created to the region<br />Deprecated: Use "Components" instead |  | Optional: \{\} <br /> |
 
 
 
@@ -879,9 +879,9 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `cluster-id` _string_ | The cluster ID for which a Snapshot need to be taken<br />The cluster should be in the same namespace as this QdrantClusterSnapshot is located |  |  |
-| `creation-timestamp` _integer_ | The CreationTimestamp of the backup (expressed in Unix epoch format) |  |  |
-| `scheduleShortId` _string_ | Specifies the short Id which identifies a schedule, if any.<br />This field should not be set if the backup is made manually. |  | MaxLength: 8 <br /> |
-| `retention` _string_ | The retention period of this snapshot in hours, if any.<br />If not set, the backup doesn't have a retention period, meaning it will not be removed. |  | Pattern: `^[0-9]+h$` <br /> |
+| `creation-timestamp` _integer_ | The CreationTimestamp of the backup (expressed in Unix epoch format) |  | Optional: \{\} <br /> |
+| `scheduleShortId` _string_ | Specifies the short Id which identifies a schedule, if any.<br />This field should not be set if the backup is made manually. |  | MaxLength: 8 <br />Optional: \{\} <br /> |
+| `retention` _string_ | The retention period of this snapshot in hours, if any.<br />If not set, the backup doesn't have a retention period, meaning it will not be removed. |  | Pattern: `^[0-9]+h$` <br />Optional: \{\} <br /> |
 
 
 
@@ -902,29 +902,29 @@ _Appears in:_
 | `id` _string_ | Id specifies the unique identifier of the cluster |  |  |
 | `version` _string_ | Version specifies the version of Qdrant to deploy |  |  |
 | `size` _integer_ | Size specifies the desired number of Qdrant nodes in the cluster |  | Maximum: 100 <br />Minimum: 1 <br /> |
-| `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should start a dedicated service for each node. | true |  |
-| `clusterManager` _boolean_ | ClusterManager specifies whether to use the cluster manager for this cluster.<br />The Python-operator will deploy a dedicated cluster manager instance.<br />The Go-operator will use a shared instance.<br />If not set, the default will be taken from the operator config. |  |  |
-| `suspend` _boolean_ | Suspend specifies whether to suspend the cluster.<br />If enabled, the cluster will be suspended and all related resources will be removed except the PVCs. | false |  |
-| `pauses` _[Pause](#pause) array_ | Pauses specifies a list of pause request by developer for manual maintenance.<br />Operator will skip handling any changes in the CR if any pause request is present. |  |  |
-| `image` _[QdrantImage](#qdrantimage)_ | Image specifies the image to use for each Qdrant node. |  |  |
+| `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should start a dedicated service for each node. | true | Optional: \{\} <br /> |
+| `clusterManager` _boolean_ | ClusterManager specifies whether to use the cluster manager for this cluster.<br />The Python-operator will deploy a dedicated cluster manager instance.<br />The Go-operator will use a shared instance.<br />If not set, the default will be taken from the operator config. |  | Optional: \{\} <br /> |
+| `suspend` _boolean_ | Suspend specifies whether to suspend the cluster.<br />If enabled, the cluster will be suspended and all related resources will be removed except the PVCs. | false | Optional: \{\} <br /> |
+| `pauses` _[Pause](#pause) array_ | Pauses specifies a list of pause request by developer for manual maintenance.<br />Operator will skip handling any changes in the CR if any pause request is present. |  | Optional: \{\} <br /> |
+| `image` _[QdrantImage](#qdrantimage)_ | Image specifies the image to use for each Qdrant node. |  | Optional: \{\} <br /> |
 | `resources` _[Resources](#resources)_ | Resources specifies the resources to allocate for each Qdrant node. |  |  |
-| `security` _[QdrantSecurityContext](#qdrantsecuritycontext)_ | Security specifies the security context for each Qdrant node. |  |  |
-| `tolerations` _[Toleration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#toleration-v1-core) array_ | Tolerations specifies the tolerations for each Qdrant node. |  |  |
-| `nodeSelector` _object (keys:string, values:string)_ | NodeSelector specifies the node selector for each Qdrant node. |  |  |
-| `config` _[QdrantConfiguration](#qdrantconfiguration)_ | Config specifies the Qdrant configuration setttings for the clusters. |  |  |
-| `ingress` _[Ingress](#ingress)_ | Ingress specifies the ingress for the cluster. |  |  |
-| `service` _[KubernetesService](#kubernetesservice)_ | Service specifies the configuration of the Qdrant Kubernetes Service. |  |  |
-| `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  |  |
-| `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  |  |
-| `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  |  |
-| `storage` _[Storage](#storage)_ | Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied. |  |  |
-| `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  |  |
-| `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  |  |
-| `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  |  |
-| `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  |  |
-| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size] <br /> |
-| `readClusters` _[ReadCluster](#readcluster) array_ | ReadClusters specifies the read clusters for this cluster to synchronize.<br />Cluster-manager needs to be enabled for this feature to work. |  |  |
-| `writeCluster` _[WriteCluster](#writecluster)_ | WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster. |  |  |
+| `security` _[QdrantSecurityContext](#qdrantsecuritycontext)_ | Security specifies the security context for each Qdrant node. |  | Optional: \{\} <br /> |
+| `tolerations` _[Toleration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#toleration-v1-core) array_ | Tolerations specifies the tolerations for each Qdrant node. |  | Optional: \{\} <br /> |
+| `nodeSelector` _object (keys:string, values:string)_ | NodeSelector specifies the node selector for each Qdrant node. |  | Optional: \{\} <br /> |
+| `config` _[QdrantConfiguration](#qdrantconfiguration)_ | Config specifies the Qdrant configuration setttings for the clusters. |  | Optional: \{\} <br /> |
+| `ingress` _[Ingress](#ingress)_ | Ingress specifies the ingress for the cluster. |  | Optional: \{\} <br /> |
+| `service` _[KubernetesService](#kubernetesservice)_ | Service specifies the configuration of the Qdrant Kubernetes Service. |  | Optional: \{\} <br /> |
+| `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  | Optional: \{\} <br /> |
+| `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  | Optional: \{\} <br /> |
+| `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  | Optional: \{\} <br /> |
+| `storage` _[Storage](#storage)_ | Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied. |  | Optional: \{\} <br /> |
+| `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  | Optional: \{\} <br /> |
+| `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  | Optional: \{\} <br /> |
+| `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  | Optional: \{\} <br /> |
+| `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  | Optional: \{\} <br /> |
+| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size] <br />Optional: \{\} <br /> |
+| `readClusters` _[ReadCluster](#readcluster) array_ | ReadClusters specifies the read clusters for this cluster to synchronize.<br />Cluster-manager needs to be enabled for this feature to work. |  | Optional: \{\} <br /> |
+| `writeCluster` _[WriteCluster](#writecluster)_ | WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster. |  | Optional: \{\} <br /> |
 
 
 
@@ -942,12 +942,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `collection` _[QdrantConfigurationCollection](#qdrantconfigurationcollection)_ | Collection specifies the default collection configuration for Qdrant. |  |  |
-| `log_level` _string_ | LogLevel specifies the log level for Qdrant. |  |  |
-| `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  |  |
-| `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  |  |
-| `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  |  |
-| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster. |  |  |
+| `collection` _[QdrantConfigurationCollection](#qdrantconfigurationcollection)_ | Collection specifies the default collection configuration for Qdrant. |  | Optional: \{\} <br /> |
+| `log_level` _string_ | LogLevel specifies the log level for Qdrant. |  | Optional: \{\} <br /> |
+| `service` _[QdrantConfigurationService](#qdrantconfigurationservice)_ | Service specifies the service level configuration for Qdrant. |  | Optional: \{\} <br /> |
+| `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  | Optional: \{\} <br /> |
+| `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  | Optional: \{\} <br /> |
+| `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster. |  | Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationCollection
@@ -963,10 +963,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `replication_factor` _integer_ | ReplicationFactor specifies the default number of replicas of each shard |  |  |
-| `write_consistency_factor` _integer_ | WriteConsistencyFactor specifies how many replicas should apply the operation to consider it successful |  |  |
-| `vectors` _[QdrantConfigurationCollectionVectors](#qdrantconfigurationcollectionvectors)_ | Vectors specifies the default parameters for vectors |  |  |
-| `strict_mode` _[QdrantConfigurationCollectionStrictMode](#qdrantconfigurationcollectionstrictmode)_ | StrictMode specifies the strict mode configuration for the collection |  |  |
+| `replication_factor` _integer_ | ReplicationFactor specifies the default number of replicas of each shard |  | Optional: \{\} <br /> |
+| `write_consistency_factor` _integer_ | WriteConsistencyFactor specifies how many replicas should apply the operation to consider it successful |  | Optional: \{\} <br /> |
+| `vectors` _[QdrantConfigurationCollectionVectors](#qdrantconfigurationcollectionvectors)_ | Vectors specifies the default parameters for vectors |  | Optional: \{\} <br /> |
+| `strict_mode` _[QdrantConfigurationCollectionStrictMode](#qdrantconfigurationcollectionstrictmode)_ | StrictMode specifies the strict mode configuration for the collection |  | Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationCollectionStrictMode
@@ -982,7 +982,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `max_payload_index_count` _integer_ | MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.<br />It can be set for Qdrant version >= 1.16.0<br />Default to 100 if omitted and Qdrant version >= 1.16.0 |  | Minimum: 1 <br /> |
+| `max_payload_index_count` _integer_ | MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.<br />It can be set for Qdrant version >= 1.16.0<br />Default to 100 if omitted and Qdrant version >= 1.16.0 |  | Minimum: 1 <br />Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationCollectionVectors
@@ -998,7 +998,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `on_disk` _boolean_ | OnDisk specifies whether vectors should be stored in memory or on disk. |  |  |
+| `on_disk` _boolean_ | OnDisk specifies whether vectors should be stored in memory or on disk. |  | Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationService
@@ -1014,12 +1014,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `api_key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | ApiKey for the qdrant instance |  |  |
-| `read_only_api_key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | ReadOnlyApiKey for the qdrant instance |  |  |
-| `jwt_rbac` _boolean_ | JwtRbac specifies whether to enable jwt rbac for the qdrant instance<br />Default is false |  |  |
-| `hide_jwt_dashboard` _boolean_ | HideJwtDashboard specifies whether to hide the JWT dashboard of the embedded UI<br />Default is false |  |  |
-| `enable_tls` _boolean_ | EnableTLS specifies whether to enable tls for the qdrant instance<br />Default is false |  |  |
-| `max_request_size_mb` _integer_ | MaxRequestSizeMb specifies them maximum size of POST data in a single request in megabytes<br />Default, if not set is 32 (MB) |  |  |
+| `api_key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | ApiKey for the qdrant instance |  | Optional: \{\} <br /> |
+| `read_only_api_key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | ReadOnlyApiKey for the qdrant instance |  | Optional: \{\} <br /> |
+| `jwt_rbac` _boolean_ | JwtRbac specifies whether to enable jwt rbac for the qdrant instance<br />Default is false |  | Optional: \{\} <br /> |
+| `hide_jwt_dashboard` _boolean_ | HideJwtDashboard specifies whether to hide the JWT dashboard of the embedded UI<br />Default is false |  | Optional: \{\} <br /> |
+| `enable_tls` _boolean_ | EnableTLS specifies whether to enable tls for the qdrant instance<br />Default is false |  | Optional: \{\} <br /> |
+| `max_request_size_mb` _integer_ | MaxRequestSizeMb specifies them maximum size of POST data in a single request in megabytes<br />Default, if not set is 32 (MB) |  | Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationTLS
@@ -1035,9 +1035,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `cert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server certificate chain file |  |  |
-| `key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server private key file |  |  |
-| `caCert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the CA certificate file |  |  |
+| `cert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server certificate chain file |  | Optional: \{\} <br /> |
+| `key` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the server private key file |  | Optional: \{\} <br /> |
+| `caCert` _[QdrantSecretKeyRef](#qdrantsecretkeyref)_ | Reference to the secret containing the CA certificate file |  | Optional: \{\} <br /> |
 
 
 #### QdrantEntity
@@ -1092,7 +1092,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `id` _string_ | The unique identifier of the entity (in UUID format). |  |  |
 | `entityType` _string_ | The type of the entity. |  |  |
-| `clusterId` _string_ | The optional cluster identifier |  |  |
+| `clusterId` _string_ | The optional cluster identifier |  | Optional: \{\} <br /> |
 | `createdAt` _[MicroTime](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#microtime-v1-meta)_ | Timestamp when the entity was created. |  |  |
 | `lastUpdatedAt` _[MicroTime](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#microtime-v1-meta)_ | Timestamp when the entity was last updated. |  |  |
 | `deletedAt` _[MicroTime](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#microtime-v1-meta)_ | Timestamp when the entity was deleted (or is started to be deleting).<br />If not set the entity is not deleted |  |  |
@@ -1132,9 +1132,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `repository` _string_ | Repository specifies the repository of the Qdrant image.<br />If not specified defaults the config of the operator (or qdrant/qdrant if not specified in operator). |  |  |
-| `pullPolicy` _[PullPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#pullpolicy-v1-core)_ | PullPolicy specifies the image pull policy for the Qdrant image.<br />If not specified defaults the config of the operator (or IfNotPresent if not specified in operator). |  |  |
-| `pullSecretName` _string_ | PullSecretName specifies the pull secret for the Qdrant image. |  |  |
+| `repository` _string_ | Repository specifies the repository of the Qdrant image.<br />If not specified defaults the config of the operator (or qdrant/qdrant if not specified in operator). |  | Optional: \{\} <br /> |
+| `pullPolicy` _[PullPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#pullpolicy-v1-core)_ | PullPolicy specifies the image pull policy for the Qdrant image.<br />If not specified defaults the config of the operator (or IfNotPresent if not specified in operator). |  | Optional: \{\} <br /> |
+| `pullSecretName` _string_ | PullSecretName specifies the pull secret for the Qdrant image. |  | Optional: \{\} <br /> |
 
 
 #### QdrantRelease
@@ -1188,13 +1188,13 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `version` _string_ | Version number (should be semver compliant).<br />E.g. "v1.10.1" |  |  |
-| `default` _boolean_ | If set, this version is default for new clusters on Cloud.<br />There should be only 1 Qdrant version in the platform set as default. | false |  |
-| `image` _string_ | Full docker image to use for this version.<br />If empty, a default image will be derived from Version (and qdrant/qdrant is assumed). |  |  |
-| `unavailable` _boolean_ | If set, this version cannot be used for new clusters. | false |  |
-| `endOfLife` _boolean_ | If set, this version is no longer actively supported. | false |  |
-| `accountIds` _string array_ | If set, this version can only be used by accounts with given IDs. |  |  |
-| `accountPrivileges` _string array_ | If set, this version can only be used by accounts that have been given the listed privileges. |  |  |
-| `remarks` _string_ | General remarks for human reading |  |  |
+| `default` _boolean_ | If set, this version is default for new clusters on Cloud.<br />There should be only 1 Qdrant version in the platform set as default. | false | Optional: \{\} <br /> |
+| `image` _string_ | Full docker image to use for this version.<br />If empty, a default image will be derived from Version (and qdrant/qdrant is assumed). |  | Optional: \{\} <br /> |
+| `unavailable` _boolean_ | If set, this version cannot be used for new clusters. | false | Optional: \{\} <br /> |
+| `endOfLife` _boolean_ | If set, this version is no longer actively supported. | false | Optional: \{\} <br /> |
+| `accountIds` _string array_ | If set, this version can only be used by accounts with given IDs. |  | Optional: \{\} <br /> |
+| `accountPrivileges` _string array_ | If set, this version can only be used by accounts that have been given the listed privileges. |  | Optional: \{\} <br /> |
+| `remarks` _string_ | General remarks for human reading |  | Optional: \{\} <br /> |
 | `releaseNotesURL` _string_ | Release Notes URL for the specified version |  |  |
 
 
@@ -1212,7 +1212,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `secretKeyRef` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#secretkeyselector-v1-core)_ | SecretKeyRef to the secret containing data to configure the qdrant instance |  |  |
+| `secretKeyRef` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#secretkeyselector-v1-core)_ | SecretKeyRef to the secret containing data to configure the qdrant instance |  | Optional: \{\} <br /> |
 
 
 #### QdrantSecurityContext
@@ -1230,7 +1230,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `user` _integer_ | User specifies the user to run the Qdrant process as. |  |  |
 | `group` _integer_ | Group specifies the group to run the Qdrant process as. |  |  |
-| `fsGroup` _integer_ | FsGroup specifies file system group to run the Qdrant process as. |  |  |
+| `fsGroup` _integer_ | FsGroup specifies file system group to run the Qdrant process as. |  | Optional: \{\} <br /> |
 
 
 #### ReadCluster
@@ -1281,8 +1281,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `volumeSnapshot` _boolean_ | VolumeSnapshot specifies whether the Kubernetes cluster supports volume snapshot |  |  |
-| `volumeExpansion` _boolean_ | VolumeExpansion specifies whether the Kubernetes cluster supports volume expansion |  |  |
+| `volumeSnapshot` _boolean_ | VolumeSnapshot specifies whether the Kubernetes cluster supports volume snapshot |  | Optional: \{\} <br /> |
+| `volumeExpansion` _boolean_ | VolumeExpansion specifies whether the Kubernetes cluster supports volume expansion |  | Optional: \{\} <br /> |
 
 
 #### RegionPhase
@@ -1316,8 +1316,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `cpu` _string_ | CPU specifies the CPU request for each Qdrant node. |  |  |
-| `memory` _string_ | Memory specifies the memory request for each Qdrant node. |  |  |
+| `cpu` _string_ | CPU specifies the CPU request for each Qdrant node. |  | Optional: \{\} <br /> |
+| `memory` _string_ | Memory specifies the memory request for each Qdrant node. |  | Optional: \{\} <br /> |
 
 
 #### Resources
@@ -1336,7 +1336,7 @@ _Appears in:_
 | `cpu` _string_ | CPU specifies the CPU limit for each Qdrant node. |  |  |
 | `memory` _string_ | Memory specifies the memory limit for each Qdrant node. |  |  |
 | `storage` _string_ | Storage specifies the storage amount for each Qdrant node. |  |  |
-| `requests` _[ResourceRequests](#resourcerequests)_ | Requests specifies the resource requests for each Qdrant node. |  |  |
+| `requests` _[ResourceRequests](#resourcerequests)_ | Requests specifies the resource requests for each Qdrant node. |  | Optional: \{\} <br /> |
 
 
 #### RestoreDestination
@@ -1354,7 +1354,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `name` _string_ | Name of the destination cluster |  |  |
 | `namespace` _string_ | Namespace of the destination cluster |  |  |
-| `create` _boolean_ | Create when set to true indicates that<br />a new cluster with the specified name should be created.<br />Otherwise, if set to false, the existing cluster is going to be restored<br />to the specified state. |  |  |
+| `create` _boolean_ | Create when set to true indicates that<br />a new cluster with the specified name should be created.<br />Otherwise, if set to false, the existing cluster is going to be restored<br />to the specified state. |  | Optional: \{\} <br /> |
 
 
 #### RestorePhase
@@ -1424,9 +1424,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `volumeAttributesClassName` _string_ | VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs |  |  |
-| `iops` _integer_ | IOPS defines the IOPS number to configure for the storage PVCs |  |  |
-| `throughput` _integer_ | Throughput defines the throughput number in MB/s for the storage PVCs |  |  |
+| `volumeAttributesClassName` _string_ | VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs |  | Optional: \{\} <br /> |
+| `iops` _integer_ | IOPS defines the IOPS number to configure for the storage PVCs |  | Optional: \{\} <br /> |
+| `throughput` _integer_ | Throughput defines the throughput number in MB/s for the storage PVCs |  | Optional: \{\} <br /> |
 
 
 #### StorageClass
@@ -1447,7 +1447,7 @@ _Appears in:_
 | `provisioner` _string_ | Provisioner specifies the provisioner of the storage class |  |  |
 | `allowVolumeExpansion` _boolean_ | AllowVolumeExpansion specifies whether the storage class allows volume expansion |  |  |
 | `reclaimPolicy` _string_ | ReclaimPolicy specifies the reclaim policy of the storage class |  |  |
-| `parameters` _object (keys:string, values:string)_ | Parameters specifies the parameters of the storage class |  |  |
+| `parameters` _object (keys:string, values:string)_ | Parameters specifies the parameters of the storage class |  | Optional: \{\} <br /> |
 
 
 #### StorageClassNames
@@ -1463,8 +1463,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `db` _string_ | DB specifies the storage class name for db volume. |  |  |
-| `snapshots` _string_ | Snapshots specifies the storage class name for snapshots volume. |  |  |
+| `db` _string_ | DB specifies the storage class name for db volume. |  | Optional: \{\} <br /> |
+| `snapshots` _string_ | Snapshots specifies the storage class name for snapshots volume. |  | Optional: \{\} <br /> |
 
 
 #### StorageConfig
@@ -1480,8 +1480,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  |  |
-| `maxCollections` _integer_ | MaxCollections represents the maximal number of collections allowed to be created.<br />It can be set for Qdrant version >= 1.14.1<br />Default to 1000 if omitted and Qdrant version >= 1.15.0 |  | Minimum: 1 <br /> |
+| `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  | Optional: \{\} <br /> |
+| `maxCollections` _integer_ | MaxCollections represents the maximal number of collections allowed to be created.<br />It can be set for Qdrant version >= 1.14.1<br />Default to 1000 if omitted and Qdrant version >= 1.15.0 |  | Minimum: 1 <br />Optional: \{\} <br /> |
 
 
 #### StoragePerformanceConfig
@@ -1497,8 +1497,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `optimizer_cpu_budget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  |  |
-| `async_scorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  |  |
+| `optimizer_cpu_budget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  | Optional: \{\} <br /> |
+| `async_scorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  | Optional: \{\} <br /> |
 
 
 #### TraefikConfig
@@ -1514,7 +1514,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
+| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  | Optional: \{\} <br /> |
 | `entryPoints` _string array_ | EntryPoints is the list of traefik entry points to use for the ingress route.<br />If nothing is set, it will take the entryPoints configured in the operator config. |  |  |
 
 
@@ -1550,10 +1550,10 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `volumeSnapshotName` _string_ | VolumeSnapshotName is the name of the volume snapshot |  |  |
 | `volumeName` _string_ | VolumeName is the name of the volume that was backed up |  |  |
-| `readyToUse` _boolean_ | ReadyToUse indicates if the volume snapshot is ready to use |  |  |
-| `snapshotHandle` _string_ | SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider |  |  |
-| `error` _[VolumeSnapshotError](#volumesnapshoterror)_ | Error contains the error details if the snapshot creation failed |  |  |
-| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the VolumeSnapshot<br />Events that happened in the last 30 minutes are stored. |  |  |
+| `readyToUse` _boolean_ | ReadyToUse indicates if the volume snapshot is ready to use |  | Optional: \{\} <br /> |
+| `snapshotHandle` _string_ | SnapshotHandle is the identifier of the volume snapshot in the respective cloud provider |  | Optional: \{\} <br /> |
+| `error` _[VolumeSnapshotError](#volumesnapshoterror)_ | Error contains the error details if the snapshot creation failed |  | Optional: \{\} <br /> |
+| `events` _[KubernetesEventInfo](#kuberneteseventinfo) array_ | Recent Kubernetes Events related to the VolumeSnapshot<br />Events that happened in the last 30 minutes are stored. |  | Optional: \{\} <br /> |
 
 
 #### WriteCluster
@@ -1616,7 +1616,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `apiVersion` _string_ | `routing.qdrant.io/v1alpha1` | | |
 | `kind` _string_ | `QdrantClusterRouting` | | |
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  | Optional: \{\} <br /> |
 | `spec` _[QdrantClusterRoutingSpec](#qdrantclusterroutingspec)_ |  |  |  |
 
 
@@ -1636,14 +1636,14 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `clusterId` _string_ | ClusterId specifies the unique identifier of the cluster.<br />For shared routing this Id will be used for SNI resolving. |  |  |
-| `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. | true |  |
-| `shared` _boolean_ | Set if the cluster uses (at least one) shared loadbalancer.<br />Note that this doesn't mean it doesn't have a dedicated loadbalancer as well (e.g. during a migration from one to the other). |  |  |
-| `dedicated` _boolean_ | Set if the cluster uses (at least one) dedicated loadbalancer.<br />Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other). |  |  |
-| `tls` _boolean_ | TLS specifies whether tls is enabled or not at qdrant level. |  |  |
-| `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should have a dedicated route for each node. | true |  |
+| `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. | true | Optional: \{\} <br /> |
+| `shared` _boolean_ | Set if the cluster uses (at least one) shared loadbalancer.<br />Note that this doesn't mean it doesn't have a dedicated loadbalancer as well (e.g. during a migration from one to the other). |  | Optional: \{\} <br /> |
+| `dedicated` _boolean_ | Set if the cluster uses (at least one) dedicated loadbalancer.<br />Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other). |  | Optional: \{\} <br /> |
+| `tls` _boolean_ | TLS specifies whether tls is enabled or not at qdrant level. |  | Optional: \{\} <br /> |
+| `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should have a dedicated route for each node. | true | Optional: \{\} <br /> |
 | `nodeIndexes` _integer array_ | NodeIndexes specifies the indexes of the individual nodes in the cluster. |  |  |
-| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
-| `enableAccessLog` _boolean_ | If true enable (proxy) access log for this qdrant cluster. |  |  |
+| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  | Optional: \{\} <br /> |
+| `enableAccessLog` _boolean_ | If true enable (proxy) access log for this qdrant cluster. |  | Optional: \{\} <br /> |
 
 
 
