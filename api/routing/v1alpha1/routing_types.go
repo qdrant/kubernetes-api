@@ -54,9 +54,9 @@ type QdrantClusterRoutingSpec struct {
 	// AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress.
 	// +optional
 	AllowedSourceRanges []string `json:"allowedSourceRanges,omitempty"`
-	// If true enabled envoy access log
+	// If true enabled (proxy) access log
 	// +optional
-	EnableEnvoyAccessLog *bool `json:"enableEnvoyAccessLog,omitempty"`
+	EnableAccessLog *bool `json:"enableAccessLog,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

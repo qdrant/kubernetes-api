@@ -77,8 +77,8 @@ spec:
                   Set if the cluster uses (at least one) dedicated loadbalancer.
                   Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other).
                 type: boolean
-              enableEnvoyAccessLog:
-                description: If true enabled envoy access log
+              enableAccessLog:
+                description: If true enabled (proxy) access log
                 type: boolean
               enabled:
                 default: true

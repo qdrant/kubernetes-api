@@ -1643,7 +1643,7 @@ _Appears in:_
 | `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should have a dedicated route for each node. | true |  |
 | `nodeIndexes` _integer array_ | NodeIndexes specifies the indexes of the individual nodes in the cluster. |  |  |
 | `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
-| `enableEnvoyAccessLog` _boolean_ | If true enabled envoy access log |  |  |
+| `enableAccessLog` _boolean_ | If true enabled (proxy) access log |  |  |
 
 
 

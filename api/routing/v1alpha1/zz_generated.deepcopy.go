@@ -135,8 +135,8 @@ func (in *QdrantClusterRoutingSpec) DeepCopyInto(out *QdrantClusterRoutingSpec) 
 		*out = make([]string, len(*in))
 		copy(*out, *in)
 	}
-	if in.EnableEnvoyAccessLog != nil {
-		in, out := &in.EnableEnvoyAccessLog, &out.EnableEnvoyAccessLog
+	if in.EnableAccessLog != nil {
+		in, out := &in.EnableAccessLog, &out.EnableAccessLog
 		*out = new(bool)
 		**out = **in
 	}
