@@ -26,7 +26,8 @@ jobs:
           helm lint charts/qdrant-kubernetes-api
           helm lint charts/qdrant-kubernetes-api --set includeManagementCRDs=true
           helm lint charts/qdrant-kubernetes-api --set includeAuthCRDs=true
-          helm lint charts/qdrant-kubernetes-api --set includeManagementCRDs=true --set includeAuthCRDs=true
+          helm lint charts/qdrant-kubernetes-api --set includeRoutingCRDs=true
+          helm lint charts/qdrant-kubernetes-api --set includeManagementCRDs=true --set includeAuthCRDs=true --set includeRoutingCRDs=true
 
       - name: Run kubeconform
         shell: bash

@@ -3,6 +3,7 @@
 ## Packages
 - [auth.qdrant.io/v1alpha1](#authqdrantiov1alpha1)
 - [qdrant.io/v1](#qdrantiov1)
+- [routing.qdrant.io/v1alpha1](#routingqdrantiov1alpha1)
 
 
 ## auth.qdrant.io/v1alpha1
@@ -1569,5 +1570,81 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `id` _string_ | Id specifies the unique identifier of the write cluster |  |  |
+
+
+
+## routing.qdrant.io/v1alpha1
+
+Package v1alpha1 contains API Schema definitions for the routing.qdrant.io v1alpha1 API group
+
+### Resource Types
+- [QdrantClusterRouting](#qdrantclusterrouting)
+
+
+
+#### BootstrapStatusInfo
+
+
+
+BootstrapStatusInfo is part of QdrantClusterRoutingStatus.
+
+
+
+_Appears in:_
+- [QdrantClusterRoutingStatus](#qdrantclusterroutingstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `routeId` _string_ | Identifier of the route this bootstrap status info belongs to. |  |  |
+| `shared` _boolean_ | Set if the route uses a shared loadbalancer. |  |  |
+| `dedicated` _boolean_ | Set if the route uses a dedicated loadbalancer. |  |  |
+| `bootstrapped` _boolean_ | Set to true if routing of the Qdrant cluster has been bootstrapped once for this specific route. |  |  |
+
+
+#### QdrantClusterRouting
+
+
+
+QdrantClusterRouting is the Schema for the routing towards Qdrant clusters API
+
+
+
+_Appears in:_
+- [QdrantClusterRoutingList](#qdrantclusterroutinglist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `routing.qdrant.io/v1alpha1` | | |
+| `kind` _string_ | `QdrantClusterRouting` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[QdrantClusterRoutingSpec](#qdrantclusterroutingspec)_ |  |  |  |
+
+
+
+
+#### QdrantClusterRoutingSpec
+
+
+
+QdrantClusterRoutingSpec describes the configuration for routing towards Qdrant clusters.
+
+
+
+_Appears in:_
+- [QdrantClusterRouting](#qdrantclusterrouting)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `clusterId` _string_ | ClusterId specifies the unique identifier of the cluster.<br />For shared routing this Id will be used for SNI resolving. |  |  |
+| `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. | true |  |
+| `shared` _boolean_ | Set if the cluster uses (at least one) shared loadbalancer.<br />Note that this doesn't mean it doesn't have a dedicated loadbalancer as well (e.g. during a migration from one to the other). |  |  |
+| `dedicated` _boolean_ | Set if the cluster uses (at least one) dedicated loadbalancer.<br />Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other). |  |  |
+| `tls` _boolean_ | TLS specifies whether tls is enabled or not at qdrant level. |  |  |
+| `servicePerNode` _boolean_ | ServicePerNode specifies whether the cluster should have a dedicated route for each node. | true |  |
+| `nodeIndexes` _integer array_ | NodeIndexes specifies the indexes of the individual nodes in the cluster. |  |  |
+| `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  |  |
+| `enableEnvoyAccessLog` _boolean_ | If true enabled envoy access log |  |  |
+
+
 
 

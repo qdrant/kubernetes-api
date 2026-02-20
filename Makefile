@@ -21,7 +21,8 @@ lint:
 	helm lint $(CHART_DIR)
 	helm lint $(CHART_DIR) --set includeManagementCRDs=true
 	helm lint $(CHART_DIR) --set includeAuthCRDs=true
-	helm lint $(CHART_DIR) --set includeManagementCRDs=true --set includeAuthCRDs=true
+	helm lint $(CHART_DIR) --set includeRoutingCRDs=true
+	helm lint $(CHART_DIR) --set includeManagementCRDs=true --set includeAuthCRDs=true --set includeRoutingCRDs=true
 	helm lint $(CHART_DIR)
 	golangci-lint run
 
@@ -33,10 +34,12 @@ manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	rm $(CHART_DIR)/templates/management-crds/*.yaml || true
 	rm $(CHART_DIR)/templates/region-crds/*.yaml || true
 	rm $(CHART_DIR)/templates/auth-crds/*.yaml || true
+	rm $(CHART_DIR)/templates/routing-crds/*.yaml || true
 	$(CONTROLLER_GEN) crd paths="./..." output:crd:artifacts:config=$(CRDS_DIR)
 	mv $(CRDS_DIR)/qdrant.io_qdrantreleases.yaml $(CHART_DIR)/templates/management-crds/
 	cp $(CRDS_DIR)/qdrant*.yaml $(CHART_DIR)/templates/region-crds/
 	mv $(CRDS_DIR)/auth.qdrant.io*.yaml $(CHART_DIR)/templates/auth-crds/
+	mv $(CRDS_DIR)/routing.qdrant.io*.yaml $(CHART_DIR)/templates/routing-crds/
 	for file in $(CHART_DIR)/templates/management-crds/*.yaml; do \
 		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
@@ -48,6 +51,11 @@ manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	# We only want to deploy API key CRD to regional clusters
 	for file in $(CHART_DIR)/templates/auth-crds/auth.qdrant.io*.yaml; do \
 		echo "{{ if .Values.includeAuthCRDs }}" | cat - $$file > temp && mv temp $$file; \
+		echo "{{ end }}" >> $$file; \
+	done
+	# We only want to deploy routing CRD to regional clusters
+	for file in $(CHART_DIR)/templates/routing-crds/routing.qdrant.io*.yaml; do \
+		echo "{{ if .Values.includeRoutingCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
 	helm lint $(CHART_DIR)

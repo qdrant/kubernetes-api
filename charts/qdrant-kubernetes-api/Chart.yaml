@@ -1,6 +1,6 @@
 apiVersion: v2
 name: qdrant-kubernetes-api
-description: Kubernetes API (CRDs) used to manage Qdrant databases inside of Kubernetes cluster # Used by both the operator and agent.
+description: Kubernetes API (CRDs) used to manage Qdrant databases inside of Kubernetes cluster # Used by the operator, agent and route-manager.
 home: https://qdrant.tech
 type: application
 version: 0.1.0
