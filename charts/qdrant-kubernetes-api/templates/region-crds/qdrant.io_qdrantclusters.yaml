@@ -67,6 +67,42 @@ spec:
                 description: Config specifies the Qdrant configuration setttings for
                   the clusters.
                 properties:
+                  audit:
+                    description: Audit specifies the audit logging configuration for
+                      Qdrant.
+                    properties:
+                      dir:
+                        description: Dir specifies the directory to write audit log
+                          files into.
+                        type: string
+                      enabled:
+                        default: false
+                        description: Enabled specifies whether to enable audit logging.
+                        type: boolean
+                      max_log_files:
+                        default: 7
+                        description: |-
+                          MaxLogFiles specifies the maximum number of rotated audit log files to keep.
+                          Older files are deleted when a new log file is created. Default: 7.
+                        format: int64
+                        minimum: 1
+                        type: integer
+                      rotation:
+                        default: daily
+                        description: 'Rotation specifies the rotation interval: "daily"
+                          (default) or "hourly".'
+                        enum:
+                        - daily
+                        - hourly
+                        type: string
+                      trust_forwarded_headers:
+                        default: false
+                        description: |-
+                          TrustForwardedHeaders specifies whether to use X-Forwarded-For header to
+                          determine the client address recorded in audit log entries. Only enable
+                          this when running behind a trusted reverse proxy or load balancer.
+                        type: boolean
+                    type: object
                   collection:
                     description: Collection specifies the default collection configuration
                       for Qdrant.
