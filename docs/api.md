@@ -76,6 +76,44 @@ Package v1 contains API Schema definitions for the qdrant.io v1 API group
 
 
 
+#### AuditConfig
+
+
+
+AuditConfig specifies the audit logging configuration for Qdrant.
+
+
+
+_Appears in:_
+- [QdrantConfiguration](#qdrantconfiguration)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `enabled` _boolean_ | Enabled specifies whether to enable audit logging. | false | Optional: \{\} <br /> |
+| `dir` _string_ | Dir specifies the directory to write audit log files into. |  | Optional: \{\} <br /> |
+| `rotation` _[AuditRotation](#auditrotation)_ | Rotation specifies the rotation interval: "daily" (default) or "hourly". | daily | Enum: [daily hourly] <br />Optional: \{\} <br /> |
+| `max_log_files` _integer_ | MaxLogFiles specifies the maximum number of rotated audit log files to keep.<br />Older files are deleted when a new log file is created. Default: 7. | 7 | Minimum: 1 <br />Optional: \{\} <br /> |
+| `trust_forwarded_headers` _boolean_ | TrustForwardedHeaders specifies whether to use X-Forwarded-For header to<br />determine the client address recorded in audit log entries. Only enable<br />this when running behind a trusted reverse proxy or load balancer. | false | Optional: \{\} <br /> |
+
+
+#### AuditRotation
+
+_Underlying type:_ _string_
+
+AuditRotation specifies the rotation interval for audit log files.
+
+_Validation:_
+- Enum: [daily hourly]
+
+_Appears in:_
+- [AuditConfig](#auditconfig)
+
+| Field | Description |
+| --- | --- |
+| `daily` |  |
+| `hourly` |  |
+
+
 
 
 #### ClusterManagerReponse
@@ -948,6 +986,7 @@ _Appears in:_
 | `tls` _[QdrantConfigurationTLS](#qdrantconfigurationtls)_ | TLS specifies the TLS configuration for Qdrant. |  | Optional: \{\} <br /> |
 | `storage` _[StorageConfig](#storageconfig)_ | Storage specifies the storage configuration for Qdrant. |  | Optional: \{\} <br /> |
 | `inference` _[InferenceConfig](#inferenceconfig)_ | Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster. |  | Optional: \{\} <br /> |
+| `audit` _[AuditConfig](#auditconfig)_ | Audit specifies the audit logging configuration for Qdrant. |  | Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationCollection

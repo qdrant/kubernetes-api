@@ -464,6 +464,9 @@ type QdrantConfiguration struct {
 	// Inference configuration. This is used in Qdrant Managed Cloud only. If not set Inference is not available to this cluster.
 	// +optional
 	Inference *InferenceConfig `json:"inference,omitempty"`
+	// Audit specifies the audit logging configuration for Qdrant.
+	// +optional
+	Audit *AuditConfig `json:"audit,omitempty"`
 }
 
 type InferenceConfig struct {
@@ -471,6 +474,42 @@ type InferenceConfig struct {
 	// +kubebuilder:default=false
 	// +optional
 	Enabled bool `json:"enabled"`
+}
+
+// AuditRotation specifies the rotation interval for audit log files.
+// +kubebuilder:validation:Enum=daily;hourly
+type AuditRotation string
+
+const (
+	AuditRotationDaily  AuditRotation = "daily"
+	AuditRotationHourly AuditRotation = "hourly"
+)
+
+// AuditConfig specifies the audit logging configuration for Qdrant.
+type AuditConfig struct {
+	// Enabled specifies whether to enable audit logging.
+	// +kubebuilder:default=false
+	// +optional
+	Enabled bool `json:"enabled"`
+	// Dir specifies the directory to write audit log files into.
+	// +optional
+	Dir *string `json:"dir,omitempty"`
+	// Rotation specifies the rotation interval: "daily" (default) or "hourly".
+	// +kubebuilder:default=daily
+	// +optional
+	Rotation *AuditRotation `json:"rotation,omitempty"`
+	// MaxLogFiles specifies the maximum number of rotated audit log files to keep.
+	// Older files are deleted when a new log file is created. Default: 7.
+	// +kubebuilder:default=7
+	// +kubebuilder:validation:Minimum=1
+	// +optional
+	MaxLogFiles *int64 `json:"max_log_files,omitempty"`
+	// TrustForwardedHeaders specifies whether to use X-Forwarded-For header to
+	// determine the client address recorded in audit log entries. Only enable
+	// this when running behind a trusted reverse proxy or load balancer.
+	// +kubebuilder:default=false
+	// +optional
+	TrustForwardedHeaders bool `json:"trust_forwarded_headers"`
 }
 
 type StorageConfig struct {
