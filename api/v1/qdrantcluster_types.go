@@ -492,6 +492,7 @@ type AuditConfig struct {
 	// +optional
 	Enabled bool `json:"enabled"`
 	// Dir specifies the directory to write audit log files into.
+	// Default is `./storage/audit`
 	// +optional
 	Dir *string `json:"dir,omitempty"`
 	// Rotation specifies the rotation interval: "daily" (default) or "hourly".
@@ -507,7 +508,7 @@ type AuditConfig struct {
 	// TrustForwardedHeaders specifies whether to use X-Forwarded-For header to
 	// determine the client address recorded in audit log entries. Only enable
 	// this when running behind a trusted reverse proxy or load balancer.
-	// +kubebuilder:default=false
+	// Default is false.
 	// +optional
 	TrustForwardedHeaders bool `json:"trust_forwarded_headers"`
 }

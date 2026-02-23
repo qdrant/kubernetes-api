@@ -71,8 +71,9 @@ spec:
                       Qdrant.
                     properties:
                       dir:
-                        description: Dir specifies the directory to write audit log
-                          files into.
+                        description: |-
+                          Dir specifies the directory to write audit log files into.
+                          Default is `./storage/audit`
                         type: string
                       enabled:
                         default: false
@@ -95,11 +96,11 @@ spec:
                         - hourly
                         type: string
                       trust_forwarded_headers:
-                        default: false
                         description: |-
                           TrustForwardedHeaders specifies whether to use X-Forwarded-For header to
                           determine the client address recorded in audit log entries. Only enable
                           this when running behind a trusted reverse proxy or load balancer.
+                          Default is false.
                         type: boolean
                     type: object
                   collection:

@@ -90,10 +90,10 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `enabled` _boolean_ | Enabled specifies whether to enable audit logging. | false | Optional: \{\} <br /> |
-| `dir` _string_ | Dir specifies the directory to write audit log files into. |  | Optional: \{\} <br /> |
+| `dir` _string_ | Dir specifies the directory to write audit log files into.<br />Default is `./storage/audit` |  | Optional: \{\} <br /> |
 | `rotation` _[AuditRotation](#auditrotation)_ | Rotation specifies the rotation interval: "daily" (default) or "hourly". | daily | Enum: [daily hourly] <br />Optional: \{\} <br /> |
 | `max_log_files` _integer_ | MaxLogFiles specifies the maximum number of rotated audit log files to keep.<br />Older files are deleted when a new log file is created. Default: 7. | 7 | Minimum: 1 <br />Optional: \{\} <br /> |
-| `trust_forwarded_headers` _boolean_ | TrustForwardedHeaders specifies whether to use X-Forwarded-For header to<br />determine the client address recorded in audit log entries. Only enable<br />this when running behind a trusted reverse proxy or load balancer. | false | Optional: \{\} <br /> |
+| `trust_forwarded_headers` _boolean_ | TrustForwardedHeaders specifies whether to use X-Forwarded-For header to<br />determine the client address recorded in audit log entries. Only enable<br />this when running behind a trusted reverse proxy or load balancer.<br />Default is false. |  | Optional: \{\} <br /> |
 
 
 #### AuditRotation
