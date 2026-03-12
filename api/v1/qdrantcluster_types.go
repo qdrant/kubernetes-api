@@ -32,6 +32,9 @@ const (
 	// ReinitAnnotationKey is the annotation key to trigger reinitialization of the given cluster.
 	// The annotation value is ignored and can be used to document why reinitialization is requested.
 	ReinitAnnotationKey = "operator.qdrant.com/reinit"
+	// BootstrapNodeAnnotationKey is annotation key to explicitely specify the bootstrap node.
+	// This should be only used when automatically detected bootstrap node is in bad state.
+	BootstrapNodeAnnotationKey = "operator.qdrant.com/bootstrap-node"
 )
 
 // GPUType specifies the type of GPU to use.
