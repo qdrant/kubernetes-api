@@ -32,6 +32,9 @@ const (
 	// ReinitAnnotationKey is the annotation key to trigger reinitialization of the given cluster.
 	// The annotation value is ignored and can be used to document why reinitialization is requested.
 	ReinitAnnotationKey = "operator.qdrant.com/reinit"
+	// BootstrapNodeAnnotationKey is annotation key to explicitely specify the bootstrap node.
+	// This should be only used when automatically detected bootstrap node is in bad state.
+	BootstrapNodeAnnotationKey = "operator.qdrant.com/bootstrap-node"
 )
 
 // GPUType specifies the type of GPU to use.
@@ -913,11 +916,6 @@ type QdrantClusterStatus struct {
 	// If the cluster want to scale-up concurrently (aka the delete is in progress), new nodes are required to accomplish.
 	// +optional
 	DeleteInProgessNodeIndexes []int `json:"deleteInProgressNodeIndexes,omitempty"`
-	// BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
-	// Should be a value from AvailableNodeIndexes.
-	// As default the value from AvailableNodeIndexes[0] will be used.
-	// +optional
-	BootstrapNode int `json:"bootstrapNode,omitempty"`
 	// If set the operator will scale down 1 peer and reset the bool.
 	// If you want to remove more then 1 peer, you need to repeat setting this bool
 	// +optional
