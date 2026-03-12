@@ -1223,12 +1223,6 @@ spec:
                 description: AvailableNodes specifies the number of available nodes
                   in the cluster
                 type: integer
-              bootstrapNode:
-                description: |-
-                  BootstrapNode specifies the node in the cluster which will be used for bootstrapping a new node.
-                  Should be a value from AvailableNodeIndexes.
-                  As default the value from AvailableNodeIndexes[0] will be used.
-                type: integer
               clusterManagerResponse:
                 description: The last response from the cluster-manager manage endpoint
                 properties:
