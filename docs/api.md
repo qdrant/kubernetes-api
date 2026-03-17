@@ -1557,7 +1557,7 @@ _Appears in:_
 | `entryPoints` _string array_ | EntryPoints is the list of traefik entry points to use for the ingress route.<br />If nothing is set, it will take the entryPoints configured in the operator config. |  |  |
 
 
-#### VolumeAttributeClass
+#### VolumeAttributesClass
 
 
 

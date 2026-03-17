@@ -112,9 +112,9 @@ type QdrantCloudRegionStatus struct {
 	// VolumeSnapshotClasses contains the available VolumeSnapshotClasses in the Kubernetes cluster
 	// +optional
 	VolumeSnapshotClasses []VolumeSnapshotClass `json:"volumeSnapshotClasses,omitempty"`
-	// VolumeAttributeClasses contains the available VolumeAttributeClasses in the Kubernetes cluster
+	// VolumeAttributesClasses contains the available VolumeAttributesClasses in the Kubernetes cluster
 	// +optional
-	VolumeAttributeClasses []VolumeAttributeClass `json:"volumeAttributeClasses,omitempty"`
+	VolumeAttributesClasses []VolumeAttributesClass `json:"VolumeAttributesClasses,omitempty"`
 	// NodeInfos contains the information about the nodes in the Kubernetes cluster
 	// +optional
 	NodeInfos []NodeInfo `json:"nodeInfos,omitempty"`
@@ -143,7 +143,7 @@ type VolumeSnapshotClass struct {
 	Driver string `json:"driver"`
 }
 
-type VolumeAttributeClass struct {
+type VolumeAttributesClass struct {
 	// Name specifies the name of the volume atrribute class
 	Name string `json:"name"`
 	// Driver specifies the driver of the volume atrribute class
