@@ -1557,6 +1557,24 @@ _Appears in:_
 | `entryPoints` _string array_ | EntryPoints is the list of traefik entry points to use for the ingress route.<br />If nothing is set, it will take the entryPoints configured in the operator config. |  |  |
 
 
+#### VolumeAttributeClass
+
+
+
+
+
+
+
+_Appears in:_
+- [QdrantCloudRegionStatus](#qdrantcloudregionstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name specifies the name of the volume atrribute class |  |  |
+| `driver` _string_ | Driver specifies the driver of the volume atrribute class |  |  |
+| `parameters` _object (keys:string, values:string)_ | Parameters specifies the parameters of the volume atrribute class |  | Optional: \{\} <br /> |
+
+
 #### VolumeSnapshotClass
 
 

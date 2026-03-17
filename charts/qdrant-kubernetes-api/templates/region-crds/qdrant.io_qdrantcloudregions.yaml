@@ -1913,6 +1913,30 @@ spec:
                   - reclaimPolicy
                   type: object
                 type: array
+              volumeAttributeClasses:
+                description: VolumeAttributeClasses contains the available VolumeAttributeClasses
+                  in the Kubernetes cluster
+                items:
+                  properties:
+                    driver:
+                      description: Driver specifies the driver of the volume atrribute
+                        class
+                      type: string
+                    name:
+                      description: Name specifies the name of the volume atrribute
+                        class
+                      type: string
+                    parameters:
+                      additionalProperties:
+                        type: string
+                      description: Parameters specifies the parameters of the volume
+                        atrribute class
+                      type: object
+                  required:
+                  - driver
+                  - name
+                  type: object
+                type: array
               volumeSnapshotClasses:
                 description: VolumeSnapshotClasses contains the available VolumeSnapshotClasses
                   in the Kubernetes cluster
