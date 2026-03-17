@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/fluxcd/helm-controller/api v1.4.5
-	github.com/fluxcd/source-controller/api v1.8.0
+	github.com/fluxcd/source-controller/api v1.8.1
 	github.com/google/go-cmp v0.7.0
 	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.4.0
 	github.com/onsi/ginkgo/v2 v2.28.1
@@ -28,7 +28,7 @@ require (
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
 	github.com/fluxcd/pkg/apis/acl v0.9.0 // indirect
 	github.com/fluxcd/pkg/apis/kustomize v1.15.0 // indirect
-	github.com/fluxcd/pkg/apis/meta v1.25.0 // indirect
+	github.com/fluxcd/pkg/apis/meta v1.25.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/zapr v1.3.0 // indirect
