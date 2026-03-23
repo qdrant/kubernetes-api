@@ -835,6 +835,16 @@ type Storage struct {
 	// Throughput defines the throughput number in MB/s for the storage PVCs
 	// +optional
 	Throughput *int `json:"throughput,omitempty"`
+	// AdditionalVolumes specifies additional volumes to add to the Qdrant Pods.
+	// +optional
+	AdditionalVolumes []corev1.Volume `json:"additionalVolumes,omitempty"`
+	// AdditionalVolumeClaimTemplates specifies volumeClaimTemplates to create for each Qdrant Pod.
+	// These are added in addition to the default storage and snapshot PVCs created by the operator.
+	// +optional
+	AdditionalVolumeClaimTemplates []corev1.PersistentVolumeClaim `json:"additionalVolumeClaimTemplates,omitempty"`
+	// AdditionalVolumeMounts specifies additional volumeMounts to add to the Qdrant container.
+	// +optional
+	AdditionalVolumeMounts []corev1.VolumeMount `json:"additionalVolumeMounts,omitempty"`
 }
 
 // Validate storage configurations
