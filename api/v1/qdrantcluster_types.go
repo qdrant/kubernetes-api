@@ -212,7 +212,8 @@ type GPU struct {
 	// ParallelIndexes is the number of parallel indexes to run on the GPU.
 	// +kubebuilder:default=1
 	// +kubebuilder:validation:Minimum:=1
-	ParallelIndexes int `json:"parallelIndexes"`
+	// +optional
+	ParallelIndexes int `json:"parallelIndexes,omitempty"`
 	// GroupsCount is the amount of used vulkan "groups" of GPU.
 	// In other words, how many parallel points can be indexed by GPU.
 	// Optimal value might depend on the GPU model.
