@@ -424,7 +424,6 @@ spec:
                 - allowIntegrated
                 - forceHalfPrecision
                 - gpuType
-                - parallelIndexes
                 type: object
               id:
                 description: Id specifies the unique identifier of the cluster
