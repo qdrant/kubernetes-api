@@ -638,6 +638,23 @@ _Appears in:_
 | `creationTimestamp` _string_ | CreationTimestamp specifies the time when the pause request was created. |  |  |
 
 
+#### PersistentVolumeClaimTemplate
+
+
+
+
+
+
+
+_Appears in:_
+- [Storage](#storage)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `metadata` _[TemplateMetadata](#templatemetadata)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[PersistentVolumeClaimSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaimspec-v1-core)_ | spec defines the desired characteristics of a volume requested by a pod author.<br />More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims |  | Optional: \{\} <br /> |
+
+
 #### QdrantCloudRegion
 
 
@@ -1467,7 +1484,7 @@ _Appears in:_
 | `iops` _integer_ | IOPS defines the IOPS number to configure for the storage PVCs |  | Optional: \{\} <br /> |
 | `throughput` _integer_ | Throughput defines the throughput number in MB/s for the storage PVCs |  | Optional: \{\} <br /> |
 | `additionalVolumes` _[Volume](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#volume-v1-core) array_ | AdditionalVolumes specifies additional volumes to add to the Qdrant Pods. |  | Optional: \{\} <br /> |
-| `additionalVolumeClaimTemplates` _[PersistentVolumeClaim](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#persistentvolumeclaim-v1-core) array_ | AdditionalVolumeClaimTemplates specifies volumeClaimTemplates to create for each Qdrant Pod.<br />These are added in addition to the default storage and snapshot PVCs created by the operator. |  | Optional: \{\} <br /> |
+| `additionalVolumeClaimTemplates` _[PersistentVolumeClaimTemplate](#persistentvolumeclaimtemplate) array_ | AdditionalVolumeClaimTemplates specifies volumeClaimTemplates to create for each Qdrant Pod.<br />These are added in addition to the default storage and snapshot PVCs created by the operator. |  | Optional: \{\} <br /> |
 | `additionalVolumeMounts` _[VolumeMount](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#volumemount-v1-core) array_ | AdditionalVolumeMounts specifies additional volumeMounts to add to the Qdrant container. |  | Optional: \{\} <br /> |
 
 
@@ -1541,6 +1558,24 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `optimizer_cpu_budget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  | Optional: \{\} <br /> |
 | `async_scorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  | Optional: \{\} <br /> |
+
+
+#### TemplateMetadata
+
+
+
+
+
+
+
+_Appears in:_
+- [PersistentVolumeClaimTemplate](#persistentvolumeclaimtemplate)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name must be unique within a namespace. Is required when creating resources, although<br />some resources may allow a client to request the generation of an appropriate name<br />automatically. Name is primarily intended for creation idempotence and configuration<br />definition.<br />Cannot be updated.<br />More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names |  | Optional: \{\} <br /> |
+| `labels` _object (keys:string, values:string)_ | Map of string keys and values that can be used to organize and categorize<br />(scope and select) objects. May match selectors of replication controllers<br />and services.<br />More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels |  | Optional: \{\} <br /> |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be<br />set by external tools to store and retrieve arbitrary metadata. They are not<br />queryable and should be preserved when modifying objects.<br />More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations |  | Optional: \{\} <br /> |
 
 
 #### TraefikConfig

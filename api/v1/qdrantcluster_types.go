@@ -842,10 +842,42 @@ type Storage struct {
 	// AdditionalVolumeClaimTemplates specifies volumeClaimTemplates to create for each Qdrant Pod.
 	// These are added in addition to the default storage and snapshot PVCs created by the operator.
 	// +optional
-	AdditionalVolumeClaimTemplates []corev1.PersistentVolumeClaim `json:"additionalVolumeClaimTemplates,omitempty"`
+	AdditionalVolumeClaimTemplates []PersistentVolumeClaimTemplate `json:"additionalVolumeClaimTemplates,omitempty"`
 	// AdditionalVolumeMounts specifies additional volumeMounts to add to the Qdrant container.
 	// +optional
 	AdditionalVolumeMounts []corev1.VolumeMount `json:"additionalVolumeMounts,omitempty"`
+}
+
+type PersistentVolumeClaimTemplate struct {
+	Metadata TemplateMetadata `json:"metadata,omitempty"`
+
+	// spec defines the desired characteristics of a volume requested by a pod author.
+	// More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
+	// +optional
+	Spec corev1.PersistentVolumeClaimSpec `json:"spec,omitempty"`
+}
+
+type TemplateMetadata struct {
+	// Name must be unique within a namespace. Is required when creating resources, although
+	// some resources may allow a client to request the generation of an appropriate name
+	// automatically. Name is primarily intended for creation idempotence and configuration
+	// definition.
+	// Cannot be updated.
+	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
+	// +optional
+	Name string `json:"name,omitempty" protobuf:"bytes,1,opt,name=name"`
+	// Map of string keys and values that can be used to organize and categorize
+	// (scope and select) objects. May match selectors of replication controllers
+	// and services.
+	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels
+	// +optional
+	Labels map[string]string `json:"labels,omitempty" protobuf:"bytes,11,rep,name=labels"`
+	// Annotations is an unstructured key value map stored with a resource that may be
+	// set by external tools to store and retrieve arbitrary metadata. They are not
+	// queryable and should be preserved when modifying objects.
+	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
+	// +optional
+	Annotations map[string]string `json:"annotations,omitempty" protobuf:"bytes,12,rep,name=annotations"`
 }
 
 // Validate storage configurations
