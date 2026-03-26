@@ -982,6 +982,9 @@ type QdrantClusterStatus struct {
 	// The last response from the cluster-manager manage endpoint
 	// +optional
 	ClusterManagerReponse *ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
+	// Selector contains the labels to select the pods (added for PodDisruptionBudget)
+	// +optional
+	Selector string `json:"selector,omitempty"`
 }
 
 type ClusterManagerReponse struct {
@@ -1098,6 +1101,7 @@ type NodePVCStatus struct {
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
 // +kubebuilder:subresource:status
+// +kubebuilder:subresource:scale:specpath=.spec.size,statuspath=.status.availableNodes,selectorpath=.status.selector
 
 // QdrantCluster is the Schema for the qdrantclusters API
 type QdrantCluster struct {

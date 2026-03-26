@@ -4280,6 +4280,10 @@ spec:
                   If set the operator will scale down 1 peer and reset the bool.
                   If you want to remove more then 1 peer, you need to repeat setting this bool
                 type: boolean
+              selector:
+                description: Selector contains the labels to select the pods (added
+                  for PodDisruptionBudget)
+                type: string
               version:
                 description: |-
                   The version (to be) used in the cluster.
@@ -4291,5 +4295,9 @@ spec:
     served: true
     storage: true
     subresources:
+      scale:
+        labelSelectorPath: .status.selector
+        specReplicasPath: .spec.size
+        statusReplicasPath: .status.availableNodes
       status: {}
 {{ end }}
