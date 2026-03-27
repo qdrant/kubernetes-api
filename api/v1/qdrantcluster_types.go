@@ -985,6 +985,9 @@ type QdrantClusterStatus struct {
 	// CurrentNodes contains the count of existing nodes (used as replicas for PDB)
 	// +optional
 	CurrentNodes int `json:"currentNodes,omitempty"`
+	// Selector is the label query to find the pods (used as status for PDB)
+	// +optional
+	Selector string `json:"selector,omitempty"`
 }
 
 type ClusterManagerReponse struct {
