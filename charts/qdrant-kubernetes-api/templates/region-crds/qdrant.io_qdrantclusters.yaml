@@ -3505,6 +3505,10 @@ spec:
                   - type
                   type: object
                 type: array
+              currentNodes:
+                description: CurrentNodes contains the count of existing nodes (used
+                  as replicas for PDB)
+                type: integer
               deleteInProgressNodeIndexes:
                 description: |-
                   DeleteInProgessNodeIndexes specifies the indexes of the nodes in the cluster which are in progress of deleting and required to be deleted.
