@@ -982,12 +982,12 @@ type QdrantClusterStatus struct {
 	// The last response from the cluster-manager manage endpoint
 	// +optional
 	ClusterManagerReponse *ClusterManagerReponse `json:"clusterManagerResponse,omitempty"`
-	// CurrentNodes contains the count of existing nodes (used as replicas for PDB)
+	// CurrentNodes contains the count of existing nodes (used as replicas for PodDisruptionBudget)
 	// +optional
-	CurrentNodes int `json:"currentNodes,omitempty"`
-	// Selector is the label query to find the pods (used as status for PDB)
+	CurrentNodes *int `json:"currentNodes,omitempty"`
+	// Selector is the label query to find the pods (used as status for PodDisruptionBudget)
 	// +optional
-	Selector string `json:"selector,omitempty"`
+	Selector *string `json:"selector,omitempty"`
 }
 
 type ClusterManagerReponse struct {

@@ -3506,7 +3506,7 @@ spec:
                 type: array
               currentNodes:
                 description: CurrentNodes contains the count of existing nodes (used
-                  as replicas for PDB)
+                  as replicas for PodDisruptionBudget)
                 type: integer
               deleteInProgressNodeIndexes:
                 description: |-
@@ -4285,7 +4285,7 @@ spec:
                 type: boolean
               selector:
                 description: Selector is the label query to find the pods (used as
-                  status for PDB)
+                  status for PodDisruptionBudget)
                 type: string
               version:
                 description: |-
