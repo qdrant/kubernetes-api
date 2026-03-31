@@ -3505,6 +3505,10 @@ spec:
                   - type
                   type: object
                 type: array
+              currentNodes:
+                description: CurrentNodes contains the count of existing nodes (used
+                  as replicas for PodDisruptionBudget)
+                type: integer
               deleteInProgressNodeIndexes:
                 description: |-
                   DeleteInProgessNodeIndexes specifies the indexes of the nodes in the cluster which are in progress of deleting and required to be deleted.
@@ -4280,6 +4284,10 @@ spec:
                   If set the operator will scale down 1 peer and reset the bool.
                   If you want to remove more then 1 peer, you need to repeat setting this bool
                 type: boolean
+              selector:
+                description: Selector is the label query to find the pods (used as
+                  status for PodDisruptionBudget)
+                type: string
               version:
                 description: |-
                   The version (to be) used in the cluster.
