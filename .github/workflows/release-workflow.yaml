@@ -18,7 +18,7 @@ jobs:
       id-token: write  # needed for cosign keyless signing with OIDC
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Extract build info
         id: extract_build_info
@@ -27,10 +27,10 @@ jobs:
           echo "commit_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v4.1.0
+        uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 # v4.1.0
 
       - name: Login to registry.cloud.qdrant.io
-        uses: docker/login-action@v4
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
         with:
           registry: registry.cloud.qdrant.io
           username: ${{ secrets.HARBOR_USERNAME }}
@@ -48,7 +48,7 @@ jobs:
           git push origin ${{ steps.extract_build_info.outputs.tag }}
 
       - name: Publish Release Notes
-        uses: release-drafter/release-drafter@v7
+        uses: release-drafter/release-drafter@139054aeaa9adc52ab36ddf67437541f039b88e2 # v7.1.1
         with:
           disable-autolabeler: true
           commitish: ${{ github.ref }}

@@ -14,9 +14,9 @@ jobs:
     timeout-minutes: 10 # Sets a timeout of 10 minutes for this job (default is 1 minute)
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6.3.0
         with:
           go-version: '^1.25'
           cache: false
@@ -40,7 +40,7 @@ jobs:
           files=$(gofmt -l .) && echo $files && [ -z "$files" ]
 
       - name: Golang CI Lint
-        uses: golangci/golangci-lint-action@v9
+        uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9.2.0
         with:
           version: v2.10.1 # Specify the golangci-lint version, so we are stable
 
@@ -49,7 +49,7 @@ jobs:
           make gen
 
       - name: Ensure that make gen did not result in changes
-        uses: CatChen/check-git-status-action@v2
+        uses: CatChen/check-git-status-action@cc5a79733c441f67cd0cd076de116cd2eebcebfe # v2.1.3
         with:
           fail-if-not-clean: true
 
