@@ -85,7 +85,7 @@ spec:
                 type: boolean
               fqdn:
                 description: |-
-                  The fully qualified domain name (also know as host)
+                  The fully qualified domain name (also know as host).
                   For shared routing this will be used for SNI resolving.
                 type: string
               nodeIndexes:

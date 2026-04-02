@@ -29,7 +29,7 @@ type QdrantClusterRouting struct {
 type QdrantClusterRoutingSpec struct {
 	// ClusterId specifies the unique identifier of the cluster.
 	ClusterId string `json:"clusterId"`
-	// The fully qualified domain name (also know as host)
+	// The fully qualified domain name (also know as host).
 	// For shared routing this will be used for SNI resolving.
 	FQDN string `json:"fqdn"`
 	// Enabled specifies whether to enable ingress for the cluster or not.
