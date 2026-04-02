@@ -68,9 +68,7 @@ spec:
                   type: string
                 type: array
               clusterId:
-                description: |-
-                  ClusterId specifies the unique identifier of the cluster.
-                  For shared routing this Id will be used for SNI resolving.
+                description: ClusterId specifies the unique identifier of the cluster.
                 type: string
               dedicated:
                 description: |-
@@ -85,6 +83,11 @@ spec:
                 description: Enabled specifies whether to enable ingress for the cluster
                   or not.
                 type: boolean
+              fqdn:
+                description: |-
+                  The fully qualified domain name (also know as host)
+                  For shared routing this will be used for SNI resolving.
+                type: string
               nodeIndexes:
                 description: NodeIndexes specifies the indexes of the individual nodes
                   in the cluster.
@@ -107,6 +110,7 @@ spec:
                 type: boolean
             required:
             - clusterId
+            - fqdn
             type: object
           status:
             description: QdrantClusterRoutingStatus defines the observed state of

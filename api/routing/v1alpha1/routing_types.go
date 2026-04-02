@@ -28,8 +28,10 @@ type QdrantClusterRouting struct {
 // QdrantClusterRoutingSpec describes the configuration for routing towards Qdrant clusters.
 type QdrantClusterRoutingSpec struct {
 	// ClusterId specifies the unique identifier of the cluster.
-	// For shared routing this Id will be used for SNI resolving.
 	ClusterId string `json:"clusterId"`
+	// The fully qualified domain name (also know as host)
+	// For shared routing this will be used for SNI resolving.
+	FQDN string `json:"fqdn"`
 	// Enabled specifies whether to enable ingress for the cluster or not.
 	// +kubebuilder:default=true
 	// +optional

@@ -1730,7 +1730,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `clusterId` _string_ | ClusterId specifies the unique identifier of the cluster.<br />For shared routing this Id will be used for SNI resolving. |  |  |
+| `clusterId` _string_ | ClusterId specifies the unique identifier of the cluster. |  |  |
+| `fqdn` _string_ | The fully qualified domain name (also know as host)<br />For shared routing this will be used for SNI resolving. |  |  |
 | `enabled` _boolean_ | Enabled specifies whether to enable ingress for the cluster or not. | true | Optional: \{\} <br /> |
 | `shared` _boolean_ | Set if the cluster uses (at least one) shared loadbalancer.<br />Note that this doesn't mean it doesn't have a dedicated loadbalancer as well (e.g. during a migration from one to the other). |  | Optional: \{\} <br /> |
 | `dedicated` _boolean_ | Set if the cluster uses (at least one) dedicated loadbalancer.<br />Note that this doesn't mean it doesn't have a shared loadbalancer as well (e.g. during a migration from one to the other). |  | Optional: \{\} <br /> |
