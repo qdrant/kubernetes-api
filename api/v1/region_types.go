@@ -114,7 +114,7 @@ type QdrantCloudRegionStatus struct {
 	VolumeSnapshotClasses []VolumeSnapshotClass `json:"volumeSnapshotClasses,omitempty"`
 	// VolumeAttributesClasses contains the available VolumeAttributesClasses in the Kubernetes cluster
 	// +optional
-	VolumeAttributesClasses []VolumeAttributesClass `json:"VolumeAttributesClasses,omitempty"`
+	VolumeAttributesClasses []VolumeAttributesClass `json:"volumeAttributesClasses,omitempty"`
 	// NodeInfos contains the information about the nodes in the Kubernetes cluster
 	// +optional
 	NodeInfos []NodeInfo `json:"nodeInfos,omitempty"`
