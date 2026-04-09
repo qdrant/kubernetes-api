@@ -1709,30 +1709,6 @@ spec:
             type: object
           status:
             properties:
-              VolumeAttributesClasses:
-                description: VolumeAttributesClasses contains the available VolumeAttributesClasses
-                  in the Kubernetes cluster
-                items:
-                  properties:
-                    driver:
-                      description: Driver specifies the driver of the volume atrribute
-                        class
-                      type: string
-                    name:
-                      description: Name specifies the name of the volume atrribute
-                        class
-                      type: string
-                    parameters:
-                      additionalProperties:
-                        type: string
-                      description: Parameters specifies the parameters of the volume
-                        atrribute class
-                      type: object
-                  required:
-                  - driver
-                  - name
-                  type: object
-                type: array
               capabilities:
                 description: Capabilities specifies the capabilities of the Kubernetes
                   cluster
@@ -1934,6 +1910,30 @@ spec:
                   - name
                   - provisioner
                   - reclaimPolicy
+                  type: object
+                type: array
+              volumeAttributesClasses:
+                description: VolumeAttributesClasses contains the available VolumeAttributesClasses
+                  in the Kubernetes cluster
+                items:
+                  properties:
+                    driver:
+                      description: Driver specifies the driver of the volume atrribute
+                        class
+                      type: string
+                    name:
+                      description: Name specifies the name of the volume atrribute
+                        class
+                      type: string
+                    parameters:
+                      additionalProperties:
+                        type: string
+                      description: Parameters specifies the parameters of the volume
+                        atrribute class
+                      type: object
+                  required:
+                  - driver
+                  - name
                   type: object
                 type: array
               volumeSnapshotClasses:
