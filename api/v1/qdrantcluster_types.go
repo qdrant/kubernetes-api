@@ -1104,6 +1104,7 @@ type NodePVCStatus struct {
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
 // +kubebuilder:subresource:status
+// +kubebuilder:subresource:scale:specpath=.status.availableNodes,statuspath=.status.currentNodes,selectorpath=.status.selector
 
 // QdrantCluster is the Schema for the qdrantclusters API
 type QdrantCluster struct {
