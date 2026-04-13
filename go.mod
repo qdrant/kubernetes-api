@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/fluxcd/helm-controller/api v1.4.5
-	github.com/fluxcd/source-controller/api v1.8.1
+	github.com/fluxcd/source-controller/api v1.8.2
 	github.com/google/go-cmp v0.7.0
 	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.4.0
 	github.com/onsi/ginkgo/v2 v2.28.1
