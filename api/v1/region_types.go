@@ -90,6 +90,7 @@ type QdrantCloudRegionStatus struct {
 	NumberOfNodes int `json:"numberOfNodes,omitempty"`
 	// Capabilities specifies the capabilities of the Kubernetes cluster
 	// +optional
+	// Deprecated: We calculate capabilities dynamically from availble storageclasess and volumesnapshotclasses
 	Capabilities *RegionCapabilities `json:"capabilities,omitempty"`
 	// HelmRepositories specifies the status of the helm repositories
 	// +optional
