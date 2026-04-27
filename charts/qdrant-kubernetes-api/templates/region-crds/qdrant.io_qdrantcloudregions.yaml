@@ -1711,8 +1711,9 @@ spec:
           status:
             properties:
               capabilities:
-                description: Capabilities specifies the capabilities of the Kubernetes
-                  cluster
+                description: |-
+                  Capabilities specifies the capabilities of the Kubernetes cluster
+                  Deprecated: We calculate capabilities dynamically from availble storageclasess and volumesnapshotclasses
                 properties:
                   volumeExpansion:
                     description: VolumeExpansion specifies whether the Kubernetes
