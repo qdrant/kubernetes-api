@@ -1673,6 +1673,7 @@ _Appears in:_
 Package v1alpha1 contains API Schema definitions for the routing.qdrant.io v1alpha1 API group
 
 ### Resource Types
+- [EnvoyBootstrapConfig](#envoybootstrapconfig)
 - [QdrantClusterRouting](#qdrantclusterrouting)
 
 
@@ -1694,6 +1695,50 @@ _Appears in:_
 | `shared` _boolean_ | Set if the route uses a shared loadbalancer. |  |  |
 | `dedicated` _boolean_ | Set if the route uses a dedicated loadbalancer. |  |  |
 | `bootstrapped` _boolean_ | Set to true if routing of the Qdrant cluster has been bootstrapped once for this specific route. |  |  |
+
+
+#### EnvoyBootstrapConfig
+
+
+
+EnvoyBootstrapConfig is the Schema for the envoybootstrapconfigs API.
+It declares the desired state for an Envoy bootstrap configuration.
+The route-manager reconciler watches these resources and produces a
+ConfigMap (rendered bootstrap JSON) and a Secret (access token) in the
+same namespace.
+
+
+
+_Appears in:_
+- [EnvoyBootstrapConfigList](#envoybootstrapconfiglist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `routing.qdrant.io/v1alpha1` | | |
+| `kind` _string_ | `EnvoyBootstrapConfig` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  | Optional: \{\} <br /> |
+| `spec` _[EnvoyBootstrapConfigSpec](#envoybootstrapconfigspec)_ |  |  |  |
+
+
+
+
+#### EnvoyBootstrapConfigSpec
+
+
+
+EnvoyBootstrapConfigSpec describes the desired Envoy bootstrap configuration.
+
+
+
+_Appears in:_
+- [EnvoyBootstrapConfig](#envoybootstrapconfig)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `clusterID` _string_ | ClusterID identifies the Qdrant cluster this Envoy instance serves.<br />When set the Envoy runs in dedicated mode for this cluster.<br />When nil it runs in shared mode. |  | Optional: \{\} <br /> |
+| `proxyProtocolEnabled` _boolean_ | ProxyProtocolEnabled enables the PROXY protocol on Envoy listeners. | false | Optional: \{\} <br /> |
+
+
 
 
 #### QdrantClusterRouting
