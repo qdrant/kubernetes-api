@@ -7,7 +7,7 @@ require (
 	github.com/fluxcd/source-controller/api v1.8.3
 	github.com/google/go-cmp v0.7.0
 	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.4.0
-	github.com/onsi/ginkgo/v2 v2.28.1
+	github.com/onsi/ginkgo/v2 v2.28.2
 	github.com/onsi/gomega v1.39.1
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/protobuf v1.36.11
