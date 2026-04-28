@@ -3,7 +3,7 @@ module github.com/qdrant/kubernetes-api
 go 1.25.0
 
 require (
-	github.com/fluxcd/helm-controller/api v1.4.5
+	github.com/fluxcd/helm-controller/api v1.5.4
 	github.com/fluxcd/source-controller/api v1.8.3
 	github.com/google/go-cmp v0.7.0
 	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.4.0
@@ -27,7 +27,7 @@ require (
 	github.com/emicklei/go-restful/v3 v3.13.0 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
 	github.com/fluxcd/pkg/apis/acl v0.9.0 // indirect
-	github.com/fluxcd/pkg/apis/kustomize v1.15.0 // indirect
+	github.com/fluxcd/pkg/apis/kustomize v1.15.1 // indirect
 	github.com/fluxcd/pkg/apis/meta v1.25.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
