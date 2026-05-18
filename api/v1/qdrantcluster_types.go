@@ -120,6 +120,10 @@ type QdrantClusterSpec struct {
 	// StorageClassNames specifies the storage class names for db and snapshots.
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
+	// VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
+	// VolumeSnapshot resources for this cluster's backups.
+	// +optional
+	VolumeSnapshotClassName *string `json:"volumeSnapshotClassName,omitempty"`
 	// Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied.
 	// +optional
 	Storage *Storage `json:"storage,omitempty"`
@@ -824,6 +828,14 @@ func (n *StorageClassNames) GetSnapshots() *string {
 		return nil
 	}
 	return n.Snapshots
+}
+
+// GetVolumeSnapshotClassName returns the VolumeSnapshotClass name used for this cluster's backups.
+func (s *QdrantClusterSpec) GetVolumeSnapshotClassName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.VolumeSnapshotClassName
 }
 
 type Storage struct {

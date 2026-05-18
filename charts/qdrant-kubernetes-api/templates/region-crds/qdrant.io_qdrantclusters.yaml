@@ -3401,6 +3401,11 @@ spec:
               version:
                 description: Version specifies the version of Qdrant to deploy
                 type: string
+              volumeSnapshotClassName:
+                description: |-
+                  VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
+                  VolumeSnapshot resources for this cluster's backups.
+                type: string
               writeCluster:
                 description: WriteCluster specifies the write cluster for this cluster.
                   This configures the NetworkPolicy to allow egress to the write cluster.
