@@ -972,7 +972,6 @@ _Appears in:_
 | `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  | Optional: \{\} <br /> |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  | Optional: \{\} <br /> |
 | `storageClassNames` _[StorageClassNames](#storageclassnames)_ | StorageClassNames specifies the storage class names for db and snapshots. |  | Optional: \{\} <br /> |
-| `volumeSnapshotClassName` _string_ | VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating<br />VolumeSnapshot resources for this cluster's backups. |  | Optional: \{\} <br /> |
 | `storage` _[Storage](#storage)_ | Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied. |  | Optional: \{\} <br /> |
 | `topologySpreadConstraints` _[TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#topologyspreadconstraint-v1-core)_ | TopologySpreadConstraints specifies the topology spread constraints for the cluster. |  | Optional: \{\} <br /> |
 | `podDisruptionBudget` _[PodDisruptionBudgetSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#poddisruptionbudgetspec-v1-policy)_ | PodDisruptionBudget specifies the pod disruption budget for the cluster. |  | Optional: \{\} <br /> |
@@ -1482,6 +1481,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `volumeAttributesClassName` _string_ | VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs |  | Optional: \{\} <br /> |
+| `volumeSnapshotClassName` _string_ | VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating<br />VolumeSnapshot resources for this cluster's backups. |  | Optional: \{\} <br /> |
 | `iops` _integer_ | IOPS defines the IOPS number to configure for the storage PVCs |  | Optional: \{\} <br /> |
 | `throughput` _integer_ | Throughput defines the throughput number in MB/s for the storage PVCs |  | Optional: \{\} <br /> |
 | `additionalVolumes` _[Volume](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#volume-v1-core) array_ | AdditionalVolumes specifies additional volumes to add to the Qdrant Pods. |  | Optional: \{\} <br /> |

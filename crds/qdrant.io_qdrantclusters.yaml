@@ -3162,6 +3162,11 @@ spec:
                     description: VolumeAttributesClassName specifies VolumeAttributeClass
                       name to use for the storage PVCs
                     type: string
+                  volumeSnapshotClassName:
+                    description: |-
+                      VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
+                      VolumeSnapshot resources for this cluster's backups.
+                    type: string
                 type: object
               storageClassNames:
                 description: StorageClassNames specifies the storage class names for
@@ -3399,11 +3404,6 @@ spec:
                 type: array
               version:
                 description: Version specifies the version of Qdrant to deploy
-                type: string
-              volumeSnapshotClassName:
-                description: |-
-                  VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
-                  VolumeSnapshot resources for this cluster's backups.
                 type: string
               writeCluster:
                 description: WriteCluster specifies the write cluster for this cluster.

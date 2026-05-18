@@ -1114,11 +1114,6 @@ func (in *QdrantClusterSpec) DeepCopyInto(out *QdrantClusterSpec) {
 		*out = new(StorageClassNames)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.VolumeSnapshotClassName != nil {
-		in, out := &in.VolumeSnapshotClassName, &out.VolumeSnapshotClassName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Storage != nil {
 		in, out := &in.Storage, &out.Storage
 		*out = new(Storage)
@@ -1806,6 +1801,11 @@ func (in *Storage) DeepCopyInto(out *Storage) {
 	*out = *in
 	if in.VolumeAttributesClassName != nil {
 		in, out := &in.VolumeAttributesClassName, &out.VolumeAttributesClassName
+		*out = new(string)
+		**out = **in
+	}
+	if in.VolumeSnapshotClassName != nil {
+		in, out := &in.VolumeSnapshotClassName, &out.VolumeSnapshotClassName
 		*out = new(string)
 		**out = **in
 	}

@@ -120,10 +120,6 @@ type QdrantClusterSpec struct {
 	// StorageClassNames specifies the storage class names for db and snapshots.
 	// +optional
 	StorageClassNames *StorageClassNames `json:"storageClassNames,omitempty"`
-	// VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
-	// VolumeSnapshot resources for this cluster's backups.
-	// +optional
-	VolumeSnapshotClassName *string `json:"volumeSnapshotClassName,omitempty"`
 	// Storage specifies the storage specification for the PVCs of the cluster. If the field is not set, no configuration will be applied.
 	// +optional
 	Storage *Storage `json:"storage,omitempty"`
@@ -832,16 +828,20 @@ func (n *StorageClassNames) GetSnapshots() *string {
 
 // GetVolumeSnapshotClassName returns the VolumeSnapshotClass name used for this cluster's backups.
 func (s *QdrantClusterSpec) GetVolumeSnapshotClassName() *string {
-	if s == nil {
+	if s == nil || s.Storage == nil {
 		return nil
 	}
-	return s.VolumeSnapshotClassName
+	return s.Storage.GetVolumeSnapshotClassName()
 }
 
 type Storage struct {
 	// VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs
 	// +optional
 	VolumeAttributesClassName *string `json:"volumeAttributesClassName,omitempty"`
+	// VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
+	// VolumeSnapshot resources for this cluster's backups.
+	// +optional
+	VolumeSnapshotClassName *string `json:"volumeSnapshotClassName,omitempty"`
 	// IOPS defines the IOPS number to configure for the storage PVCs
 	// +optional
 	IOPS *int `json:"iops,omitempty"`
@@ -858,6 +858,14 @@ type Storage struct {
 	// AdditionalVolumeMounts specifies additional volumeMounts to add to the Qdrant container.
 	// +optional
 	AdditionalVolumeMounts []corev1.VolumeMount `json:"additionalVolumeMounts,omitempty"`
+}
+
+// GetVolumeSnapshotClassName returns the VolumeSnapshotClass name used for this cluster's backups.
+func (s *Storage) GetVolumeSnapshotClassName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.VolumeSnapshotClassName
 }
 
 type PersistentVolumeClaimTemplate struct {
