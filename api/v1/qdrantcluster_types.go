@@ -826,14 +826,6 @@ func (n *StorageClassNames) GetSnapshots() *string {
 	return n.Snapshots
 }
 
-// GetVolumeSnapshotClassName returns the VolumeSnapshotClass name used for this cluster's backups.
-func (s *QdrantClusterSpec) GetVolumeSnapshotClassName() *string {
-	if s == nil || s.Storage == nil {
-		return nil
-	}
-	return s.Storage.GetVolumeSnapshotClassName()
-}
-
 type Storage struct {
 	// VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs
 	// +optional
