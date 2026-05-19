@@ -3162,6 +3162,11 @@ spec:
                     description: VolumeAttributesClassName specifies VolumeAttributeClass
                       name to use for the storage PVCs
                     type: string
+                  volumeSnapshotClassName:
+                    description: |-
+                      VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
+                      VolumeSnapshot resources for this cluster's backups.
+                    type: string
                 type: object
               storageClassNames:
                 description: StorageClassNames specifies the storage class names for

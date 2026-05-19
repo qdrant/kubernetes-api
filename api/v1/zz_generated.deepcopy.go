@@ -1804,6 +1804,11 @@ func (in *Storage) DeepCopyInto(out *Storage) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VolumeSnapshotClassName != nil {
+		in, out := &in.VolumeSnapshotClassName, &out.VolumeSnapshotClassName
+		*out = new(string)
+		**out = **in
+	}
 	if in.IOPS != nil {
 		in, out := &in.IOPS, &out.IOPS
 		*out = new(int)

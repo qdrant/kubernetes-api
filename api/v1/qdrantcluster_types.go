@@ -830,6 +830,10 @@ type Storage struct {
 	// VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs
 	// +optional
 	VolumeAttributesClassName *string `json:"volumeAttributesClassName,omitempty"`
+	// VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating
+	// VolumeSnapshot resources for this cluster's backups.
+	// +optional
+	VolumeSnapshotClassName *string `json:"volumeSnapshotClassName,omitempty"`
 	// IOPS defines the IOPS number to configure for the storage PVCs
 	// +optional
 	IOPS *int `json:"iops,omitempty"`
@@ -846,6 +850,14 @@ type Storage struct {
 	// AdditionalVolumeMounts specifies additional volumeMounts to add to the Qdrant container.
 	// +optional
 	AdditionalVolumeMounts []corev1.VolumeMount `json:"additionalVolumeMounts,omitempty"`
+}
+
+// GetVolumeSnapshotClassName returns the VolumeSnapshotClass name used for this cluster's backups.
+func (s *Storage) GetVolumeSnapshotClassName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.VolumeSnapshotClassName
 }
 
 type PersistentVolumeClaimTemplate struct {

@@ -1481,6 +1481,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `volumeAttributesClassName` _string_ | VolumeAttributesClassName specifies VolumeAttributeClass name to use for the storage PVCs |  | Optional: \{\} <br /> |
+| `volumeSnapshotClassName` _string_ | VolumeSnapshotClassName specifies the VolumeSnapshotClass used when creating<br />VolumeSnapshot resources for this cluster's backups. |  | Optional: \{\} <br /> |
 | `iops` _integer_ | IOPS defines the IOPS number to configure for the storage PVCs |  | Optional: \{\} <br /> |
 | `throughput` _integer_ | Throughput defines the throughput number in MB/s for the storage PVCs |  | Optional: \{\} <br /> |
 | `additionalVolumes` _[Volume](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#volume-v1-core) array_ | AdditionalVolumes specifies additional volumes to add to the Qdrant Pods. |  | Optional: \{\} <br /> |
