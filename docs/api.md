@@ -980,6 +980,7 @@ _Appears in:_
 | `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size] <br />Optional: \{\} <br /> |
 | `readClusters` _[ReadCluster](#readcluster) array_ | ReadClusters specifies the read clusters for this cluster to synchronize.<br />Cluster-manager needs to be enabled for this feature to work. |  | Optional: \{\} <br /> |
 | `writeCluster` _[WriteCluster](#writecluster)_ | WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster. |  | Optional: \{\} <br /> |
+| `multiAZ` _boolean_ | MultiAZ indicates that this cluster spans multiple availability zones<br />and traffic should be kept same-zone where possible. When true, the<br />operator propagates the flag to the generated QdrantClusterRouting so<br />the route-manager enables zone-aware load balancing on the Envoy<br />clusters that front this Qdrant cluster. | false | Optional: \{\} <br /> |
 
 
 
@@ -1738,6 +1739,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `clusterID` _string_ | ClusterID identifies the Qdrant cluster this Envoy instance serves.<br />When set the Envoy runs in dedicated mode for this cluster.<br />When nil it runs in shared mode. |  | Optional: \{\} <br /> |
 | `proxyProtocolEnabled` _boolean_ | ProxyProtocolEnabled enables the PROXY protocol on Envoy listeners. | false | Optional: \{\} <br /> |
+| `multiAZ` _boolean_ | MultiAZ marks this Envoy fleet as the multi-AZ load balancer. When true,<br />the route-manager advertises this fact to Envoy via node metadata so that<br />zone-aware routing decisions can be made per-cluster via<br />QdrantClusterRouting.spec.multiAZ. | false | Optional: \{\} <br /> |
 
 
 
@@ -1786,6 +1788,7 @@ _Appears in:_
 | `nodeIndexes` _integer array_ | NodeIndexes specifies the indexes of the individual nodes in the cluster. |  |  |
 | `allowedSourceRanges` _string array_ | AllowedSourceRanges specifies the allowed CIDR source ranges for the ingress. |  | Optional: \{\} <br /> |
 | `enableAccessLog` _boolean_ | If true enable (proxy) access log for this qdrant cluster. |  | Optional: \{\} <br /> |
+| `multiAZ` _boolean_ | MultiAZ is true when the Qdrant cluster spans multiple availability<br />zones and traffic should be kept same-zone where possible. | false | Optional: \{\} <br /> |
 
 
 
