@@ -42,6 +42,13 @@ type EnvoyBootstrapConfigSpec struct {
 	// +kubebuilder:default=false
 	// +optional
 	ProxyProtocolEnabled bool `json:"proxyProtocolEnabled,omitempty"`
+	// MultiAZ marks this Envoy fleet as the multi-AZ load balancer. When true,
+	// the route-manager advertises this fact to Envoy via node metadata so that
+	// zone-aware routing decisions can be made per-cluster via
+	// QdrantClusterRouting.spec.multiAZ.
+	// +kubebuilder:default=false
+	// +optional
+	MultiAZ bool `json:"multiAZ,omitempty"`
 }
 
 // EnvoyBootstrapConfigStatus defines the observed state of EnvoyBootstrapConfig.

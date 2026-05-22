@@ -65,6 +65,14 @@ spec:
                   When set the Envoy runs in dedicated mode for this cluster.
                   When nil it runs in shared mode.
                 type: string
+              multiAZ:
+                default: false
+                description: |-
+                  MultiAZ marks this Envoy fleet as the multi-AZ load balancer. When true,
+                  the route-manager advertises this fact to Envoy via node metadata so that
+                  zone-aware routing decisions can be made per-cluster via
+                  QdrantClusterRouting.spec.multiAZ.
+                type: boolean
               proxyProtocolEnabled:
                 default: false
                 description: ProxyProtocolEnabled enables the PROXY protocol on Envoy

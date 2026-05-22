@@ -153,6 +153,14 @@ type QdrantClusterSpec struct {
 	// WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster.
 	// +optional
 	WriteCluster *WriteCluster `json:"writeCluster,omitempty"`
+	// MultiAZ indicates that this cluster spans multiple availability zones
+	// and traffic should be kept same-zone where possible. When true, the
+	// operator propagates the flag to the generated QdrantClusterRouting so
+	// the route-manager enables zone-aware load balancing on the Envoy
+	// clusters that front this Qdrant cluster.
+	// +kubebuilder:default=false
+	// +optional
+	MultiAZ bool `json:"multiAZ,omitempty"`
 }
 
 // Validate if there are incorrect settings in the CRD

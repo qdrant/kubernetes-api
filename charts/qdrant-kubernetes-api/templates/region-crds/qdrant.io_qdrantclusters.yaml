@@ -510,6 +510,15 @@ spec:
                         type: array
                     type: object
                 type: object
+              multiAZ:
+                default: false
+                description: |-
+                  MultiAZ indicates that this cluster spans multiple availability zones
+                  and traffic should be kept same-zone where possible. When true, the
+                  operator propagates the flag to the generated QdrantClusterRouting so
+                  the route-manager enables zone-aware load balancing on the Envoy
+                  clusters that front this Qdrant cluster.
+                type: boolean
               nodeSelector:
                 additionalProperties:
                   type: string

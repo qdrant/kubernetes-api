@@ -59,6 +59,11 @@ type QdrantClusterRoutingSpec struct {
 	// If true enable (proxy) access log for this qdrant cluster.
 	// +optional
 	EnableAccessLog *bool `json:"enableAccessLog,omitempty"`
+	// MultiAZ is true when the Qdrant cluster spans multiple availability
+	// zones and traffic should be kept same-zone where possible.
+	// +kubebuilder:default=false
+	// +optional
+	MultiAZ bool `json:"multiAZ,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
