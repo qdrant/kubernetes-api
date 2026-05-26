@@ -149,6 +149,30 @@ spec:
                   Set to true if routing of the Qdrant cluster has been bootstrapped once.
                   This implies that at least one route is bootstrapped, for detailed information see the BootstrapInfos field
                 type: boolean
+              multiAZDNSGateClearedAt:
+                description: |-
+                  MultiAZDNSGateClearedAt is when the per-cluster DNSEndpoint first reached the
+                  desired state for the current transient phase (present for Promoting, absent for
+                  Demoting). Grace counts from this timestamp — not from MultiAZRoutingPhaseEnteredAt —
+                  so slow DNSEndpoint convergence does not cause premature settling. Reset to nil
+                  when the gate condition becomes unsatisfied (DNS flap) or on phase change.
+                format: date-time
+                type: string
+              multiAZRoutingPhase:
+                description: |-
+                  MultiAZRoutingPhase tracks the cluster's position in a multi-AZ cutover transition.
+                  During transient phases the route-manager serves the cluster on BOTH LBs so DNS can flip safely.
+                enum:
+                - SettledSingle
+                - SettledMulti
+                - PromotingToMulti
+                - DemotingToSingle
+                type: string
+              multiAZRoutingPhaseEnteredAt:
+                description: MultiAZRoutingPhaseEnteredAt records when the current
+                  phase was entered.
+                format: date-time
+                type: string
             type: object
             x-kubernetes-preserve-unknown-fields: true
         required:

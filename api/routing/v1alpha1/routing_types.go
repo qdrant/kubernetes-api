@@ -88,7 +88,30 @@ type QdrantClusterRoutingStatus struct {
 	Bootstrapped *bool `json:"bootstrapped,omitempty"`
 	// Individual bootstrap status info (e.g. when multiple routes are available for this Qdrant cluster)
 	BootstrapInfos *[]BootstrapStatusInfo `json:"bootstrapInfos,omitempty"`
+	// MultiAZRoutingPhase tracks the cluster's position in a multi-AZ cutover transition.
+	// During transient phases the route-manager serves the cluster on BOTH LBs so DNS can flip safely.
+	// +kubebuilder:validation:Enum=SettledSingle;SettledMulti;PromotingToMulti;DemotingToSingle
+	// +optional
+	MultiAZRoutingPhase string `json:"multiAZRoutingPhase,omitempty"`
+	// MultiAZRoutingPhaseEnteredAt records when the current phase was entered.
+	// +optional
+	MultiAZRoutingPhaseEnteredAt *metav1.Time `json:"multiAZRoutingPhaseEnteredAt,omitempty"`
+	// MultiAZDNSGateClearedAt is when the per-cluster DNSEndpoint first reached the
+	// desired state for the current transient phase (present for Promoting, absent for
+	// Demoting). Grace counts from this timestamp — not from MultiAZRoutingPhaseEnteredAt —
+	// so slow DNSEndpoint convergence does not cause premature settling. Reset to nil
+	// when the gate condition becomes unsatisfied (DNS flap) or on phase change.
+	// +optional
+	MultiAZDNSGateClearedAt *metav1.Time `json:"multiAZDNSGateClearedAt,omitempty"`
 }
+
+// MultiAZRoutingPhase values written to QdrantClusterRoutingStatus.MultiAZRoutingPhase.
+const (
+	MultiAZRoutingPhaseSettledSingle    = "SettledSingle"
+	MultiAZRoutingPhaseSettledMulti     = "SettledMulti"
+	MultiAZRoutingPhasePromotingToMulti = "PromotingToMulti"
+	MultiAZRoutingPhaseDemotingToSingle = "DemotingToSingle"
+)
 
 // BootstrapStatusInfo is part of QdrantClusterRoutingStatus.
 type BootstrapStatusInfo struct {
