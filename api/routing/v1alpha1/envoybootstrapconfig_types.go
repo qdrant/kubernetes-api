@@ -49,6 +49,19 @@ type EnvoyBootstrapConfigSpec struct {
 	// +kubebuilder:default=false
 	// +optional
 	MultiAZ bool `json:"multiAZ,omitempty"`
+	// LoadBalancerService identifies the Kubernetes Service backing this Envoy
+	// fleet's cloud load balancer.
+	// +optional
+	LoadBalancerService *LoadBalancerServiceReference `json:"loadBalancerService,omitempty"`
+}
+
+// LoadBalancerServiceReference identifies a Kubernetes Service that exposes an
+// Envoy fleet through a cloud load balancer.
+type LoadBalancerServiceReference struct {
+	// Name is the Service name.
+	Name string `json:"name"`
+	// Namespace is the Service namespace.
+	Namespace string `json:"namespace"`
 }
 
 // EnvoyBootstrapConfigStatus defines the observed state of EnvoyBootstrapConfig.

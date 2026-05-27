@@ -1740,8 +1740,27 @@ _Appears in:_
 | `clusterID` _string_ | ClusterID identifies the Qdrant cluster this Envoy instance serves.<br />When set the Envoy runs in dedicated mode for this cluster.<br />When nil it runs in shared mode. |  | Optional: \{\} <br /> |
 | `proxyProtocolEnabled` _boolean_ | ProxyProtocolEnabled enables the PROXY protocol on Envoy listeners. | false | Optional: \{\} <br /> |
 | `multiAZ` _boolean_ | MultiAZ marks this Envoy fleet as the multi-AZ load balancer. When true,<br />the route-manager advertises this fact to Envoy via node metadata so that<br />zone-aware routing decisions can be made per-cluster via<br />QdrantClusterRouting.spec.multiAZ. | false | Optional: \{\} <br /> |
+| `loadBalancerService` _[LoadBalancerServiceReference](#loadbalancerservicereference)_ | LoadBalancerService identifies the Kubernetes Service backing this Envoy<br />fleet's cloud load balancer. |  | Optional: \{\} <br /> |
 
 
+
+
+#### LoadBalancerServiceReference
+
+
+
+LoadBalancerServiceReference identifies a Kubernetes Service that exposes an
+Envoy fleet through a cloud load balancer.
+
+
+
+_Appears in:_
+- [EnvoyBootstrapConfigSpec](#envoybootstrapconfigspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ | Name is the Service name. |  |  |
+| `namespace` _string_ | Namespace is the Service namespace. |  |  |
 
 
 #### QdrantClusterRouting

@@ -65,6 +65,21 @@ spec:
                   When set the Envoy runs in dedicated mode for this cluster.
                   When nil it runs in shared mode.
                 type: string
+              loadBalancerService:
+                description: |-
+                  LoadBalancerService identifies the Kubernetes Service backing this Envoy
+                  fleet's cloud load balancer.
+                properties:
+                  name:
+                    description: Name is the Service name.
+                    type: string
+                  namespace:
+                    description: Namespace is the Service namespace.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
               multiAZ:
                 default: false
                 description: |-
