@@ -1760,7 +1760,7 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `name` _string_ | Name is the Service name. |  |  |
-| `namespace` _string_ | Namespace is the Service namespace. |  |  |
+| `namespace` _string_ | Namespace is the Service namespace.<br />If empty, defaults to the namespace where the EnvoyBootstrapConfig is created. |  | Optional: \{\} <br /> |
 
 
 #### QdrantClusterRouting

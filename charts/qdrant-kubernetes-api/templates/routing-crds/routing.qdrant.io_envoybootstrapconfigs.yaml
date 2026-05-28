@@ -74,11 +74,12 @@ spec:
                     description: Name is the Service name.
                     type: string
                   namespace:
-                    description: Namespace is the Service namespace.
+                    description: |-
+                      Namespace is the Service namespace.
+                      If empty, defaults to the namespace where the EnvoyBootstrapConfig is created.
                     type: string
                 required:
                 - name
-                - namespace
                 type: object
               multiAZ:
                 default: false

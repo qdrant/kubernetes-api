@@ -61,6 +61,8 @@ type LoadBalancerServiceReference struct {
 	// Name is the Service name.
 	Name string `json:"name"`
 	// Namespace is the Service namespace.
+	// If empty, defaults to the namespace where the EnvoyBootstrapConfig is created.
+	// +optional
 	Namespace string `json:"namespace"`
 }
 
