@@ -23,6 +23,11 @@ const (
 	// If the value is updated it will retrigger the restart.
 	// For historical reasons the key doesn't start with `operator.qdrant.com/`
 	RestartedAtAnnotationKey = "restartedAt"
+	// NodeUpdateRestartAnnotationKey is the annotation key to trigger a restart from the node-update-operator.
+	// The annotation should be placed on the QdrantCluster instance.
+	// The value should be a [RFC3339 formatted] date.
+	// If the value is updated it will retrigger the restart.
+	NodeUpdateRestartAnnotationKey = "operator.qdrant.com/node-update-restart"
 	// RecreateNodeAnnotationKey is the annotation key to recreate a certain node.
 	// The annotation should be placed on the pod created by the operator (for the node that need to be recreated).
 	// It is allowed to add this annotation to multiple pods, the operator will handle them all.
@@ -56,6 +61,17 @@ const (
 	ByCount        RebalanceStrategy = "by_count"
 	BySize         RebalanceStrategy = "by_size"
 	ByCountAndSize RebalanceStrategy = "by_count_and_size"
+)
+
+// OnDemandReplicationType specifies the on-demand replication restart mode.
+// +kubebuilder:validation:Enum=Off;Auto;On
+type OnDemandReplicationType string
+
+//goland:noinspection GoUnusedConst
+const (
+	OnDemandReplicationOff  OnDemandReplicationType = "Off"
+	OnDemandReplicationAuto OnDemandReplicationType = "Auto"
+	OnDemandReplicationOn   OnDemandReplicationType = "On"
 )
 
 // QdrantClusterSpec defines the desired state of QdrantCluster
@@ -136,6 +152,13 @@ type QdrantClusterSpec struct {
 	// If unset, the operator is going to restart nodes concurrently if none of the collections if replicated.
 	// +optional
 	RestartAllPodsConcurrently *bool `json:"restartAllPodsConcurrently,omitempty"`
+	// OnDemandReplication specifies the on-demand replication restart mode.
+	// Off (default): Normal restart behavior. Pods are restarted directly.
+	// Auto: The operator checks telemetry for non-replicated shards. If found, uses the recreate-node flow.
+	// On: Always uses the recreate-node flow for eligible restart triggers.
+	// +kubebuilder:default=Off
+	// +optional
+	OnDemandReplication OnDemandReplicationType `json:"onDemandReplication,omitempty"`
 	// If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.
 	// The sleep will be added when a pod is restarted, it will not force any pod to restart.
 	// This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way
