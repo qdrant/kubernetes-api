@@ -1,12 +1,20 @@
 package v1
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"k8s.io/utils/ptr"
 )
+
+func TestQdrantClusterSpecJSONOmitsUnsetOnDemandReplication(t *testing.T) {
+	data, err := json.Marshal(QdrantClusterSpec{})
+
+	assert.NoError(t, err)
+	assert.NotContains(t, string(data), "onDemandReplication")
+}
 
 func TestValidate(t *testing.T) {
 	testCases := []struct {
