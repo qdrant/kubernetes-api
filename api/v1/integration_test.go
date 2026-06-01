@@ -7,21 +7,22 @@ import (
 	. "github.com/onsi/gomega"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 var _ = Describe("QdrantCluster", func() {
 	Context("API integration tests", func() {
 		const namespaceName = "test-namespace"
 		ctx := context.Background()
-		namespace := &corev1.Namespace{
-			ObjectMeta: metav1.ObjectMeta{
-				Name: namespaceName,
-			},
-		}
 		BeforeEach(func() {
 			By("Creating the Namespace to perform the tests")
+			namespace := &corev1.Namespace{
+				ObjectMeta: metav1.ObjectMeta{
+					Name: namespaceName,
+				},
+			}
 			err := k8sClient.Create(ctx, namespace)
-			Expect(err).To(Not(HaveOccurred()))
+			Expect(client.IgnoreAlreadyExists(err)).To(Not(HaveOccurred()))
 		})
 		It("should not flip ServicePerNode value on update", func() {
 			qc := QdrantCluster{
@@ -43,6 +44,26 @@ var _ = Describe("QdrantCluster", func() {
 			err = k8sClient.Update(ctx, &qc)
 			Expect(err).To(Not(HaveOccurred()))
 			Expect(DerefPointer(qc.Spec.ServicePerNode)).To(BeFalse())
+		})
+		It("should default OnDemandReplication to Off when omitted", func() {
+			qc := QdrantCluster{
+				ObjectMeta: metav1.ObjectMeta{
+					Namespace: namespaceName,
+					Name:      "test-cluster-on-demand-replication",
+				},
+				Spec: QdrantClusterSpec{
+					Id:      "test-cluster-on-demand-replication",
+					Version: "v1.18.0",
+					Size:    1,
+				},
+			}
+			err := k8sClient.Create(ctx, &qc)
+			Expect(err).To(Not(HaveOccurred()))
+
+			created := &QdrantCluster{}
+			err = k8sClient.Get(ctx, client.ObjectKeyFromObject(&qc), created)
+			Expect(err).To(Not(HaveOccurred()))
+			Expect(created.Spec.OnDemandReplication).To(Equal(OnDemandReplicationOff))
 		})
 	})
 
