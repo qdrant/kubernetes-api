@@ -525,6 +525,18 @@ spec:
                 description: NodeSelector specifies the node selector for each Qdrant
                   node.
                 type: object
+              onDemandReplication:
+                default: "Off"
+                description: |-
+                  OnDemandReplication specifies the on-demand replication restart mode.
+                  Off (default): Normal restart behavior. Pods are restarted directly.
+                  Auto: The operator checks telemetry for non-replicated shards. If found, uses the recreate-node flow.
+                  On: Always uses the recreate-node flow for eligible restart triggers.
+                enum:
+                - "Off"
+                - Auto
+                - "On"
+                type: string
               pauses:
                 description: |-
                   Pauses specifies a list of pause request by developer for manual maintenance.
