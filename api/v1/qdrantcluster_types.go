@@ -994,6 +994,14 @@ type QdrantClusterStatus struct {
 	AvailableNodes int `json:"availableNodes,omitempty"`
 	// AvailableNodeIndexes specifies the indexes of the individual nodes in the cluster
 	// The number of indexes should be equal with the AvailableNodes field.
+	// NOTE: these indexes are NOT guaranteed to be the contiguous range 0..Size-1.
+	// New indexes are allocated monotonically (always above the current maximum) and are
+	// never re-compacted, so after repeated scale-up-then-scale-down rounds (e.g.
+	// on-demand-replication-restart or version upgrades) the indexes - and the per-index
+	// pod names and PVCs - can grow well beyond Spec.Size. This is expected behavior:
+	// indexes are reserved-not-reused to avoid colliding with not-yet-reclaimed PVCs/PVs
+	// and lingering consensus peers from a prior occupant of the same index. Consumers
+	// must treat this slice as the source of truth and must not assume contiguous ordinals.
 	// +optional
 	AvailableNodeIndexes []int `json:"availableNodeIndexes,omitempty"`
 	// DeleteInProgessNodeIndexes specifies the indexes of the nodes in the cluster which are in progress of deleting and required to be deleted.
