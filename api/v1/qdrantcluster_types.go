@@ -273,6 +273,9 @@ type KubernetesService struct {
 	// Annotations specifies the annotations for the Service.
 	// +optional
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// LoadBalancerSourceRanges specifies the allowed CIDR source ranges for the loadBalancer Service.
+	// +optional
+	LoadBalancerSourceRanges []string `json:"loadBalancerSourceRanges,omitempty"`
 }
 
 func (s *KubernetesService) GetType() corev1.ServiceType {
