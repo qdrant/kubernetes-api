@@ -457,6 +457,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#servicetype-v1-core)_ | Type specifies the type of the Service: "ClusterIP", "NodePort", "LoadBalancer". | ClusterIP | Optional: \{\} <br /> |
 | `annotations` _object (keys:string, values:string)_ | Annotations specifies the annotations for the Service. |  | Optional: \{\} <br /> |
+| `loadBalancerSourceRanges` _string array_ | LoadBalancerSourceRanges specifies the allowed CIDR source ranges for the loadBalancer Service. |  | Optional: \{\} <br /> |
 
 
 #### KubernetesStatefulSet

@@ -744,6 +744,12 @@ spec:
                       type: string
                     description: Annotations specifies the annotations for the Service.
                     type: object
+                  loadBalancerSourceRanges:
+                    description: LoadBalancerSourceRanges specifies the allowed CIDR
+                      source ranges for the loadBalancer Service.
+                    items:
+                      type: string
+                    type: array
                   type:
                     default: ClusterIP
                     description: 'Type specifies the type of the Service: "ClusterIP",
