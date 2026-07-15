@@ -611,6 +611,13 @@ type QdrantConfigurationCollectionStrictMode struct {
 	// +optional
 	// +kubebuilder:validation:Minimum:=1
 	MaxPayloadIndexCount *uint `json:"max_payload_index_count,omitempty"`
+	// MaxDiskUsagePercent rejects disk-consuming update operations (e.g. upsert, set payload)
+	// when the filesystem hosting Qdrant storage is filled above this percentage of its total capacity.
+	// It can be set for Qdrant version >= 1.19.0
+	// +optional
+	// +kubebuilder:validation:Minimum:=1
+	// +kubebuilder:validation:Maximum:=100
+	MaxDiskUsagePercent *uint `json:"max_disk_usage_percent,omitempty"`
 }
 
 type QdrantConfigurationCollectionVectors struct {
