@@ -117,14 +117,6 @@ spec:
                         description: StrictMode specifies the strict mode configuration
                           for the collection
                         properties:
-                          max_disk_usage_percent:
-                            description: |-
-                              MaxDiskUsagePercent rejects disk-consuming update operations (e.g. upsert, set payload)
-                              when the filesystem hosting Qdrant storage is filled above this percentage of its total capacity.
-                              It can be set for Qdrant version >= 1.19.0
-                            maximum: 100
-                            minimum: 1
-                            type: integer
                           max_payload_index_count:
                             description: |-
                               MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.

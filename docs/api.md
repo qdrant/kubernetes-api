@@ -1061,7 +1061,6 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `max_payload_index_count` _integer_ | MaxPayloadIndexCount represents the maximal number of payload indexes allowed to be created.<br />It can be set for Qdrant version >= 1.16.0<br />Default to 100 if omitted and Qdrant version >= 1.16.0 |  | Minimum: 1 <br />Optional: \{\} <br /> |
-| `max_disk_usage_percent` _integer_ | MaxDiskUsagePercent rejects disk-consuming update operations (e.g. upsert, set payload)<br />when the filesystem hosting Qdrant storage is filled above this percentage of its total capacity.<br />It can be set for Qdrant version >= 1.19.0 |  | Maximum: 100 <br />Minimum: 1 <br />Optional: \{\} <br /> |
 
 
 #### QdrantConfigurationCollectionVectors
