@@ -676,6 +676,7 @@ spec:
                 - by_count
                 - by_size
                 - by_count_and_size
+                - disabled
                 type: string
               resources:
                 description: Resources specifies the resources to allocate for each

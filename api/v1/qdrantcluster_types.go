@@ -52,8 +52,8 @@ const (
 	GPUTypeAmd    GPUType = "amd"
 )
 
-// RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
-// +kubebuilder:validation:Enum=by_count;by_size;by_count_and_size
+// RebalanceStrategy specifies the strategy to use for automatically rebalancing shards the cluster.
+// +kubebuilder:validation:Enum=by_count;by_size;by_count_and_size;disabled
 type RebalanceStrategy string
 
 //goland:noinspection GoUnusedConst
@@ -61,6 +61,7 @@ const (
 	ByCount        RebalanceStrategy = "by_count"
 	BySize         RebalanceStrategy = "by_size"
 	ByCountAndSize RebalanceStrategy = "by_count_and_size"
+	Disabled       RebalanceStrategy = "disabled"
 )
 
 // OnDemandReplicationType specifies the on-demand replication restart mode.

@@ -998,7 +998,7 @@ _Appears in:_
 | `restartAllPodsConcurrently` _boolean_ | RestartAllPodsConcurrently specifies whether to restart all pods concurrently (also called one-shot-restart).<br />If enabled, all the pods in the cluster will be restarted concurrently in situations where multiple pods<br />need to be restarted, like when RestartedAtAnnotationKey is added/updated or the Qdrant version needs to be upgraded.<br />This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.<br />If unset, the operator is going to restart nodes concurrently if none of the collections if replicated. |  | Optional: \{\} <br /> |
 | `onDemandReplication` _[OnDemandReplicationType](#ondemandreplicationtype)_ | OnDemandReplication specifies the on-demand replication restart mode.<br />Off (default): Normal restart behavior. Pods are restarted directly.<br />Auto: The operator checks telemetry for non-replicated shards. If found, uses the recreate-node flow.<br />On: Always uses the recreate-node flow for eligible restart triggers. | Off | Enum: [Off Auto On] <br />Optional: \{\} <br /> |
 | `startupDelaySeconds` _integer_ | If StartupDelaySeconds is set (> 0), an additional 'sleep <value>' will be emitted to the pod startup.<br />The sleep will be added when a pod is restarted, it will not force any pod to restart.<br />This feature can be used for debugging the core, e.g. if a pod is in crash loop, it provided a way<br />to inspect the attached storage. |  | Optional: \{\} <br /> |
-| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size] <br />Optional: \{\} <br /> |
+| `rebalanceStrategy` _[RebalanceStrategy](#rebalancestrategy)_ | RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.<br />Cluster-manager needs to be enabled for this feature to work. |  | Enum: [by_count by_size by_count_and_size disabled] <br />Optional: \{\} <br /> |
 | `readClusters` _[ReadCluster](#readcluster) array_ | ReadClusters specifies the read clusters for this cluster to synchronize.<br />Cluster-manager needs to be enabled for this feature to work. |  | Optional: \{\} <br /> |
 | `writeCluster` _[WriteCluster](#writecluster)_ | WriteCluster specifies the write cluster for this cluster. This configures the NetworkPolicy to allow egress to the write cluster. |  | Optional: \{\} <br /> |
 | `multiAZ` _boolean_ | MultiAZ indicates that this cluster spans multiple availability zones<br />and traffic should be kept same-zone where possible. When true, the<br />operator propagates the flag to the generated QdrantClusterRouting so<br />the route-manager enables zone-aware load balancing on the Envoy<br />clusters that front this Qdrant cluster. | false | Optional: \{\} <br /> |
@@ -1331,10 +1331,10 @@ _Appears in:_
 
 _Underlying type:_ _string_
 
-RebalanceStrategy specifies the strategy to use for automaticially rebalancing shards the cluster.
+RebalanceStrategy specifies the strategy to use for automatically rebalancing shards the cluster.
 
 _Validation:_
-- Enum: [by_count by_size by_count_and_size]
+- Enum: [by_count by_size by_count_and_size disabled]
 
 _Appears in:_
 - [QdrantClusterSpec](#qdrantclusterspec)
@@ -1344,6 +1344,7 @@ _Appears in:_
 | `by_count` |  |
 | `by_size` |  |
 | `by_count_and_size` |  |
+| `disabled` |  |
 
 
 #### RegionCapabilities

@@ -65,6 +65,41 @@ var _ = Describe("QdrantCluster", func() {
 			Expect(err).To(Not(HaveOccurred()))
 			Expect(created.Spec.OnDemandReplication).To(Equal(OnDemandReplicationOff))
 		})
+		It("should accept disabled as a rebalanceStrategy", func() {
+			qc := QdrantCluster{
+				ObjectMeta: metav1.ObjectMeta{
+					Namespace: namespaceName,
+					Name:      "test-cluster-rebalance-disabled",
+				},
+				Spec: QdrantClusterSpec{
+					Id:                "test-cluster-rebalance-disabled",
+					Size:              1,
+					RebalanceStrategy: NewPointer(Disabled),
+				},
+			}
+			err := k8sClient.Create(ctx, &qc)
+			Expect(err).To(Not(HaveOccurred()))
+
+			created := &QdrantCluster{}
+			err = k8sClient.Get(ctx, client.ObjectKeyFromObject(&qc), created)
+			Expect(err).To(Not(HaveOccurred()))
+			Expect(DerefPointer(created.Spec.RebalanceStrategy)).To(Equal(Disabled))
+		})
+		It("should reject an invalid rebalanceStrategy", func() {
+			qc := QdrantCluster{
+				ObjectMeta: metav1.ObjectMeta{
+					Namespace: namespaceName,
+					Name:      "test-cluster-rebalance-invalid",
+				},
+				Spec: QdrantClusterSpec{
+					Id:                "test-cluster-rebalance-invalid",
+					Size:              1,
+					RebalanceStrategy: NewPointer(RebalanceStrategy("bogus")),
+				},
+			}
+			err := k8sClient.Create(ctx, &qc)
+			Expect(err).To(HaveOccurred())
+		})
 	})
 
 })
