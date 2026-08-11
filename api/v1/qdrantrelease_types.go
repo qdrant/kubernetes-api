@@ -64,5 +64,5 @@ type QdrantReleaseList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantRelease{}, &QdrantReleaseList{})
+	registerTypes(&QdrantRelease{}, &QdrantReleaseList{})
 }

@@ -103,5 +103,5 @@ type BootstrapStatusInfo struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantClusterRouting{}, &QdrantClusterRoutingList{})
+	registerTypes(&QdrantClusterRouting{}, &QdrantClusterRoutingList{})
 }

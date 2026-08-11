@@ -47,5 +47,5 @@ type APIAuthenticationList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&APIAuthentication{}, &APIAuthenticationList{})
+	registerTypes(&APIAuthentication{}, &APIAuthenticationList{})
 }

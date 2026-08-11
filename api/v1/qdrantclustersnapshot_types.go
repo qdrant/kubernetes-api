@@ -110,5 +110,5 @@ type QdrantClusterSnapshotList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantClusterSnapshot{}, &QdrantClusterSnapshotList{})
+	registerTypes(&QdrantClusterSnapshot{}, &QdrantClusterSnapshotList{})
 }

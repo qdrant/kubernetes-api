@@ -1180,5 +1180,5 @@ type QdrantClusterList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantCluster{}, &QdrantClusterList{})
+	registerTypes(&QdrantCluster{}, &QdrantClusterList{})
 }

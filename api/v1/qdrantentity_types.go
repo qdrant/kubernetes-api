@@ -144,7 +144,7 @@ type QdrantEntityList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantEntity{}, &QdrantEntityList{})
+	registerTypes(&QdrantEntity{}, &QdrantEntityList{})
 }
 
 // apiextensionsJSONToStructpb converts apiextensions.JSON to *structpb.Struct.
