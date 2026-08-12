@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
-          go-version: '^1.25'
+          go-version: '^1.26'
           cache: false
 
       - name: Helm lint (CRDs)
@@ -43,7 +43,7 @@ jobs:
       - name: Golang CI Lint
         uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
         with:
-          version: v2.10.1 # Specify the golangci-lint version, so we are stable
+          version: v2.11.4 # Specify the golangci-lint version, so we are stable
 
       - name: Run make gen
         run: |

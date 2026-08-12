@@ -83,5 +83,5 @@ type QdrantClusterRestoreList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantClusterRestore{}, &QdrantClusterRestoreList{})
+	registerTypes(&QdrantClusterRestore{}, &QdrantClusterRestoreList{})
 }

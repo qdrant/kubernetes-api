@@ -93,5 +93,5 @@ type EnvoyBootstrapConfigList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&EnvoyBootstrapConfig{}, &EnvoyBootstrapConfigList{})
+	registerTypes(&EnvoyBootstrapConfig{}, &EnvoyBootstrapConfigList{})
 }

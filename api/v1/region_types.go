@@ -276,5 +276,5 @@ type QdrantCloudRegionList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&QdrantCloudRegion{}, &QdrantCloudRegionList{})
+	registerTypes(&QdrantCloudRegion{}, &QdrantCloudRegionList{})
 }
