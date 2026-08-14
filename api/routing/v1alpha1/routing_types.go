@@ -25,6 +25,16 @@ type QdrantClusterRouting struct {
 	Status QdrantClusterRoutingStatus `json:"status,omitempty"`
 }
 
+// GetSpec returns the routing spec, or the zero spec if the object is nil.
+// Returning a value (rather than a pointer) keeps the spec getters below usable
+// on the result, so callers can chain safely: qcrt.GetSpec().GetEnabled().
+func (r *QdrantClusterRouting) GetSpec() QdrantClusterRoutingSpec {
+	if r == nil {
+		return QdrantClusterRoutingSpec{}
+	}
+	return r.Spec
+}
+
 // QdrantClusterRoutingSpec describes the configuration for routing towards Qdrant clusters.
 type QdrantClusterRoutingSpec struct {
 	// ClusterId specifies the unique identifier of the cluster.
@@ -64,6 +74,83 @@ type QdrantClusterRoutingSpec struct {
 	// +kubebuilder:default=false
 	// +optional
 	MultiAZ bool `json:"multiAZ,omitempty"`
+}
+
+// GetClusterId returns the unique identifier of the cluster.
+func (s QdrantClusterRoutingSpec) GetClusterId() string {
+	return s.ClusterId
+}
+
+// GetFQDN returns the fully qualified domain name of the cluster.
+func (s QdrantClusterRoutingSpec) GetFQDN() string {
+	return s.FQDN
+}
+
+// GetEnabled returns whether ingress is enabled for the cluster.
+// Unset means enabled, matching the CRD default.
+func (s QdrantClusterRoutingSpec) GetEnabled() bool {
+	if s.Enabled == nil {
+		return true
+	}
+	return *s.Enabled
+}
+
+// GetShared returns whether the cluster uses at least one shared loadbalancer.
+func (s QdrantClusterRoutingSpec) GetShared() bool {
+	if s.Shared == nil {
+		return false
+	}
+	return *s.Shared
+}
+
+// GetDedicated returns whether the cluster uses at least one dedicated loadbalancer.
+func (s QdrantClusterRoutingSpec) GetDedicated() bool {
+	if s.Dedicated == nil {
+		return false
+	}
+	return *s.Dedicated
+}
+
+// GetTLS returns whether tls is enabled at qdrant level.
+func (s QdrantClusterRoutingSpec) GetTLS() bool {
+	if s.TLS == nil {
+		return false
+	}
+	return *s.TLS
+}
+
+// GetServicePerNode returns whether each node has a dedicated route.
+// Unset means enabled, matching the CRD default.
+func (s QdrantClusterRoutingSpec) GetServicePerNode() bool {
+	if s.ServicePerNode == nil {
+		return true
+	}
+	return *s.ServicePerNode
+}
+
+// GetNodeIndexes returns the indexes of the individual nodes in the cluster.
+func (s QdrantClusterRoutingSpec) GetNodeIndexes() []int {
+	return s.NodeIndexes
+}
+
+// GetAllowedSourceRanges returns the allowed CIDR source ranges for the ingress.
+// An empty result means no restriction, so callers that enforce it must treat
+// "no ranges" as "allow all" deliberately rather than by omission.
+func (s QdrantClusterRoutingSpec) GetAllowedSourceRanges() []string {
+	return s.AllowedSourceRanges
+}
+
+// GetEnableAccessLog returns whether the (proxy) access log is enabled.
+func (s QdrantClusterRoutingSpec) GetEnableAccessLog() bool {
+	if s.EnableAccessLog == nil {
+		return false
+	}
+	return *s.EnableAccessLog
+}
+
+// GetMultiAZ returns whether the cluster spans multiple availability zones.
+func (s QdrantClusterRoutingSpec) GetMultiAZ() bool {
+	return s.MultiAZ
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
