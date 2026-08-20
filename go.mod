@@ -9,7 +9,7 @@ require (
 	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.6.0
 	github.com/onsi/ginkgo/v2 v2.32.1
 	github.com/onsi/gomega v1.42.1
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.0
 	google.golang.org/protobuf v1.36.12
 	k8s.io/api v0.36.3
 	k8s.io/apiextensions-apiserver v0.36.3
