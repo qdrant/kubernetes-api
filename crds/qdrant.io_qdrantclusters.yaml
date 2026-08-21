@@ -450,6 +450,18 @@ spec:
                       type: string
                     description: Annotations specifies annotations for the ingress.
                     type: object
+                  enableAccessLog:
+                    description: |-
+                      EnableAccessLog overrides the region-wide Envoy proxy access log setting
+                      for this cluster: true forces it on, false forces it off, and unset
+                      follows the region.
+
+                      The override matters in both directions. A single tenant can carry most
+                      of a region's traffic, so "off" has to be expressible for one cluster
+                      without giving up the log for every other cluster in that region; and
+                      "on" has to be expressible for a cluster under investigation without
+                      enabling the whole region.
+                    type: boolean
                   enabled:
                     description: Enabled specifies whether to enable ingress for the
                       cluster or not.

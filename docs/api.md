@@ -371,6 +371,7 @@ _Appears in:_
 | `tlsSecretName` _string_ | TLSSecretName specifies the name of the secret containing the tls certificate. |  | Optional: \{\} <br /> |
 | `nginx` _[NGINXConfig](#nginxconfig)_ | NGINX specifies the nginx ingress specific configurations. |  | Optional: \{\} <br /> |
 | `traefik` _[TraefikConfig](#traefikconfig)_ | Traefik specifies the traefik ingress specific configurations. |  | Optional: \{\} <br /> |
+| `enableAccessLog` _boolean_ | EnableAccessLog overrides the region-wide Envoy proxy access log setting<br />for this cluster: true forces it on, false forces it off, and unset<br />follows the region.<br />The override matters in both directions. A single tenant can carry most<br />of a region's traffic, so "off" has to be expressible for one cluster<br />without giving up the log for every other cluster in that region; and<br />"on" has to be expressible for a cluster under investigation without<br />enabling the whole region. |  | Optional: \{\} <br /> |
 
 
 #### KubernetesDistribution
