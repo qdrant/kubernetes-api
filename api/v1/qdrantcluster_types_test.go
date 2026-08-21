@@ -196,3 +196,34 @@ func TestValidate(t *testing.T) {
 		})
 	}
 }
+
+// TestIngressGetEnableAccessLog pins the three-state override. The false case is
+// the one that matters operationally: a single tenant can carry most of a
+// region's traffic, so it has to be possible to silence one cluster without
+// giving up the log for every other cluster in the region.
+func TestIngressGetEnableAccessLog(t *testing.T) {
+	testCases := []struct {
+		name    string
+		ingress *Ingress
+		region  bool
+		want    bool
+	}{
+		{"nil ingress follows the region", nil, true, true},
+		{"unset follows the region (on)", &Ingress{}, true, true},
+		{"unset follows the region (off)", &Ingress{}, false, false},
+		{"true forces on against a disabled region", &Ingress{EnableAccessLog: ptr.To(true)}, false, true},
+		{"false forces off against an enabled region", &Ingress{EnableAccessLog: ptr.To(false)}, true, false},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.ingress.GetEnableAccessLog(tc.region))
+		})
+	}
+}
+
+func TestIngressJSONOmitsUnsetEnableAccessLog(t *testing.T) {
+	data, err := json.Marshal(Ingress{})
+
+	assert.NoError(t, err)
+	assert.NotContains(t, string(data), "enableAccessLog")
+}

@@ -762,6 +762,17 @@ type Ingress struct {
 	// Traefik specifies the traefik ingress specific configurations.
 	// +optional
 	Traefik *TraefikConfig `json:"traefik,omitempty"`
+	// EnableAccessLog overrides the region-wide Envoy proxy access log setting
+	// for this cluster: true forces it on, false forces it off, and unset
+	// follows the region.
+	//
+	// The override matters in both directions. A single tenant can carry most
+	// of a region's traffic, so "off" has to be expressible for one cluster
+	// without giving up the log for every other cluster in that region; and
+	// "on" has to be expressible for a cluster under investigation without
+	// enabling the whole region.
+	// +optional
+	EnableAccessLog *bool `json:"enableAccessLog,omitempty"`
 }
 
 func (i *Ingress) GetAnnotations() map[string]string {
@@ -783,6 +794,16 @@ func (i *Ingress) GetTls(def bool) bool {
 		return def
 	}
 	return *i.TLS
+}
+
+// GetEnableAccessLog returns whether the Envoy access log is enabled for this
+// cluster, falling back to def (the region-wide setting) when the cluster does
+// not override it.
+func (i *Ingress) GetEnableAccessLog(def bool) bool {
+	if i == nil || i.EnableAccessLog == nil {
+		return def
+	}
+	return *i.EnableAccessLog
 }
 
 func (i *Ingress) GetNGINX() *NGINXConfig {
