@@ -196,3 +196,88 @@ func TestValidate(t *testing.T) {
 		})
 	}
 }
+
+// TestRoutingSpecGetters pins the three-state contract. The false cases are the
+// operationally important ones: a single tenant can carry most of a region's
+// traffic, so an override has to be able to contradict the region default in
+// either direction.
+func TestRoutingSpecGetters(t *testing.T) {
+	testCases := []struct {
+		name                               string
+		routing                            *RoutingSpec
+		def                                bool
+		wantLog, wantShared, wantDedicated bool
+	}{
+		{"nil spec follows the default (on)", nil, true, true, true, true},
+		{"nil spec follows the default (off)", nil, false, false, false, false},
+		{"empty spec follows the default", &RoutingSpec{}, true, true, true, true},
+		{
+			"false overrides an enabled default",
+			&RoutingSpec{EnableAccessLog: ptr.To(false), Shared: ptr.To(false), Dedicated: ptr.To(false)},
+			true, false, false, false,
+		},
+		{
+			"true overrides a disabled default",
+			&RoutingSpec{EnableAccessLog: ptr.To(true), Shared: ptr.To(true), Dedicated: ptr.To(true)},
+			false, true, true, true,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.wantLog, tc.routing.GetEnableAccessLog(tc.def))
+			assert.Equal(t, tc.wantShared, tc.routing.GetShared(tc.def))
+			assert.Equal(t, tc.wantDedicated, tc.routing.GetDedicated(tc.def))
+		})
+	}
+}
+
+func TestQdrantClusterSpecJSONOmitsUnsetRouting(t *testing.T) {
+	data, err := json.Marshal(QdrantClusterSpec{})
+
+	assert.NoError(t, err)
+	assert.NotContains(t, string(data), "routing")
+}
+
+// TestRoutingSpecValidate covers the one combination that is an outage rather
+// than a preference: with both load balancer kinds off, nothing publishes a
+// listener for the cluster.
+func TestRoutingSpecValidate(t *testing.T) {
+	testCases := []struct {
+		name    string
+		routing *RoutingSpec
+		wantErr bool
+	}{
+		{"nil is valid", nil, false},
+		{"empty is valid", &RoutingSpec{}, false},
+		{"shared only", &RoutingSpec{Shared: ptr.To(true), Dedicated: ptr.To(false)}, false},
+		{"dedicated only", &RoutingSpec{Shared: ptr.To(false), Dedicated: ptr.To(true)}, false},
+		{"both on is valid", &RoutingSpec{Shared: ptr.To(true), Dedicated: ptr.To(true)}, false},
+		// Only one arm set cannot strand the cluster: the unset one still falls
+		// back to the operator default.
+		{"shared false alone", &RoutingSpec{Shared: ptr.To(false)}, false},
+		{"dedicated false alone", &RoutingSpec{Dedicated: ptr.To(false)}, false},
+		{"both false is rejected", &RoutingSpec{Shared: ptr.To(false), Dedicated: ptr.To(false)}, true},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			err := tc.routing.Validate()
+			if tc.wantErr {
+				assert.Error(t, err)
+				return
+			}
+			assert.NoError(t, err)
+		})
+	}
+}
+
+// TestQdrantClusterSpecValidateRejectsStrandedRouting proves the check is
+// reachable from the entry point the operator actually calls.
+func TestQdrantClusterSpecValidateRejectsStrandedRouting(t *testing.T) {
+	spec := QdrantClusterSpec{
+		// Resources must be valid or Validate returns before it reaches routing.
+		Resources: Resources{CPU: "100m", Memory: "128Mi", Storage: "1Gi"},
+		Routing:   &RoutingSpec{Shared: ptr.To(false), Dedicated: ptr.To(false)},
+	}
+
+	assert.ErrorContains(t, spec.Validate(), "cannot both be false")
+}

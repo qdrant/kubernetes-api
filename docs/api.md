@@ -988,6 +988,7 @@ _Appears in:_
 | `nodeSelector` _object (keys:string, values:string)_ | NodeSelector specifies the node selector for each Qdrant node. |  | Optional: \{\} <br /> |
 | `config` _[QdrantConfiguration](#qdrantconfiguration)_ | Config specifies the Qdrant configuration setttings for the clusters. |  | Optional: \{\} <br /> |
 | `ingress` _[Ingress](#ingress)_ | Ingress specifies the ingress for the cluster. |  | Optional: \{\} <br /> |
+| `routing` _[RoutingSpec](#routingspec)_ | Routing specifies per-cluster overrides for how traffic reaches this<br />cluster. Each field falls back to the operator's region-wide default<br />when it is not set. |  | Optional: \{\} <br /> |
 | `service` _[KubernetesService](#kubernetesservice)_ | Service specifies the configuration of the Qdrant Kubernetes Service. |  | Optional: \{\} <br /> |
 | `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  | Optional: \{\} <br /> |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  | Optional: \{\} <br /> |
@@ -1471,6 +1472,34 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `snapshotName` _string_ | SnapshotName is the name of the snapshot from which we wish to restore |  |  |
 | `namespace` _string_ | Namespace of the snapshot |  |  |
+
+
+#### RoutingSpec
+
+
+
+RoutingSpec holds per-cluster routing overrides.
+
+Every field is three-state: nil means "use the default the operator supplies",
+true and false override it in either direction. Each getter takes that default
+as an argument, so a field can be backed by region-wide config without any
+change here — EnableAccessLog already is, and Shared/Dedicated can be later.
+
+The operator must resolve every field to a concrete value before it reaches
+QdrantClusterRouting: the routing data plane reads those with
+refs.DerefPointer, so a nil Shared arrives as false, which means "exclude from
+shared routing" rather than "unset".
+
+
+
+_Appears in:_
+- [QdrantClusterSpec](#qdrantclusterspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `enableAccessLog` _boolean_ | EnableAccessLog enables the (proxy) access log for this cluster.<br />If unset, the region-wide operator config default applies. |  | Optional: \{\} <br /> |
+| `shared` _boolean_ | Shared indicates the cluster uses (at least one) shared loadbalancer.<br />If unset, the operator default applies, which is currently true for every<br />region. |  | Optional: \{\} <br /> |
+| `dedicated` _boolean_ | Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.<br />If unset, the operator default applies, which is currently false for every<br />region. |  | Optional: \{\} <br /> |
 
 
 #### ScheduledSnapshotPhase
