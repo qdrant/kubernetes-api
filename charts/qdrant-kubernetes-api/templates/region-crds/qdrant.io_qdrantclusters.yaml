@@ -712,6 +712,28 @@ spec:
                   This helps sharded but not replicated clusters to reduce downtime to a possible minimum during restart.
                   If unset, the operator is going to restart nodes concurrently if none of the collections if replicated.
                 type: boolean
+              routing:
+                description: |-
+                  Routing specifies per-cluster overrides for how traffic reaches this
+                  cluster. Each field falls back to the operator's region-wide default
+                  when it is not set.
+                properties:
+                  dedicated:
+                    description: |-
+                      Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.
+                      If unset, defaults to false.
+                    type: boolean
+                  enableAccessLog:
+                    description: |-
+                      EnableAccessLog enables the (proxy) access log for this cluster.
+                      If unset, the operator config default (routing.enableAccessLog) applies.
+                    type: boolean
+                  shared:
+                    description: |-
+                      Shared indicates the cluster uses (at least one) shared loadbalancer.
+                      If unset, defaults to true.
+                    type: boolean
+                type: object
               security:
                 description: Security specifies the security context for each Qdrant
                   node.

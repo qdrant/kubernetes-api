@@ -125,6 +125,11 @@ type QdrantClusterSpec struct {
 	// Ingress specifies the ingress for the cluster.
 	// +optional
 	Ingress *Ingress `json:"ingress,omitempty"`
+	// Routing specifies per-cluster overrides for how traffic reaches this
+	// cluster. Each field falls back to the operator's region-wide default
+	// when it is not set.
+	// +optional
+	Routing *RoutingSpec `json:"routing,omitempty"`
 	// Service specifies the configuration of the Qdrant Kubernetes Service.
 	// +optional
 	Service *KubernetesService `json:"service,omitempty"`
@@ -797,6 +802,56 @@ func (i *Ingress) GetTraefik() *TraefikConfig {
 		return nil
 	}
 	return i.Traefik
+}
+
+// RoutingSpec holds per-cluster routing overrides.
+//
+// Every field is three-state: nil means "follow the operator's region-wide
+// default", true and false override it in either direction. The defaults named
+// below describe the API contract; the operator is responsible for resolving
+// each field to a concrete value before it reaches QdrantClusterRouting, since
+// the routing data plane reads those with refs.DerefPointer and treats a nil
+// Shared as "exclude from shared routing" rather than as "unset".
+type RoutingSpec struct {
+	// EnableAccessLog enables the (proxy) access log for this cluster.
+	// If unset, the operator config default (routing.enableAccessLog) applies.
+	// +optional
+	EnableAccessLog *bool `json:"enableAccessLog,omitempty"`
+	// Shared indicates the cluster uses (at least one) shared loadbalancer.
+	// If unset, defaults to true.
+	// +optional
+	Shared *bool `json:"shared,omitempty"`
+	// Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.
+	// If unset, defaults to false.
+	// +optional
+	Dedicated *bool `json:"dedicated,omitempty"`
+}
+
+// GetEnableAccessLog returns whether the access log is enabled for this
+// cluster, falling back to def when the cluster does not override it.
+func (r *RoutingSpec) GetEnableAccessLog(def bool) bool {
+	if r == nil || r.EnableAccessLog == nil {
+		return def
+	}
+	return *r.EnableAccessLog
+}
+
+// GetShared returns whether the cluster uses a shared loadbalancer, falling
+// back to def when the cluster does not override it.
+func (r *RoutingSpec) GetShared(def bool) bool {
+	if r == nil || r.Shared == nil {
+		return def
+	}
+	return *r.Shared
+}
+
+// GetDedicated returns whether the cluster uses a dedicated loadbalancer,
+// falling back to def when the cluster does not override it.
+func (r *RoutingSpec) GetDedicated(def bool) bool {
+	if r == nil || r.Dedicated == nil {
+		return def
+	}
+	return *r.Dedicated
 }
 
 type NGINXConfig struct {

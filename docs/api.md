@@ -988,6 +988,7 @@ _Appears in:_
 | `nodeSelector` _object (keys:string, values:string)_ | NodeSelector specifies the node selector for each Qdrant node. |  | Optional: \{\} <br /> |
 | `config` _[QdrantConfiguration](#qdrantconfiguration)_ | Config specifies the Qdrant configuration setttings for the clusters. |  | Optional: \{\} <br /> |
 | `ingress` _[Ingress](#ingress)_ | Ingress specifies the ingress for the cluster. |  | Optional: \{\} <br /> |
+| `routing` _[RoutingSpec](#routingspec)_ | Routing specifies per-cluster overrides for how traffic reaches this<br />cluster. Each field falls back to the operator's region-wide default<br />when it is not set. |  | Optional: \{\} <br /> |
 | `service` _[KubernetesService](#kubernetesservice)_ | Service specifies the configuration of the Qdrant Kubernetes Service. |  | Optional: \{\} <br /> |
 | `gpu` _[GPU](#gpu)_ | GPU specifies GPU configuration for the cluster. If this field is not set, no GPU will be used. |  | Optional: \{\} <br /> |
 | `statefulSet` _[KubernetesStatefulSet](#kubernetesstatefulset)_ | StatefulSet specifies the configuration of the Qdrant Kubernetes StatefulSet. |  | Optional: \{\} <br /> |
@@ -1471,6 +1472,31 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `snapshotName` _string_ | SnapshotName is the name of the snapshot from which we wish to restore |  |  |
 | `namespace` _string_ | Namespace of the snapshot |  |  |
+
+
+#### RoutingSpec
+
+
+
+RoutingSpec holds per-cluster routing overrides.
+
+Every field is three-state: nil means "follow the operator's region-wide
+default", true and false override it in either direction. The defaults named
+below describe the API contract; the operator is responsible for resolving
+each field to a concrete value before it reaches QdrantClusterRouting, since
+the routing data plane reads those with refs.DerefPointer and treats a nil
+Shared as "exclude from shared routing" rather than as "unset".
+
+
+
+_Appears in:_
+- [QdrantClusterSpec](#qdrantclusterspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `enableAccessLog` _boolean_ | EnableAccessLog enables the (proxy) access log for this cluster.<br />If unset, the operator config default (routing.enableAccessLog) applies. |  | Optional: \{\} <br /> |
+| `shared` _boolean_ | Shared indicates the cluster uses (at least one) shared loadbalancer.<br />If unset, defaults to true. |  | Optional: \{\} <br /> |
+| `dedicated` _boolean_ | Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.<br />If unset, defaults to false. |  | Optional: \{\} <br /> |
 
 
 #### ScheduledSnapshotPhase
