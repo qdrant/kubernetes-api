@@ -237,3 +237,47 @@ func TestQdrantClusterSpecJSONOmitsUnsetRouting(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotContains(t, string(data), "routing")
 }
+
+// TestRoutingSpecValidate covers the one combination that is an outage rather
+// than a preference: with both load balancer kinds off, nothing publishes a
+// listener for the cluster.
+func TestRoutingSpecValidate(t *testing.T) {
+	testCases := []struct {
+		name    string
+		routing *RoutingSpec
+		wantErr bool
+	}{
+		{"nil is valid", nil, false},
+		{"empty is valid", &RoutingSpec{}, false},
+		{"shared only", &RoutingSpec{Shared: ptr.To(true), Dedicated: ptr.To(false)}, false},
+		{"dedicated only", &RoutingSpec{Shared: ptr.To(false), Dedicated: ptr.To(true)}, false},
+		{"both on is valid", &RoutingSpec{Shared: ptr.To(true), Dedicated: ptr.To(true)}, false},
+		// Only one arm set cannot strand the cluster: the unset one still falls
+		// back to the operator default.
+		{"shared false alone", &RoutingSpec{Shared: ptr.To(false)}, false},
+		{"dedicated false alone", &RoutingSpec{Dedicated: ptr.To(false)}, false},
+		{"both false is rejected", &RoutingSpec{Shared: ptr.To(false), Dedicated: ptr.To(false)}, true},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			err := tc.routing.Validate()
+			if tc.wantErr {
+				assert.Error(t, err)
+				return
+			}
+			assert.NoError(t, err)
+		})
+	}
+}
+
+// TestQdrantClusterSpecValidateRejectsStrandedRouting proves the check is
+// reachable from the entry point the operator actually calls.
+func TestQdrantClusterSpecValidateRejectsStrandedRouting(t *testing.T) {
+	spec := QdrantClusterSpec{
+		// Resources must be valid or Validate returns before it reaches routing.
+		Resources: Resources{CPU: "100m", Memory: "128Mi", Storage: "1Gi"},
+		Routing:   &RoutingSpec{Shared: ptr.To(false), Dedicated: ptr.To(false)},
+	}
+
+	assert.ErrorContains(t, spec.Validate(), "cannot both be false")
+}

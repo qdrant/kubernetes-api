@@ -201,6 +201,10 @@ func (s QdrantClusterSpec) Validate() error {
 	if err := s.Storage.Validate(); err != nil {
 		return err
 	}
+	// Validate routing overrides
+	if err := s.Routing.Validate(); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -806,25 +810,49 @@ func (i *Ingress) GetTraefik() *TraefikConfig {
 
 // RoutingSpec holds per-cluster routing overrides.
 //
-// Every field is three-state: nil means "follow the operator's region-wide
-// default", true and false override it in either direction. The defaults named
-// below describe the API contract; the operator is responsible for resolving
-// each field to a concrete value before it reaches QdrantClusterRouting, since
-// the routing data plane reads those with refs.DerefPointer and treats a nil
-// Shared as "exclude from shared routing" rather than as "unset".
+// Every field is three-state: nil means "use the default the operator supplies",
+// true and false override it in either direction. Each getter takes that default
+// as an argument, so a field can be backed by region-wide config without any
+// change here — EnableAccessLog already is, and Shared/Dedicated can be later.
+//
+// The operator must resolve every field to a concrete value before it reaches
+// QdrantClusterRouting: the routing data plane reads those with
+// refs.DerefPointer, so a nil Shared arrives as false, which means "exclude from
+// shared routing" rather than "unset".
 type RoutingSpec struct {
 	// EnableAccessLog enables the (proxy) access log for this cluster.
-	// If unset, the operator config default (routing.enableAccessLog) applies.
+	// If unset, the region-wide operator config default applies.
 	// +optional
 	EnableAccessLog *bool `json:"enableAccessLog,omitempty"`
 	// Shared indicates the cluster uses (at least one) shared loadbalancer.
-	// If unset, defaults to true.
+	// If unset, the operator default applies, which is currently true for every
+	// region.
 	// +optional
 	Shared *bool `json:"shared,omitempty"`
 	// Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.
-	// If unset, defaults to false.
+	// If unset, the operator default applies, which is currently false for every
+	// region.
 	// +optional
 	Dedicated *bool `json:"dedicated,omitempty"`
+}
+
+// Validate rejects routing overrides that would leave the cluster with no path
+// to it at all.
+//
+// Shared and Dedicated both false is not a degraded mode, it is an outage: the
+// cluster is skipped when the shared load balancer's routes are collected, and
+// dedicated routing is refused outright, so nothing publishes a listener for it.
+// Rejecting the combination here means it is caught when the CR is admitted
+// rather than when traffic stops.
+func (r *RoutingSpec) Validate() error {
+	if r == nil {
+		return nil
+	}
+	if r.Shared != nil && !*r.Shared && r.Dedicated != nil && !*r.Dedicated {
+		return fmt.Errorf("spec.routing: shared and dedicated cannot both be false, " +
+			"the cluster would have no load balancer to reach it")
+	}
+	return nil
 }
 
 // GetEnableAccessLog returns whether the access log is enabled for this

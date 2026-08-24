@@ -1480,12 +1480,15 @@ _Appears in:_
 
 RoutingSpec holds per-cluster routing overrides.
 
-Every field is three-state: nil means "follow the operator's region-wide
-default", true and false override it in either direction. The defaults named
-below describe the API contract; the operator is responsible for resolving
-each field to a concrete value before it reaches QdrantClusterRouting, since
-the routing data plane reads those with refs.DerefPointer and treats a nil
-Shared as "exclude from shared routing" rather than as "unset".
+Every field is three-state: nil means "use the default the operator supplies",
+true and false override it in either direction. Each getter takes that default
+as an argument, so a field can be backed by region-wide config without any
+change here — EnableAccessLog already is, and Shared/Dedicated can be later.
+
+The operator must resolve every field to a concrete value before it reaches
+QdrantClusterRouting: the routing data plane reads those with
+refs.DerefPointer, so a nil Shared arrives as false, which means "exclude from
+shared routing" rather than "unset".
 
 
 
@@ -1494,9 +1497,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enableAccessLog` _boolean_ | EnableAccessLog enables the (proxy) access log for this cluster.<br />If unset, the operator config default (routing.enableAccessLog) applies. |  | Optional: \{\} <br /> |
-| `shared` _boolean_ | Shared indicates the cluster uses (at least one) shared loadbalancer.<br />If unset, defaults to true. |  | Optional: \{\} <br /> |
-| `dedicated` _boolean_ | Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.<br />If unset, defaults to false. |  | Optional: \{\} <br /> |
+| `enableAccessLog` _boolean_ | EnableAccessLog enables the (proxy) access log for this cluster.<br />If unset, the region-wide operator config default applies. |  | Optional: \{\} <br /> |
+| `shared` _boolean_ | Shared indicates the cluster uses (at least one) shared loadbalancer.<br />If unset, the operator default applies, which is currently true for every<br />region. |  | Optional: \{\} <br /> |
+| `dedicated` _boolean_ | Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.<br />If unset, the operator default applies, which is currently false for every<br />region. |  | Optional: \{\} <br /> |
 
 
 #### ScheduledSnapshotPhase

@@ -721,17 +721,19 @@ spec:
                   dedicated:
                     description: |-
                       Dedicated indicates the cluster uses (at least one) dedicated loadbalancer.
-                      If unset, defaults to false.
+                      If unset, the operator default applies, which is currently false for every
+                      region.
                     type: boolean
                   enableAccessLog:
                     description: |-
                       EnableAccessLog enables the (proxy) access log for this cluster.
-                      If unset, the operator config default (routing.enableAccessLog) applies.
+                      If unset, the region-wide operator config default applies.
                     type: boolean
                   shared:
                     description: |-
                       Shared indicates the cluster uses (at least one) shared loadbalancer.
-                      If unset, defaults to true.
+                      If unset, the operator default applies, which is currently true for every
+                      region.
                     type: boolean
                 type: object
               security:
