@@ -41,20 +41,24 @@ manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	mv $(CRDS_DIR)/auth.qdrant.io*.yaml $(CHART_DIR)/templates/auth-crds/
 	mv $(CRDS_DIR)/routing.qdrant.io*.yaml $(CHART_DIR)/templates/routing-crds/
 	for file in $(CHART_DIR)/templates/management-crds/*.yaml; do \
+		awk '{print} /^  annotations:/{print "    helm.sh/resource-policy: keep"}' $$file > temp && mv temp $$file; \
 		echo "{{ if .Values.includeManagementCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
 	for file in $(CHART_DIR)/templates/region-crds/qdrant*.yaml; do \
+		awk '{print} /^  annotations:/{print "    helm.sh/resource-policy: keep"}' $$file > temp && mv temp $$file; \
 		echo "{{ if .Values.includeRegionCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
 	# We only want to deploy API key CRD to regional clusters
 	for file in $(CHART_DIR)/templates/auth-crds/auth.qdrant.io*.yaml; do \
+		awk '{print} /^  annotations:/{print "    helm.sh/resource-policy: keep"}' $$file > temp && mv temp $$file; \
 		echo "{{ if .Values.includeAuthCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
 	# We only want to deploy routing CRD to regional clusters
 	for file in $(CHART_DIR)/templates/routing-crds/routing.qdrant.io*.yaml; do \
+		awk '{print} /^  annotations:/{print "    helm.sh/resource-policy: keep"}' $$file > temp && mv temp $$file; \
 		echo "{{ if .Values.includeRoutingCRDs }}" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
