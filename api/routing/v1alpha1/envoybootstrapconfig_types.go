@@ -53,6 +53,16 @@ type EnvoyBootstrapConfigSpec struct {
 	// fleet's cloud load balancer.
 	// +optional
 	LoadBalancerService *LoadBalancerServiceReference `json:"loadBalancerService,omitempty"`
+	// LocalClusterService identifies the Service whose EndpointSlices list this
+	// Envoy fleet's OWN pods. Zone-aware routing weighs the upstream's per-zone
+	// spread against the fleet's own, so Envoy needs both.
+	//
+	// Only read when MultiAZ is true. Unset falls back to the route-manager's
+	// global multiAZ.localClusterServiceName, which names a single fleet per
+	// region -- so a second multi-AZ fleet (a PrivateLink one, say) must set
+	// this or it would weigh its zones against the other fleet's pods.
+	// +optional
+	LocalClusterService *LoadBalancerServiceReference `json:"localClusterService,omitempty"`
 }
 
 // LoadBalancerServiceReference identifies a Kubernetes Service that exposes an

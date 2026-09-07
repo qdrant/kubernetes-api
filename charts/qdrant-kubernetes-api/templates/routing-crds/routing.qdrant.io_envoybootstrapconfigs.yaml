@@ -82,6 +82,28 @@ spec:
                 required:
                 - name
                 type: object
+              localClusterService:
+                description: |-
+                  LocalClusterService identifies the Service whose EndpointSlices list this
+                  Envoy fleet's OWN pods. Zone-aware routing weighs the upstream's per-zone
+                  spread against the fleet's own, so Envoy needs both.
+
+                  Only read when MultiAZ is true. Unset falls back to the route-manager's
+                  global multiAZ.localClusterServiceName, which names a single fleet per
+                  region -- so a second multi-AZ fleet (a PrivateLink one, say) must set
+                  this or it would weigh its zones against the other fleet's pods.
+                properties:
+                  name:
+                    description: Name is the Service name.
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace is the Service namespace.
+                      If empty, defaults to the namespace where the EnvoyBootstrapConfig is created.
+                    type: string
+                required:
+                - name
+                type: object
               multiAZ:
                 default: false
                 description: |-

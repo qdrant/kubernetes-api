@@ -1792,6 +1792,7 @@ _Appears in:_
 | `proxyProtocolEnabled` _boolean_ | ProxyProtocolEnabled enables the PROXY protocol on Envoy listeners. | false | Optional: \{\} <br /> |
 | `multiAZ` _boolean_ | MultiAZ marks this Envoy fleet as the multi-AZ load balancer. When true,<br />the route-manager advertises this fact to Envoy via node metadata so that<br />zone-aware routing decisions can be made per-cluster via<br />QdrantClusterRouting.spec.multiAZ. | false | Optional: \{\} <br /> |
 | `loadBalancerService` _[LoadBalancerServiceReference](#loadbalancerservicereference)_ | LoadBalancerService identifies the Kubernetes Service backing this Envoy<br />fleet's cloud load balancer. |  | Optional: \{\} <br /> |
+| `localClusterService` _[LoadBalancerServiceReference](#loadbalancerservicereference)_ | LocalClusterService identifies the Service whose EndpointSlices list this<br />Envoy fleet's OWN pods. Zone-aware routing weighs the upstream's per-zone<br />spread against the fleet's own, so Envoy needs both.<br />Only read when MultiAZ is true. Unset falls back to the route-manager's<br />global multiAZ.localClusterServiceName, which names a single fleet per<br />region -- so a second multi-AZ fleet (a PrivateLink one, say) must set<br />this or it would weigh its zones against the other fleet's pods. |  | Optional: \{\} <br /> |
 
 
 
