@@ -1067,6 +1067,38 @@ const (
 	ClusterConditionRecoveryMode        ClusterCondition = "RecoveryMode"
 )
 
+// GlobalQuotaConfigStatus records the complete quota configuration owned by the
+// operator. It contains the defaults last applied by the operator, or adopted
+// when Qdrant already had those same defaults. It is not a live copy of
+// Qdrant's current quota state. The fields stay together because the quotas API
+// replaces the complete configuration.
+type GlobalQuotaConfigStatus struct {
+	// Enabled records whether quotas were enabled in the last applied
+	// configuration.
+	Enabled bool `json:"enabled"`
+
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=100
+	// MaxResidentMemoryPercent records the resident-memory limit in the last
+	// applied configuration.
+	MaxResidentMemoryPercent uint8 `json:"maxResidentMemoryPercent"`
+
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=100
+	// MaxDiskUsagePercent records the disk-usage limit in the last applied
+	// configuration.
+	MaxDiskUsagePercent uint8 `json:"maxDiskUsagePercent"`
+}
+
+// GlobalQuotasStatus records the last quota configuration applied by the
+// operator. A nil QdrantClusterStatus.GlobalQuotas means ownership has not
+// been established yet.
+type GlobalQuotasStatus struct {
+	// LastApplied is the complete quota configuration from the operator's last
+	// action.
+	LastApplied GlobalQuotaConfigStatus `json:"lastApplied"`
+}
+
 // QdrantClusterStatus defines the observed state of QdrantCluster
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantClusterStatus struct {
@@ -1126,6 +1158,10 @@ type QdrantClusterStatus struct {
 	// Selector is the label query to find the pods (used as status for PodDisruptionBudget)
 	// +optional
 	Selector *string `json:"selector,omitempty"`
+	// GlobalQuotas records the quota configuration last applied by the
+	// operator.
+	// +optional
+	GlobalQuotas *GlobalQuotasStatus `json:"globalQuotas,omitempty"`
 }
 
 type ClusterManagerReponse struct {
