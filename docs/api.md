@@ -300,6 +300,46 @@ _Appears in:_
 | `amd` |  |
 
 
+#### GlobalQuotaConfigStatus
+
+
+
+GlobalQuotaConfigStatus records the complete quota configuration owned by the
+operator. It contains the defaults last applied by the operator, or adopted
+when Qdrant already had those same defaults. It is not a live copy of
+Qdrant's current quota state. The fields stay together because the quotas API
+replaces the complete configuration.
+
+
+
+_Appears in:_
+- [GlobalQuotasStatus](#globalquotasstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `enabled` _boolean_ | Enabled records whether quotas were enabled in the last applied<br />configuration. |  |  |
+| `maxResidentMemoryPercent` _integer_ | MaxResidentMemoryPercent records the resident-memory limit in the last<br />applied configuration. |  | Maximum: 100 <br />Minimum: 1 <br /> |
+| `maxDiskUsagePercent` _integer_ | MaxDiskUsagePercent records the disk-usage limit in the last applied<br />configuration. |  | Maximum: 100 <br />Minimum: 1 <br /> |
+
+
+#### GlobalQuotasStatus
+
+
+
+GlobalQuotasStatus records the last quota configuration applied by the
+operator. A nil QdrantClusterStatus.GlobalQuotas means ownership has not
+been established yet.
+
+
+
+_Appears in:_
+- [QdrantClusterStatus](#qdrantclusterstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `lastApplied` _[GlobalQuotaConfigStatus](#globalquotaconfigstatus)_ | LastApplied is the complete quota configuration from the operator's last<br />action. |  |  |
+
+
 #### HelmRelease
 
 

@@ -3577,6 +3577,43 @@ spec:
                 items:
                   type: integer
                 type: array
+              globalQuotas:
+                description: |-
+                  GlobalQuotas records the quota configuration last applied by the
+                  operator.
+                properties:
+                  lastApplied:
+                    description: |-
+                      LastApplied is the complete quota configuration from the operator's last
+                      action.
+                    properties:
+                      enabled:
+                        description: |-
+                          Enabled records whether quotas were enabled in the last applied
+                          configuration.
+                        type: boolean
+                      maxDiskUsagePercent:
+                        description: |-
+                          MaxDiskUsagePercent records the disk-usage limit in the last applied
+                          configuration.
+                        maximum: 100
+                        minimum: 1
+                        type: integer
+                      maxResidentMemoryPercent:
+                        description: |-
+                          MaxResidentMemoryPercent records the resident-memory limit in the last
+                          applied configuration.
+                        maximum: 100
+                        minimum: 1
+                        type: integer
+                    required:
+                    - enabled
+                    - maxDiskUsagePercent
+                    - maxResidentMemoryPercent
+                    type: object
+                required:
+                - lastApplied
+                type: object
               nextClusterManagerInvocation:
                 description: The next time to invoke the cluster-manager in UTC
                 format: date-time
