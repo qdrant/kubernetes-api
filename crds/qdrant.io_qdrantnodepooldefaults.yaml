@@ -57,6 +57,17 @@ spec:
             required:
             - version
             type: object
+          status:
+            description: QdrantNodePoolDefaultStatus defines the observed state of
+              QdrantNodePoolDefault.
+            properties:
+              observedGeneration:
+                description: ObservedGeneration is the most recent generation observed
+                  by the operator.
+                format: int64
+                type: integer
+            type: object
+            x-kubernetes-preserve-unknown-fields: true
         required:
         - spec
         type: object
@@ -65,4 +76,5 @@ spec:
           rule: self.metadata.name == 'default'
     served: true
     storage: true
-    subresources: {}
+    subresources:
+      status: {}

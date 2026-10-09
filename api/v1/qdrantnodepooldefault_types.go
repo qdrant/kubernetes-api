@@ -17,7 +17,16 @@ type QdrantNodePoolDefaultSpec struct {
 	Version string `json:"version"`
 }
 
+// QdrantNodePoolDefaultStatus defines the observed state of QdrantNodePoolDefault.
+// +kubebuilder:pruning:PreserveUnknownFields
+type QdrantNodePoolDefaultStatus struct {
+	// ObservedGeneration is the most recent generation observed by the operator.
+	// +optional
+	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
+}
+
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 // +kubebuilder:resource:path=qdrantnodepooldefaults,scope=Cluster,singular=qdrantnodepooldefault,shortName=qnpd
 // +kubebuilder:printcolumn:name="Version",type=string,JSONPath=`.spec.version`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
@@ -29,7 +38,8 @@ type QdrantNodePoolDefault struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// +kubebuilder:validation:Required
-	Spec QdrantNodePoolDefaultSpec `json:"spec"`
+	Spec   QdrantNodePoolDefaultSpec   `json:"spec"`
+	Status QdrantNodePoolDefaultStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

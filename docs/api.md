@@ -1347,6 +1347,8 @@ _Appears in:_
 | `version` _string_ | Node pool version that new and recreated workloads target. Not checked against the QdrantNodePoolVersion CRs yet. |  | Pattern: `^v[0-9]+\.[0-9]+\.[0-9]+$` <br /> |
 
 
+
+
 #### QdrantNodePoolVersion
 
 
