@@ -18,7 +18,7 @@ type QdrantNodePoolDefaultSpec struct {
 }
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:path=qdrantnodepooldefaults,scope=Namespaced,singular=qdrantnodepooldefault,shortName=qnpd
+// +kubebuilder:resource:path=qdrantnodepooldefaults,scope=Cluster,singular=qdrantnodepooldefault,shortName=qnpd
 // +kubebuilder:printcolumn:name="Version",type=string,JSONPath=`.spec.version`
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
 // +kubebuilder:validation:XValidation:rule="self.metadata.name == 'default'",message="QdrantNodePoolDefault is a singleton and must be named \"default\"."

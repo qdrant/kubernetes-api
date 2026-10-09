@@ -14,7 +14,7 @@ spec:
     shortNames:
     - qnpv
     singular: qdrantnodepoolversion
-  scope: Namespaced
+  scope: Cluster
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.version

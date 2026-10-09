@@ -53,7 +53,7 @@ type QdrantNodePoolVersionStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:path=qdrantnodepoolversions,scope=Namespaced,singular=qdrantnodepoolversion,shortName=qnpv
+// +kubebuilder:resource:path=qdrantnodepoolversions,scope=Cluster,singular=qdrantnodepoolversion,shortName=qnpv
 // +kubebuilder:printcolumn:name="Version",type=string,JSONPath=`.spec.version`
 // +kubebuilder:printcolumn:name="Kubernetes",type=string,JSONPath=`.spec.kubernetesVersion`
 // +kubebuilder:printcolumn:name="Available",type=boolean,JSONPath=`.spec.available`
