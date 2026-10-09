@@ -71,6 +71,10 @@ Package v1 contains API Schema definitions for the qdrant.io v1 API group
 - [QdrantClusterSnapshotList](#qdrantclustersnapshotlist)
 - [QdrantEntity](#qdrantentity)
 - [QdrantEntityList](#qdrantentitylist)
+- [QdrantNodePoolDefault](#qdrantnodepooldefault)
+- [QdrantNodePoolDefaultList](#qdrantnodepooldefaultlist)
+- [QdrantNodePoolVersion](#qdrantnodepoolversion)
+- [QdrantNodePoolVersionList](#qdrantnodepoolversionlist)
 - [QdrantRelease](#qdrantrelease)
 - [QdrantReleaseList](#qdrantreleaselist)
 
@@ -610,6 +614,40 @@ _Appears in:_
 | `capacity` _[ResourceList](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#resourcelist-v1-core)_ | capacity represents the actual resources of the underlying volume. |  | Optional: \{\} <br /> |
 | `currentVolumeAttributesClassName` _string_ | currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.<br />When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim |  | Optional: \{\} <br /> |
 | `modifyVolumeStatus` _[ModifyVolumeStatus](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#modifyvolumestatus-v1-core)_ | ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.<br />When this is unset, there is no ModifyVolume operation being attempted. |  | Optional: \{\} <br /> |
+
+
+#### NodePoolEndOfLife
+
+
+
+NodePoolEndOfLife describes when a node pool version is scheduled for retirement.
+
+
+
+_Appears in:_
+- [QdrantNodePoolVersionSpec](#qdrantnodepoolversionspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `date` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Date the version is retired. |  |  |
+| `severity` _[NodePoolEndOfLifeSeverity](#nodepoolendoflifeseverity)_ | Severity of the end-of-life signal. | Normal | Enum: [Normal Critical] <br />Optional: \{\} <br /> |
+
+
+#### NodePoolEndOfLifeSeverity
+
+_Underlying type:_ _string_
+
+NodePoolEndOfLifeSeverity indicates how urgently a node pool version should be retired.
+
+
+
+_Appears in:_
+- [NodePoolEndOfLife](#nodepoolendoflife)
+
+| Field | Description |
+| --- | --- |
+| `Normal` |  |
+| `Critical` |  |
 
 
 #### NodeResourceInfo
@@ -1254,6 +1292,117 @@ _Appears in:_
 | `repository` _string_ | Repository specifies the repository of the Qdrant image.<br />If not specified defaults the config of the operator (or qdrant/qdrant if not specified in operator). |  | Optional: \{\} <br /> |
 | `pullPolicy` _[PullPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#pullpolicy-v1-core)_ | PullPolicy specifies the image pull policy for the Qdrant image.<br />If not specified defaults the config of the operator (or IfNotPresent if not specified in operator). |  | Optional: \{\} <br /> |
 | `pullSecretName` _string_ | PullSecretName specifies the pull secret for the Qdrant image. |  | Optional: \{\} <br /> |
+
+
+#### QdrantNodePoolDefault
+
+
+
+QdrantNodePoolDefault is a singleton (named "default") selecting the node pool version new workloads are scheduled onto.
+
+
+
+_Appears in:_
+- [QdrantNodePoolDefaultList](#qdrantnodepooldefaultlist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantNodePoolDefault` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[QdrantNodePoolDefaultSpec](#qdrantnodepooldefaultspec)_ |  |  | Required: \{\} <br /> |
+
+
+#### QdrantNodePoolDefaultList
+
+
+
+QdrantNodePoolDefaultList contains a list of QdrantNodePoolDefault
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantNodePoolDefaultList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[QdrantNodePoolDefault](#qdrantnodepooldefault) array_ |  |  |  |
+
+
+#### QdrantNodePoolDefaultSpec
+
+
+
+QdrantNodePoolDefaultSpec defines the desired state of QdrantNodePoolDefault.
+
+
+
+_Appears in:_
+- [QdrantNodePoolDefault](#qdrantnodepooldefault)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `version` _string_ | Node pool version that new and recreated workloads target. Not checked against the QdrantNodePoolVersion CRs yet. |  | Pattern: `^v[0-9]+\.[0-9]+\.[0-9]+$` <br /> |
+
+
+#### QdrantNodePoolVersion
+
+
+
+QdrantNodePoolVersion describes a versioned node pool (qdrant.io/node-pool-version) available in the region.
+
+
+
+_Appears in:_
+- [QdrantNodePoolVersionList](#qdrantnodepoolversionlist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantNodePoolVersion` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[QdrantNodePoolVersionSpec](#qdrantnodepoolversionspec)_ |  |  | Required: \{\} <br /> |
+
+
+#### QdrantNodePoolVersionList
+
+
+
+QdrantNodePoolVersionList contains a list of QdrantNodePoolVersion
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `qdrant.io/v1` | | |
+| `kind` _string_ | `QdrantNodePoolVersionList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[QdrantNodePoolVersion](#qdrantnodepoolversion) array_ |  |  |  |
+
+
+#### QdrantNodePoolVersionSpec
+
+
+
+QdrantNodePoolVersionSpec defines the desired state of QdrantNodePoolVersion.
+
+
+
+_Appears in:_
+- [QdrantNodePoolVersion](#qdrantnodepoolversion)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `version` _string_ | Node pool version, matching the qdrant.io/node-pool-version label and taint on the nodes. |  | Pattern: `^v[0-9]+\.[0-9]+\.[0-9]+$` <br /> |
+| `kubernetesVersion` _string_ | Kubernetes version the node pool runs. |  | Pattern: `^[0-9]+\.[0-9]+(\.[0-9]+)?$` <br /> |
+| `available` _boolean_ | Whether new workloads may be scheduled onto this node pool version. |  |  |
+| `endOfLife` _[NodePoolEndOfLife](#nodepoolendoflife)_ | Absent until the version is scheduled for retirement. |  | Optional: \{\} <br /> |
+
+
 
 
 #### QdrantRelease
