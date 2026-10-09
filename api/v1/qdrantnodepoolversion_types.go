@@ -49,6 +49,9 @@ type QdrantNodePoolVersionSpec struct {
 // QdrantNodePoolVersionStatus defines the observed state of QdrantNodePoolVersion.
 // +kubebuilder:pruning:PreserveUnknownFields
 type QdrantNodePoolVersionStatus struct {
+	// ObservedGeneration is the most recent generation observed by the operator.
+	// +optional
+	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 }
 
 // +kubebuilder:object:root=true
