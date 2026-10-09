@@ -629,7 +629,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `date` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Date the version is retired. |  |  |
+| `date` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | Date the version is retired or will be retiring.<br />Can be a date in the future. |  |  |
 | `severity` _[NodePoolEndOfLifeSeverity](#nodepoolendoflifeseverity)_ | Severity of the end-of-life signal. | Normal | Enum: [Normal Critical] <br />Optional: \{\} <br /> |
 
 
@@ -1402,7 +1402,7 @@ _Appears in:_
 | `version` _string_ | Node pool version, matching the qdrant.io/node-pool-version label and taint on the nodes. |  | Pattern: `^v[0-9]+\.[0-9]+\.[0-9]+$` <br /> |
 | `kubernetesVersion` _string_ | Kubernetes version the node pool runs. |  | Pattern: `^[0-9]+\.[0-9]+(\.[0-9]+)?$` <br /> |
 | `available` _boolean_ | Whether new workloads may be scheduled onto this node pool version. |  |  |
-| `endOfLife` _[NodePoolEndOfLife](#nodepoolendoflife)_ | Absent until the version is scheduled for retirement. |  | Optional: \{\} <br /> |
+| `endOfLife` _[NodePoolEndOfLife](#nodepoolendoflife)_ | Absent means no retirement is known yet. |  | Optional: \{\} <br /> |
 
 
 

@@ -21,7 +21,8 @@ const (
 
 // NodePoolEndOfLife describes when a node pool version is scheduled for retirement.
 type NodePoolEndOfLife struct {
-	// Date the version is retired.
+	// Date the version is retired or will be retiring.
+	// Can be a date in the future.
 	Date metav1.Time `json:"date"`
 	// Severity of the end-of-life signal.
 	// +kubebuilder:validation:Enum=Normal;Critical
@@ -41,7 +42,7 @@ type QdrantNodePoolVersionSpec struct {
 	KubernetesVersion string `json:"kubernetesVersion"`
 	// Whether new workloads may be scheduled onto this node pool version.
 	Available bool `json:"available"`
-	// Absent until the version is scheduled for retirement.
+	// Absent means no retirement is known yet.
 	// +optional
 	EndOfLife *NodePoolEndOfLife `json:"endOfLife,omitempty"`
 }

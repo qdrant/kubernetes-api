@@ -68,10 +68,12 @@ spec:
                   pool version.
                 type: boolean
               endOfLife:
-                description: Absent until the version is scheduled for retirement.
+                description: Absent means no retirement is known yet.
                 properties:
                   date:
-                    description: Date the version is retired.
+                    description: |-
+                      Date the version is retired or will be retiring.
+                      Can be a date in the future.
                     format: date-time
                     type: string
                   severity:
