@@ -8,6 +8,18 @@ import (
 const (
 	KindQdrantNodePoolDefault     = "QdrantNodePoolDefault"
 	ResourceQdrantNodePoolDefault = "qdrantnodepooldefaults"
+	// QdrantNodePoolDefaultName is the required metadata.name of the singleton QdrantNodePoolDefault.
+	QdrantNodePoolDefaultName = "default"
+)
+
+//goland:noinspection GoUnusedConst
+const (
+	// QdrantNodePoolLabel is the label and taint key on nodes for a versioned node pool.
+	// The operator also uses this key for the pod nodeSelector and matching toleration.
+	QdrantNodePoolLabel = "qdrant.io/node-pool-version"
+	// QdrantNodePoolAnnotation is the annotation key on pods recording which node pool
+	// version the pod was rendered for. The value is the target version string (e.g. "v1.0.0").
+	QdrantNodePoolAnnotation = "qdrant.io/node-pool-version"
 )
 
 // QdrantNodePoolDefaultSpec defines the desired state of QdrantNodePoolDefault.
