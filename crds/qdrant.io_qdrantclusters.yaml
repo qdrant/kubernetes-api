@@ -252,6 +252,14 @@ spec:
                           async_scorer:
                             description: AsyncScorer enables io_uring when rescoring
                             type: boolean
+                          io_uring:
+                            description: |-
+                              IOUring selects the async I/O mode, supported from Qdrant v1.19.0.
+                              When set it overrides AsyncScorer.
+                            enum:
+                            - auto
+                            - disabled
+                            type: string
                           optimizer_cpu_budget:
                             description: |-
                               OptimizerCPUBudget defines the number of CPU allocation.
