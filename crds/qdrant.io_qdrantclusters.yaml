@@ -87,6 +87,21 @@ spec:
                         format: int64
                         minimum: 1
                         type: integer
+                      output:
+                        description: |-
+                          Output specifies where audit log entries are written: "file", "stdout",
+                          "stderr", "file_and_stdout" or "file_and_stderr". If unset, Qdrant
+                          defaults to "file". No CRD default is set, so existing resources are
+                          not changed when the CRD is updated.
+                          Dir, Rotation and MaxLogFiles only apply when the output includes file.
+                          Requires Qdrant v1.20.0 or later; ignored on older versions.
+                        enum:
+                        - file
+                        - stdout
+                        - stderr
+                        - file_and_stdout
+                        - file_and_stderr
+                        type: string
                       rotation:
                         default: daily
                         description: 'Rotation specifies the rotation interval: "daily"

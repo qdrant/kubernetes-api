@@ -533,6 +533,18 @@ const (
 	AuditRotationHourly AuditRotation = "hourly"
 )
 
+// AuditOutput specifies where audit log entries are written.
+// +kubebuilder:validation:Enum=file;stdout;stderr;file_and_stdout;file_and_stderr
+type AuditOutput string
+
+const (
+	AuditOutputFile          AuditOutput = "file"
+	AuditOutputStdout        AuditOutput = "stdout"
+	AuditOutputStderr        AuditOutput = "stderr"
+	AuditOutputFileAndStdout AuditOutput = "file_and_stdout"
+	AuditOutputFileAndStderr AuditOutput = "file_and_stderr"
+)
+
 // AuditConfig specifies the audit logging configuration for Qdrant.
 type AuditConfig struct {
 	// Enabled specifies whether to enable audit logging.
@@ -553,6 +565,14 @@ type AuditConfig struct {
 	// +kubebuilder:validation:Minimum=1
 	// +optional
 	MaxLogFiles *int64 `json:"max_log_files,omitempty"`
+	// Output specifies where audit log entries are written: "file", "stdout",
+	// "stderr", "file_and_stdout" or "file_and_stderr". If unset, Qdrant
+	// defaults to "file". No CRD default is set, so existing resources are
+	// not changed when the CRD is updated.
+	// Dir, Rotation and MaxLogFiles only apply when the output includes file.
+	// Requires Qdrant v1.20.0 or later; ignored on older versions.
+	// +optional
+	Output *AuditOutput `json:"output,omitempty"`
 	// TrustForwardedHeaders specifies whether to use X-Forwarded-For header to
 	// determine the client address recorded in audit log entries. Only enable
 	// this when running behind a trusted reverse proxy or load balancer.
