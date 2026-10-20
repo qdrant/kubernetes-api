@@ -43,9 +43,20 @@ jobs:
 
       - name: Tag Release
         shell: bash
+        env:
+          TAG: ${{ steps.extract_build_info.outputs.tag }}
         run: |
-          git tag ${{ steps.extract_build_info.outputs.tag }}
-          git push origin ${{ steps.extract_build_info.outputs.tag }}
+          # The peeled ref (^{}) is the commit for an annotated tag; lightweight tags only have the direct ref.
+          remote_sha="$(git ls-remote --tags origin "refs/tags/${TAG}" "refs/tags/${TAG}^{}" | tail -n1 | cut -f1)"
+          if [ -z "${remote_sha}" ]; then
+            git tag "${TAG}"
+            git push origin "${TAG}"
+          elif [ "${remote_sha}" = "$(git rev-parse HEAD)" ]; then
+            echo "Tag ${TAG} already exists on HEAD, skipping"
+          else
+            echo "::error::Tag ${TAG} exists on ${remote_sha}, not on HEAD $(git rev-parse HEAD)"
+            exit 1
+          fi
 
       - name: Publish Release Notes
         uses: release-drafter/release-drafter@978bb0b30c5ee8cdd332ced253758157150d43f0 # v7.10.0
