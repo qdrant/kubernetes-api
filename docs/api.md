@@ -400,6 +400,24 @@ _Appears in:_
 | `object` _[HelmRepository](#helmrepository)_ | Object specifies the helm repository object |  | EmbeddedResource: \{\} <br /> |
 
 
+#### IOUringMode
+
+_Underlying type:_ _string_
+
+IOUringMode specifies the async I/O mode, supported from Qdrant v1.19.0.
+
+_Validation:_
+- Enum: [auto disabled]
+
+_Appears in:_
+- [StoragePerformanceConfig](#storageperformanceconfig)
+
+| Field | Description |
+| --- | --- |
+| `auto` | IOUringAuto uses io_uring for every structure in the cold memory tier.<br /> |
+| `disabled` | IOUringDisabled turns io_uring off entirely.<br /> |
+
+
 #### InferenceConfig
 
 
@@ -1824,6 +1842,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `optimizer_cpu_budget` _integer_ | OptimizerCPUBudget defines the number of CPU allocation.<br />If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size<br />If negative - subtract this number of CPUs from the available CPUs.<br />If positive - use this exact number of CPUs. |  | Optional: \{\} <br /> |
 | `async_scorer` _boolean_ | AsyncScorer enables io_uring when rescoring |  | Optional: \{\} <br /> |
+| `io_uring` _[IOUringMode](#iouringmode)_ | IOUring selects the async I/O mode, supported from Qdrant v1.19.0.<br />When set it overrides AsyncScorer. |  | Enum: [auto disabled] <br />Optional: \{\} <br /> |
 
 
 #### TemplateMetadata

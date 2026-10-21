@@ -593,6 +593,18 @@ type StorageConfig struct {
 	MaxCollections *uint `json:"maxCollections,omitempty"`
 }
 
+// IOUringMode specifies the async I/O mode, supported from Qdrant v1.19.0.
+// +kubebuilder:validation:Enum=auto;disabled
+type IOUringMode string
+
+//goland:noinspection GoUnusedConst
+const (
+	// IOUringAuto uses io_uring for every structure in the cold memory tier.
+	IOUringAuto IOUringMode = "auto"
+	// IOUringDisabled turns io_uring off entirely.
+	IOUringDisabled IOUringMode = "disabled"
+)
+
 type StoragePerformanceConfig struct {
 	// OptimizerCPUBudget defines the number of CPU allocation.
 	// If 0 - auto selection, keep 1 or more CPUs unallocated depending on CPU size
@@ -603,6 +615,10 @@ type StoragePerformanceConfig struct {
 	// AsyncScorer enables io_uring when rescoring
 	// +optional
 	AsyncScorer *bool `json:"async_scorer,omitempty"`
+	// IOUring selects the async I/O mode, supported from Qdrant v1.19.0.
+	// When set it overrides AsyncScorer.
+	// +optional
+	IOUring *IOUringMode `json:"io_uring,omitempty"`
 }
 
 func (c *QdrantConfiguration) GetService() *QdrantConfigurationService {
