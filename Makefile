@@ -22,6 +22,7 @@ lint:
 	helm lint $(CHART_DIR) --set includeManagementCRDs=true
 	helm lint $(CHART_DIR) --set includeAuthCRDs=true
 	helm lint $(CHART_DIR) --set includeRoutingCRDs=true
+	helm lint $(CHART_DIR) --set includeQdrantClusterCRDs=false
 	helm lint $(CHART_DIR) --set includeManagementCRDs=true --set includeAuthCRDs=true --set includeRoutingCRDs=true
 	helm lint $(CHART_DIR)
 	golangci-lint run
@@ -47,7 +48,13 @@ manifests: controller-gen ## Generate CustomResourceDefinition objects.
 	done
 	for file in $(CHART_DIR)/templates/region-crds/qdrant*.yaml; do \
 		awk '{print} /^  annotations:/{print "    helm.sh/resource-policy: keep"}' $$file > temp && mv temp $$file; \
-		echo "{{ if .Values.includeRegionCRDs }}" | cat - $$file > temp && mv temp $$file; \
+		case "$$(basename $$file)" in \
+			qdrant.io_qdrantclusters.yaml|qdrant.io_qdrantclusterrestores.yaml|qdrant.io_qdrantclustersnapshots.yaml|qdrant.io_qdrantclusterscheduledsnapshots.yaml) \
+				guard='{{ if and .Values.includeRegionCRDs .Values.includeQdrantClusterCRDs }}' ;; \
+			*) \
+				guard='{{ if .Values.includeRegionCRDs }}' ;; \
+		esac; \
+		echo "$$guard" | cat - $$file > temp && mv temp $$file; \
 		echo "{{ end }}" >> $$file; \
 	done
 	# We only want to deploy API key CRD to regional clusters

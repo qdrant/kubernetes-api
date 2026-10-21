@@ -2,6 +2,9 @@
 includeManagementCRDs: false
 # Include region-crds in the deployment
 includeRegionCRDs: true
+# Include QdrantCluster / snapshot / restore CRDs (subset of region-crds)
+# Should be disabled for serverless
+includeQdrantClusterCRDs: true
 # Include auth.qdrant.io API key CRD in the deployment
 includeAuthCRDs: false
 # Include routing.qdrant.io API key CRD in the deployment
