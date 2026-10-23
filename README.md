@@ -35,6 +35,6 @@ Only members of `cloud-admins` can create `v*` tags (SEC-41 tag ruleset), so the
    git push origin releases/v1.2.3
    ```
 
-The release workflow finds the tag on the branch head and skips tag creation, then publishes the release notes, the Helm chart and the image. If the branch was pushed before the tag, the run fails at the tag step; push the tag and re-run the failed job. A tag that exists on a different commit fails the release.
+The release workflow finds the tag on the branch head and skips tag creation, then publishes the release notes and the Helm chart. If the branch was pushed before the tag, the run fails at the tag step; push the tag and re-run the failed job. A tag that exists on a different commit fails the release.
 
 Deployment to different environments is coupled with operator release, please see [qdrant/operator: Release process](https://github.com/qdrant/operator?tab=readme-ov-file#release-process) for details.
