@@ -100,6 +100,94 @@ var _ = Describe("QdrantCluster", func() {
 			err := k8sClient.Create(ctx, &qc)
 			Expect(err).To(HaveOccurred())
 		})
+		snapshotsCluster := func(name string, snapshots *SnapshotsConfig) *QdrantCluster {
+			return &QdrantCluster{
+				ObjectMeta: metav1.ObjectMeta{
+					Namespace: namespaceName,
+					Name:      name,
+				},
+				Spec: QdrantClusterSpec{
+					Id:   name,
+					Size: 1,
+					Config: &QdrantConfiguration{
+						Storage: &StorageConfig{Snapshots: snapshots},
+					},
+				},
+			}
+		}
+		secretKey := func(key string) corev1.SecretKeySelector {
+			return corev1.SecretKeySelector{
+				LocalObjectReference: corev1.LocalObjectReference{Name: "s3-keys"},
+				Key:                  key,
+			}
+		}
+		It("should accept S3 snapshot storage with a Secret reference", func() {
+			qc := snapshotsCluster("test-cluster-snapshots-s3", &SnapshotsConfig{
+				S3: &SnapshotsS3Config{
+					Bucket:      "snapshots",
+					EndpointURL: NewPointer("http://rustfs:9000"),
+					Credentials: &SnapshotsS3Credentials{
+						SecretRef: &SnapshotsS3SecretRef{
+							AccessKeyID:     secretKey("access-key-id"),
+							SecretAccessKey: secretKey("secret-access-key"),
+						},
+					},
+				},
+			})
+			Expect(k8sClient.Create(ctx, qc)).To(Succeed())
+		})
+		It("should reject snapshot storage without a backend", func() {
+			qc := snapshotsCluster("test-cluster-snapshots-empty", &SnapshotsConfig{})
+			err := k8sClient.Create(ctx, qc)
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("exactly one snapshot storage backend must be set"))
+		})
+		It("should reject S3 snapshot storage with two kinds of credentials", func() {
+			qc := snapshotsCluster("test-cluster-snapshots-two-creds", &SnapshotsConfig{
+				S3: &SnapshotsS3Config{
+					Bucket: "snapshots",
+					Credentials: &SnapshotsS3Credentials{
+						SecretRef: &SnapshotsS3SecretRef{
+							AccessKeyID:     secretKey("access-key-id"),
+							SecretAccessKey: secretKey("secret-access-key"),
+						},
+						ContainerCredentials: &SnapshotsContainerCredentials{
+							URI:            "http://crosp/v1/credentials",
+							TokenSecretRef: corev1.LocalObjectReference{Name: "token"},
+						},
+					},
+				},
+			})
+			err := k8sClient.Create(ctx, qc)
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("at most one of secretRef and containerCredentials may be set"))
+		})
+		It("should reject S3 snapshot storage with an empty bucket", func() {
+			qc := snapshotsCluster("test-cluster-snapshots-no-bucket", &SnapshotsConfig{
+				S3: &SnapshotsS3Config{},
+			})
+			Expect(k8sClient.Create(ctx, qc)).NotTo(Succeed())
+		})
+		It("should accept S3 retry settings", func() {
+			qc := snapshotsCluster("test-cluster-snapshots-retries", &SnapshotsConfig{
+				S3: &SnapshotsS3Config{
+					Bucket:            "snapshots",
+					TimeoutSec:        NewPointer(uint(60)),
+					ConnectTimeoutSec: NewPointer(uint(10)),
+					MaxRetries:        NewPointer(uint(0)),
+					RetryTimeoutSec:   NewPointer(uint(600)),
+				},
+			})
+			Expect(k8sClient.Create(ctx, qc)).To(Succeed())
+		})
+		It("should reject an S3 request timeout of zero", func() {
+			qc := snapshotsCluster("test-cluster-snapshots-zero-timeout", &SnapshotsConfig{
+				S3: &SnapshotsS3Config{Bucket: "snapshots", TimeoutSec: NewPointer(uint(0))},
+			})
+			err := k8sClient.Create(ctx, qc)
+			Expect(err).To(HaveOccurred())
+			Expect(err.Error()).To(ContainSubstring("timeout_sec"))
+		})
 	})
 
 })

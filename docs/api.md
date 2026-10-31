@@ -709,6 +709,23 @@ _Appears in:_
 | `ephemeralStorage` _string_ | EphemeralStorage specifies the ephemeral storage resources of the node |  |  |
 
 
+#### NodeSnapshotMigration
+
+
+
+NodeSnapshotMigration reports the migration of a node's old snapshot volume.
+
+
+
+_Appears in:_
+- [NodeStatus](#nodestatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `state` _[SnapshotMigrationState](#snapshotmigrationstate)_ | State is the current migration state. |  | Enum: [pending migrated pvcDeleted restoring] <br /> |
+| `migratedAt` _[Time](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#time-v1-meta)_ | MigratedAt is when every snapshot was copied and verified. |  | Optional: \{\} <br /> |
+
+
 #### NodeStatus
 
 
@@ -737,6 +754,8 @@ _Appears in:_
 | `restartCount` _integer_ | The number of times the main qdrant container has been restarted. |  | Optional: \{\} <br /> |
 | `databasePVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the database storage PVC |  | Optional: \{\} <br /> |
 | `snapshotsPVCStatus` _[NodePVCStatus](#nodepvcstatus)_ | Status of the snapshots storage PVC |  | Optional: \{\} <br /> |
+| `snapshotBackend` _[SnapshotBackend](#snapshotbackend)_ | SnapshotBackend is where the node stores Qdrant snapshots. |  | Enum: [volume object] <br />Optional: \{\} <br /> |
+| `snapshotMigration` _[NodeSnapshotMigration](#nodesnapshotmigration)_ | SnapshotMigration reports the copy of the node's old snapshot volume into<br />object storage, or, after a rollback, the copy back to the snapshot volume.<br />It is set only where the operator runs that migration. |  | Optional: \{\} <br /> |
 
 
 #### OnDemandReplicationType
@@ -1750,6 +1769,102 @@ _Appears in:_
 | `Disabled` |  |
 
 
+#### SnapshotBackend
+
+_Underlying type:_ _string_
+
+SnapshotBackend is where a node stores Qdrant snapshots.
+
+_Validation:_
+- Enum: [volume object]
+
+_Appears in:_
+- [NodeStatus](#nodestatus)
+
+| Field | Description |
+| --- | --- |
+| `volume` | SnapshotBackendVolume stores snapshots on the node's snapshot volume.<br /> |
+| `object` | SnapshotBackendObject stores snapshots in object storage.<br /> |
+
+
+#### SnapshotMigrationState
+
+_Underlying type:_ _string_
+
+SnapshotMigrationState is the state of a node's snapshot migration.
+
+_Validation:_
+- Enum: [pending migrated pvcDeleted restoring]
+
+_Appears in:_
+- [NodeSnapshotMigration](#nodesnapshotmigration)
+
+| Field | Description |
+| --- | --- |
+| `pending` | SnapshotMigrationPending means the old snapshot volume is not fully copied yet.<br /> |
+| `migrated` | SnapshotMigrationMigrated means every snapshot is copied and verified.<br /> |
+| `pvcDeleted` | SnapshotMigrationPVCDeleted means the old snapshot PVC is deleted.<br /> |
+| `restoring` | SnapshotMigrationRestoring means the node left object storage, and the<br />snapshots in object storage are not fully copied back to its snapshot volume yet.<br /> |
+
+
+#### SnapshotsConfig
+
+
+
+SnapshotsConfig selects exactly one object storage backend for Qdrant snapshots.
+
+
+
+_Appears in:_
+- [StorageConfig](#storageconfig)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `s3` _[SnapshotsS3Config](#snapshotss3config)_ | S3 stores snapshots in Amazon S3 or an S3-compatible store. |  | Optional: \{\} <br /> |
+
+
+
+
+#### SnapshotsS3Config
+
+
+
+SnapshotsS3Config holds the S3 settings for Qdrant snapshot storage.
+
+
+
+_Appears in:_
+- [SnapshotsConfig](#snapshotsconfig)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `bucket` _string_ | Bucket is the name of the bucket that stores the snapshots. |  | MinLength: 1 <br /> |
+| `region` _string_ | Region is the region of the bucket. |  | Optional: \{\} <br /> |
+| `endpoint_url` _string_ | EndpointURL is the URL of the S3 API. Set it for an S3-compatible store or a proxy. |  | Optional: \{\} <br /> |
+| `prefix` _string_ | Prefix is the key prefix under which Qdrant stores snapshots in the bucket.<br />Requires Qdrant v1.19.2 or later. |  | Optional: \{\} <br /> |
+| `timeout_sec` _integer_ | TimeoutSec is the timeout of one request, body included, in seconds.<br />Qdrant uses 30 seconds when it is unset.<br />Requires Qdrant v1.20.0 or later. Older versions do not get it. |  | Minimum: 1 <br />Optional: \{\} <br /> |
+| `connect_timeout_sec` _integer_ | ConnectTimeoutSec is the timeout to open a connection, in seconds.<br />Requires Qdrant v1.20.0 or later. Older versions do not get it. |  | Minimum: 1 <br />Optional: \{\} <br /> |
+| `max_retries` _integer_ | MaxRetries is how many times Qdrant retries a failed request. A download<br />that outlives the request timeout resumes on each retry. 0 disables retries.<br />Requires Qdrant v1.20.0 or later. Older versions do not get it. |  | Optional: \{\} <br /> |
+| `retry_timeout_sec` _integer_ | RetryTimeoutSec is how long Qdrant keeps retrying after the first attempt,<br />in seconds.<br />Requires Qdrant v1.20.0 or later. Older versions do not get it. |  | Optional: \{\} <br /> |
+| `credentials` _[SnapshotsS3Credentials](#snapshotss3credentials)_ | Credentials selects how Qdrant authenticates to the store. Without it, Qdrant<br />uses the pod's own cloud identity. |  | Optional: \{\} <br /> |
+
+
+#### SnapshotsS3Credentials
+
+_Underlying type:_ _[struct{SecretRef *SnapshotsS3SecretRef "json:\"secretRef,omitempty\""; ContainerCredentials *SnapshotsContainerCredentials "json:\"containerCredentials,omitempty\""}](#struct{secretref-*snapshotss3secretref-"json:\"secretref,omitempty\"";-containercredentials-*snapshotscontainercredentials-"json:\"containercredentials,omitempty\""})_
+
+SnapshotsS3Credentials holds at most one way to authenticate to the store.
+It holds references to Secrets only, never credential values.
+
+
+
+_Appears in:_
+- [SnapshotsS3Config](#snapshotss3config)
+
+
+
+
+
 #### Storage
 
 
@@ -1825,6 +1940,7 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `performance` _[StoragePerformanceConfig](#storageperformanceconfig)_ | Performance configuration |  | Optional: \{\} <br /> |
 | `maxCollections` _integer_ | MaxCollections represents the maximal number of collections allowed to be created.<br />It can be set for Qdrant version >= 1.14.1<br />Default to 1000 if omitted and Qdrant version >= 1.15.0 |  | Minimum: 1 <br />Optional: \{\} <br /> |
+| `snapshots` _[SnapshotsConfig](#snapshotsconfig)_ | Snapshots stores Qdrant snapshots in object storage instead of on the<br />per-node snapshot volume. Without it, the operator keeps the snapshot volume.<br />Setting it never migrates snapshots that are already on the snapshot volume.<br />The operator renders it as Qdrant's storage.snapshots_config.<br />Requires Qdrant v1.16.0 or later. |  | Optional: \{\} <br /> |
 
 
 #### StoragePerformanceConfig

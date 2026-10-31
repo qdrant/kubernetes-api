@@ -284,6 +284,168 @@ spec:
                             format: int64
                             type: integer
                         type: object
+                      snapshots:
+                        description: |-
+                          Snapshots stores Qdrant snapshots in object storage instead of on the
+                          per-node snapshot volume. Without it, the operator keeps the snapshot volume.
+                          Setting it never migrates snapshots that are already on the snapshot volume.
+                          The operator renders it as Qdrant's storage.snapshots_config.
+                          Requires Qdrant v1.16.0 or later.
+                        properties:
+                          s3:
+                            description: S3 stores snapshots in Amazon S3 or an S3-compatible
+                              store.
+                            properties:
+                              bucket:
+                                description: Bucket is the name of the bucket that
+                                  stores the snapshots.
+                                minLength: 1
+                                type: string
+                              connect_timeout_sec:
+                                description: |-
+                                  ConnectTimeoutSec is the timeout to open a connection, in seconds.
+                                  Requires Qdrant v1.20.0 or later. Older versions do not get it.
+                                minimum: 1
+                                type: integer
+                              credentials:
+                                description: |-
+                                  Credentials selects how Qdrant authenticates to the store. Without it, Qdrant
+                                  uses the pod's own cloud identity.
+                                properties:
+                                  containerCredentials:
+                                    description: |-
+                                      ContainerCredentials fetches expiring credentials from an HTTP endpoint, sending
+                                      the contents of a token file as the Authorization header.
+                                    properties:
+                                      tokenSecretRef:
+                                        description: |-
+                                          TokenSecretRef references the Secret, in the QdrantCluster namespace, whose
+                                          `token` key holds the token that Qdrant sends to the endpoint.
+                                        properties:
+                                          name:
+                                            default: ""
+                                            description: |-
+                                              Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
+                                              More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            type: string
+                                        type: object
+                                        x-kubernetes-map-type: atomic
+                                      uri:
+                                        description: URI is the credentials endpoint
+                                          that Qdrant calls.
+                                        minLength: 1
+                                        type: string
+                                    required:
+                                    - tokenSecretRef
+                                    - uri
+                                    type: object
+                                  secretRef:
+                                    description: SecretRef references static access
+                                      keys in Secrets in the QdrantCluster namespace.
+                                    properties:
+                                      accessKeyId:
+                                        description: AccessKeyID references the Secret
+                                          key that holds the access key ID.
+                                        properties:
+                                          key:
+                                            description: The key of the secret to
+                                              select from.  Must be a valid secret
+                                              key.
+                                            type: string
+                                          name:
+                                            default: ""
+                                            description: |-
+                                              Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
+                                              More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            type: string
+                                          optional:
+                                            description: Specify whether the Secret
+                                              or its key must be defined
+                                            type: boolean
+                                        required:
+                                        - key
+                                        type: object
+                                        x-kubernetes-map-type: atomic
+                                      secretAccessKey:
+                                        description: SecretAccessKey references the
+                                          Secret key that holds the secret access
+                                          key.
+                                        properties:
+                                          key:
+                                            description: The key of the secret to
+                                              select from.  Must be a valid secret
+                                              key.
+                                            type: string
+                                          name:
+                                            default: ""
+                                            description: |-
+                                              Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
+                                              More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            type: string
+                                          optional:
+                                            description: Specify whether the Secret
+                                              or its key must be defined
+                                            type: boolean
+                                        required:
+                                        - key
+                                        type: object
+                                        x-kubernetes-map-type: atomic
+                                    required:
+                                    - accessKeyId
+                                    - secretAccessKey
+                                    type: object
+                                type: object
+                                x-kubernetes-validations:
+                                - message: at most one of secretRef and containerCredentials
+                                    may be set
+                                  rule: '!(has(self.secretRef) && has(self.containerCredentials))'
+                              endpoint_url:
+                                description: EndpointURL is the URL of the S3 API.
+                                  Set it for an S3-compatible store or a proxy.
+                                type: string
+                              max_retries:
+                                description: |-
+                                  MaxRetries is how many times Qdrant retries a failed request. A download
+                                  that outlives the request timeout resumes on each retry. 0 disables retries.
+                                  Requires Qdrant v1.20.0 or later. Older versions do not get it.
+                                type: integer
+                              prefix:
+                                description: |-
+                                  Prefix is the key prefix under which Qdrant stores snapshots in the bucket.
+                                  Requires Qdrant v1.19.2 or later.
+                                type: string
+                              region:
+                                description: Region is the region of the bucket.
+                                type: string
+                              retry_timeout_sec:
+                                description: |-
+                                  RetryTimeoutSec is how long Qdrant keeps retrying after the first attempt,
+                                  in seconds.
+                                  Requires Qdrant v1.20.0 or later. Older versions do not get it.
+                                type: integer
+                              timeout_sec:
+                                description: |-
+                                  TimeoutSec is the timeout of one request, body included, in seconds.
+                                  Qdrant uses 30 seconds when it is unset.
+                                  Requires Qdrant v1.20.0 or later. Older versions do not get it.
+                                minimum: 1
+                                type: integer
+                            required:
+                            - bucket
+                            type: object
+                        type: object
+                        x-kubernetes-validations:
+                        - message: exactly one snapshot storage backend must be set
+                          rule: has(self.s3)
                     type: object
                   tls:
                     description: TLS specifies the TLS configuration for Qdrant.
@@ -4397,6 +4559,35 @@ spec:
                         been restarted.
                       format: int32
                       type: integer
+                    snapshotBackend:
+                      description: SnapshotBackend is where the node stores Qdrant
+                        snapshots.
+                      enum:
+                      - volume
+                      - object
+                      type: string
+                    snapshotMigration:
+                      description: |-
+                        SnapshotMigration reports the copy of the node's old snapshot volume into
+                        object storage, or, after a rollback, the copy back to the snapshot volume.
+                        It is set only where the operator runs that migration.
+                      properties:
+                        migratedAt:
+                          description: MigratedAt is when every snapshot was copied
+                            and verified.
+                          format: date-time
+                          type: string
+                        state:
+                          description: State is the current migration state.
+                          enum:
+                          - pending
+                          - migrated
+                          - pvcDeleted
+                          - restoring
+                          type: string
+                      required:
+                      - state
+                      type: object
                     snapshotsPVCStatus:
                       description: Status of the snapshots storage PVC
                       properties:
