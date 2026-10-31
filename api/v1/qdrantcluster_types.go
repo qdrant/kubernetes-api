@@ -591,6 +591,129 @@ type StorageConfig struct {
 	// +optional
 	// +kubebuilder:validation:Minimum:=1
 	MaxCollections *uint `json:"maxCollections,omitempty"`
+	// Snapshots stores Qdrant snapshots in object storage instead of on the
+	// per-node snapshot volume. Without it, the operator keeps the snapshot volume.
+	// Setting it never migrates snapshots that are already on the snapshot volume.
+	// The operator renders it as Qdrant's storage.snapshots_config.
+	// Requires Qdrant v1.16.0 or later.
+	// +optional
+	Snapshots *SnapshotsConfig `json:"snapshots,omitempty"`
+}
+
+func (c *StorageConfig) GetSnapshots() *SnapshotsConfig {
+	if c == nil {
+		return nil
+	}
+	return c.Snapshots
+}
+
+// SnapshotsConfig selects exactly one object storage backend for Qdrant snapshots.
+// +kubebuilder:validation:XValidation:rule="has(self.s3)",message="exactly one snapshot storage backend must be set"
+type SnapshotsConfig struct {
+	// S3 stores snapshots in Amazon S3 or an S3-compatible store.
+	// +optional
+	S3 *SnapshotsS3Config `json:"s3,omitempty"`
+}
+
+func (c *SnapshotsConfig) GetS3() *SnapshotsS3Config {
+	if c == nil {
+		return nil
+	}
+	return c.S3
+}
+
+// SnapshotsS3Config holds the S3 settings for Qdrant snapshot storage.
+type SnapshotsS3Config struct {
+	// Bucket is the name of the bucket that stores the snapshots.
+	// +kubebuilder:validation:MinLength=1
+	Bucket string `json:"bucket"`
+	// Region is the region of the bucket.
+	// +optional
+	Region *string `json:"region,omitempty"`
+	// EndpointURL is the URL of the S3 API. Set it for an S3-compatible store or a proxy.
+	// +optional
+	EndpointURL *string `json:"endpoint_url,omitempty"`
+	// Prefix is the key prefix under which Qdrant stores snapshots in the bucket.
+	// Requires Qdrant v1.19.2 or later.
+	// +optional
+	Prefix *string `json:"prefix,omitempty"`
+	// TimeoutSec is the timeout of one request, body included, in seconds.
+	// Qdrant uses 30 seconds when it is unset.
+	// Requires Qdrant v1.20.0 or later. Older versions do not get it.
+	// +optional
+	// +kubebuilder:validation:Minimum=1
+	TimeoutSec *uint `json:"timeout_sec,omitempty"`
+	// ConnectTimeoutSec is the timeout to open a connection, in seconds.
+	// Requires Qdrant v1.20.0 or later. Older versions do not get it.
+	// +optional
+	// +kubebuilder:validation:Minimum=1
+	ConnectTimeoutSec *uint `json:"connect_timeout_sec,omitempty"`
+	// MaxRetries is how many times Qdrant retries a failed request. A download
+	// that outlives the request timeout resumes on each retry. 0 disables retries.
+	// Requires Qdrant v1.20.0 or later. Older versions do not get it.
+	// +optional
+	MaxRetries *uint `json:"max_retries,omitempty"`
+	// RetryTimeoutSec is how long Qdrant keeps retrying after the first attempt,
+	// in seconds.
+	// Requires Qdrant v1.20.0 or later. Older versions do not get it.
+	// +optional
+	RetryTimeoutSec *uint `json:"retry_timeout_sec,omitempty"`
+	// Credentials selects how Qdrant authenticates to the store. Without it, Qdrant
+	// uses the pod's own cloud identity.
+	// +optional
+	Credentials *SnapshotsS3Credentials `json:"credentials,omitempty"`
+}
+
+func (c *SnapshotsS3Config) GetCredentials() *SnapshotsS3Credentials {
+	if c == nil {
+		return nil
+	}
+	return c.Credentials
+}
+
+// SnapshotsS3Credentials holds at most one way to authenticate to the store.
+// It holds references to Secrets only, never credential values.
+// +kubebuilder:validation:XValidation:rule="!(has(self.secretRef) && has(self.containerCredentials))",message="at most one of secretRef and containerCredentials may be set"
+type SnapshotsS3Credentials struct {
+	// SecretRef references static access keys in Secrets in the QdrantCluster namespace.
+	// +optional
+	SecretRef *SnapshotsS3SecretRef `json:"secretRef,omitempty"`
+	// ContainerCredentials fetches expiring credentials from an HTTP endpoint, sending
+	// the contents of a token file as the Authorization header.
+	// +optional
+	ContainerCredentials *SnapshotsContainerCredentials `json:"containerCredentials,omitempty"`
+}
+
+func (c *SnapshotsS3Credentials) GetSecretRef() *SnapshotsS3SecretRef {
+	if c == nil {
+		return nil
+	}
+	return c.SecretRef
+}
+
+func (c *SnapshotsS3Credentials) GetContainerCredentials() *SnapshotsContainerCredentials {
+	if c == nil {
+		return nil
+	}
+	return c.ContainerCredentials
+}
+
+// SnapshotsS3SecretRef references the Secret keys that hold static S3 access keys.
+type SnapshotsS3SecretRef struct {
+	// AccessKeyID references the Secret key that holds the access key ID.
+	AccessKeyID corev1.SecretKeySelector `json:"accessKeyId"`
+	// SecretAccessKey references the Secret key that holds the secret access key.
+	SecretAccessKey corev1.SecretKeySelector `json:"secretAccessKey"`
+}
+
+// SnapshotsContainerCredentials configures an ECS-style credentials endpoint.
+type SnapshotsContainerCredentials struct {
+	// URI is the credentials endpoint that Qdrant calls.
+	// +kubebuilder:validation:MinLength=1
+	URI string `json:"uri"`
+	// TokenSecretRef references the Secret, in the QdrantCluster namespace, whose
+	// `token` key holds the token that Qdrant sends to the endpoint.
+	TokenSecretRef corev1.LocalObjectReference `json:"tokenSecretRef"`
 }
 
 // IOUringMode specifies the async I/O mode, supported from Qdrant v1.19.0.
@@ -633,6 +756,13 @@ func (c *QdrantConfiguration) GetTLS() *QdrantConfigurationTLS {
 		return nil
 	}
 	return c.TLS
+}
+
+func (c *QdrantConfiguration) GetStorage() *StorageConfig {
+	if c == nil {
+		return nil
+	}
+	return c.Storage
 }
 
 type QdrantConfigurationCollection struct {
@@ -1278,6 +1408,50 @@ type NodeStatus struct {
 	// Status of the snapshots storage PVC
 	// +optional
 	SnapshotsPVCStatus NodePVCStatus `json:"snapshotsPVCStatus,omitempty"`
+	// SnapshotBackend is where the node stores Qdrant snapshots.
+	// +optional
+	SnapshotBackend SnapshotBackend `json:"snapshotBackend,omitempty"`
+	// SnapshotMigration reports the copy of the node's old snapshot volume into
+	// object storage, or, after a rollback, the copy back to the snapshot volume.
+	// It is set only where the operator runs that migration.
+	// +optional
+	SnapshotMigration *NodeSnapshotMigration `json:"snapshotMigration,omitempty"`
+}
+
+// SnapshotBackend is where a node stores Qdrant snapshots.
+// +kubebuilder:validation:Enum=volume;object
+type SnapshotBackend string
+
+const (
+	// SnapshotBackendVolume stores snapshots on the node's snapshot volume.
+	SnapshotBackendVolume SnapshotBackend = "volume"
+	// SnapshotBackendObject stores snapshots in object storage.
+	SnapshotBackendObject SnapshotBackend = "object"
+)
+
+// SnapshotMigrationState is the state of a node's snapshot migration.
+// +kubebuilder:validation:Enum=pending;migrated;pvcDeleted;restoring
+type SnapshotMigrationState string
+
+const (
+	// SnapshotMigrationPending means the old snapshot volume is not fully copied yet.
+	SnapshotMigrationPending SnapshotMigrationState = "pending"
+	// SnapshotMigrationMigrated means every snapshot is copied and verified.
+	SnapshotMigrationMigrated SnapshotMigrationState = "migrated"
+	// SnapshotMigrationPVCDeleted means the old snapshot PVC is deleted.
+	SnapshotMigrationPVCDeleted SnapshotMigrationState = "pvcDeleted"
+	// SnapshotMigrationRestoring means the node left object storage, and the
+	// snapshots in object storage are not fully copied back to its snapshot volume yet.
+	SnapshotMigrationRestoring SnapshotMigrationState = "restoring"
+)
+
+// NodeSnapshotMigration reports the migration of a node's old snapshot volume.
+type NodeSnapshotMigration struct {
+	// State is the current migration state.
+	State SnapshotMigrationState `json:"state"`
+	// MigratedAt is when every snapshot was copied and verified.
+	// +optional
+	MigratedAt *metav1.Time `json:"migratedAt,omitempty"`
 }
 
 type NodePVCStatus struct {
