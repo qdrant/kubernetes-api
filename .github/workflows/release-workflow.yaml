@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   Release:
+    environment: harbor-release
     name: Release Workflow
     runs-on: ubuntu-latest
     permissions:
