@@ -59,6 +59,6 @@ see `docs/api.md` for all resources.
 
 - Name branches `feature/...` (or `feat/...`), `fix/...` or `chore/...`. The PR label is set from the branch
   name, and release notes are grouped by that label.
-- A release needs a `vX.Y.Z` tag pushed by a cloud-admin, then a push to a `releases/vX.Y.Z`
-  branch on the same commit. CI publishes the GitHub release and the chart. Steps are in
-  `README.md`.
+- A release is a `vX.Y.Z` tag on a commit in `main`, pushed by a cloud-admin. The release job runs
+  in the `release` environment after a reviewer approves it, then publishes the GitHub release and
+  the chart. Steps are in `README.md`.
