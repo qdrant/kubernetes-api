@@ -6,8 +6,8 @@ require (
 	github.com/fluxcd/helm-controller/api v1.6.5
 	github.com/fluxcd/source-controller/api v1.9.6
 	github.com/google/go-cmp v0.7.0
-	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.6.0
-	github.com/onsi/ginkgo/v2 v2.33.0
+	github.com/kubernetes-csi/external-snapshotter/client/v8 v8.7.0
+	github.com/onsi/ginkgo/v2 v2.33.1
 	github.com/onsi/gomega v1.44.0
 	github.com/stretchr/testify v1.12.1
 	google.golang.org/protobuf v1.36.12
