@@ -1,6 +1,6 @@
 module github.com/qdrant/kubernetes-api
 
-go 1.26.10
+go 1.27.4
 
 require (
 	github.com/fluxcd/helm-controller/api v1.6.5
